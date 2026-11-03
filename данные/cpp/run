@@ -1,0 +1,7 @@
+./main 50 16
+./ex11 100802 -pc_type lu -ksp_type preonly
+./main 51 16
+
+./main 20 1
+./ex11 121 -pc_type lu -ksp_type preonly
+./main 21 1

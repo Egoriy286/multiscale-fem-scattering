@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-04",
+  "execution": "local Docker dolfinx-complex CPU",
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "machine": "aarch64",
+  "torch": "2.15.0+cpu",
+  "torch_threads": 2,
+  "data_seed": 2026,
+  "model_seed": 42,
+  "numpy": "2.4.6",
+  "scipy": "1.17.1",
+  "matplotlib": "3.10.9",
+  "nbformat": "5.10.4",
+  "nbclient": "0.11.0",
+  "dolfinx": "0.11.0.post0",
+  "gmsh": "4.15.2",
+  "petsc": [
+    3,
+    25,
+    1
+  ],
+  "petsc_scalar": "<class 'numpy.complex128'>"
+}

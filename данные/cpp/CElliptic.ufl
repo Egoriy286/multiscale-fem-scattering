@@ -1,0 +1,46 @@
+element = triangle
+V = FiniteElement("CG", element, 1)
+V2 = FiniteElement("DG", element, 1)
+
+# for dg
+h = 2.0*Circumradius(element)
+havg = (h('+') + h('-'))/2
+nn = FacetNormal(element)
+
+u = TrialFunction(V)
+v = TestFunction(V)
+
+Ax = Constant(element)
+n = Constant(element)
+k = Constant(element)
+f = Constant(element)
+ui = Coefficient(V)
+
+a = inner(Ax*grad(u), grad(v))*dx\
+   - (k**2)*n*u*v*dx
+
+b = -k*u*v*ds
+
+a2 = inner(Ax*grad(u), grad(v))*dx\
+  - inner(jump(u, nn), avg(grad(v)))*dS\
+  - inner(avg(grad(u)), jump(v, nn))*dS\
+  - (k**2)*n*u*v*dx
+
+b2 = -k*u*v*ds\
+  + 4.0/havg*inner(jump(u, nn), jump(v, nn))*dS
+
+L = f*v*dx
+
+Lc = - inner((1-Ax)*grad(ui), grad(v))*dx\
+   + (k**2)*(1-n)*ui*v*dx
+
+# error
+w1  = Coefficient(V)
+w2  = Coefficient(V)
+EL2 = (w1-w2)*(w1-w2)*dx
+SL2 = (w1*w1)*dx
+EH1 = inner(grad(w1-w2), grad(w1-w2))*dx
+SH1 = inner(grad(w1), grad(w1))*dx
+
+
+forms = [a, b, L, Lc, EL2, SL2, EH1, SH1]
