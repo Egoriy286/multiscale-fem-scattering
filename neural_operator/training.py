@@ -12,9 +12,11 @@ from time import perf_counter
 import numpy as np
 import torch
 
-from .basis import PODBasis
+from .sno.basis import PODBasis
 from .grid import GridTransfer
-from .models import ChebyshevSNO, FNO2d, SVDSNO
+from .chebyshev.model import ChebyshevSNO
+from .fno.model import FNO2d
+from .sno.model import SVDSNO
 from .losses import PODFEMLoss
 from .data import update_array_digest
 

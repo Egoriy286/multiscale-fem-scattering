@@ -10,7 +10,7 @@ from time import perf_counter
 import numpy as np
 from scipy.linalg import subspace_angles
 
-from .basis import PODBasis
+from .sno.basis import PODBasis
 from .grid import GridTransfer
 
 
@@ -123,7 +123,7 @@ def chebyshev_reconstruction(dataset, indices, resolution=32, modes=8):
     consistent FEM error over the polynomial span.
     """
     import torch
-    from .models import chebyshev_matrices
+    from .chebyshev.model import chebyshev_matrices
     transfer = GridTransfer(dataset.coordinates, dataset.triangles, resolution, "chebyshev")
     train = dataset.split_indices()[0]
     mean = dataset.u_scat[train].mean(axis=0)
