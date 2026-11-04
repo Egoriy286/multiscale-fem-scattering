@@ -203,11 +203,45 @@ class Dataset:
         return np.where((den == 0) & (num == 0), 0., result).reshape(shape)
 
 
+def _dataset_path(path):
+    path = Path(path).expanduser().resolve()
+    return path/'fem_dataset.npz' if path.is_dir() else path
+
+
+def inspect_dataset(path):
+    """Read archive headers and small sample vectors; never unpack field/cache data."""
+    path = _dataset_path(path)
+    arrays = {}
+    with zipfile.ZipFile(path) as archive:
+        for member in archive.infolist():
+            if not member.filename.endswith('.npy'):
+                continue
+            with archive.open(member) as stream:
+                version = np.lib.format.read_magic(stream)
+                reader = {(1, 0): np.lib.format.read_array_header_1_0,
+                          (2, 0): np.lib.format.read_array_header_2_0}.get(version)
+                if reader is None:
+                    raise ValueError(f'Unsupported NPY header version {version}')
+                shape, _, dtype = reader(stream)
+            arrays[member.filename[:-4]] = {'shape': list(shape), 'dtype': str(dtype)}
+    with np.load(path, allow_pickle=False) as archive:
+        split, medium, k = (archive[key] for key in ('split', 'medium_id', 'k0'))
+        strategy = str(archive['split_strategy'].item()) if 'split_strategy' in archive else 'medium'
+        groups = archive['frequency_id'] if strategy == 'frequency' else medium
+    return {'directory': str(path.parent), 'samples': arrays['u_scat']['shape'][0],
+            'nodes': arrays['u_scat']['shape'][1], 'media': len(np.unique(medium)),
+            'split_strategy': strategy, 'split_groups': len(np.unique(groups)),
+            'k_range_observed': [float(k.min()), float(k.max())],
+            'splits': [{'name': name, 'samples': int(np.count_nonzero(split == j)),
+                        'groups': len(np.unique(groups[split == j]))}
+                       for j, name in enumerate(('train', 'validation', 'test'))],
+            'stored_arrays': arrays, 'archive_bytes': path.stat().st_size}
+
+
 def load_dataset(path, mmap=False):
     """Load shared samples, optionally streaming u_scat into a reusable mmap cache."""
-    path = Path(path).expanduser().resolve()
-    directory = path if path.is_dir() else path.parent
-    path = directory / 'fem_dataset.npz' if path.is_dir() else path
+    path = _dataset_path(path)
+    directory = path.parent
     with np.load(path, allow_pickle=False) as archive:
         data = {key: archive[key] for key in ('A','n','theta','k0','medium_id','split')}
         data['u_scat'] = _mapped_scattered_field(path) if mmap else archive['u_scat']

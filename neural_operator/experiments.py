@@ -58,13 +58,16 @@ def evaluate_run(dataset, run_dir, indices=None):
     return predictor, rows, summary
 
 
-def compare_methods(dataset, run_dirs, output_dir, *, n_groups=3, n_coarse=4,
+def compare_methods(dataset, run_dirs, output_dir, *, n_groups=3, n_coarse=None,
                     modes=(1, 2, 4), basis_types=(1, 2)):
     """Classical and learned methods see the same held-out group samples.
 
     Full-test neural results are saved separately from the smaller, paired
     classical comparison. GMsFEM bases are rebuilt for every changed medium/k.
     """
+    if n_coarse is None:
+        from .datasets import load_config
+        n_coarse = load_config(dataset.directory).n_coarse
     test = dataset.split_indices()[2]
     _, first = np.unique(dataset.split_group_ids[test], return_index=True)
     selected = test[first[:n_groups]]

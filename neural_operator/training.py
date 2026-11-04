@@ -148,13 +148,9 @@ def _svd_preprocessing(dataset, config, train, val):
     attained = np.flatnonzero(np.asarray(errors) <= config.target_projection_error)
     chosen = int(attained[0]+1) if len(attained) else available
     for key in ("real", "imag"):
-        state = bases[key].to_dict()
-        state["modes"] = bases[key].modes[:, :chosen].tolist()
-        state["singular_values"] = bases[key].singular_values[:chosen].tolist()
-        # from_dict recomputes the cumulative fraction from total energy.
-        if "energy" in state:
-            state["energy"] = np.asarray(bases[key].energy)[:chosen].tolist()
-        bases[key] = PODBasis.from_dict(state)
+        basis = bases[key]
+        bases[key] = PODBasis(basis.mean, basis.modes[:, :chosen],
+                              basis.singular_values[:chosen], basis.total_energy, basis.weights)
     features = np.concatenate([
         bases[name].encode(getattr(dataset, name)[train]) if bases[name].rank
         else np.empty((len(train), 0)) for name in ("A", "n")], axis=1)
