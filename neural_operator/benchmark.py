@@ -51,7 +51,7 @@ def compare_classical(dataset, index=0, n_coarse=4, modes=(1,2,4), basis_types=(
     online = perf_counter()-started
     resolution = mesh_resolution(dataset,index)
     def row(method,u,dofs,offline,online,**extra):
-        return dict(method=method,error_fem_l2=float(dataset.relative_l2(reference,u)),assembly_seconds=assembly,offline_seconds=offline,online_seconds=online,dofs=int(dofs),sample_index=int(index),medium_id=int(dataset.medium_id[index]),**resolution,**extra)
+        return dict(method=method,error_fem_l2=float(dataset.relative_l2(reference,u)),assembly_seconds=assembly,offline_seconds=offline,online_seconds=online,dofs=int(dofs),sample_index=int(index),medium_id=int(dataset.medium_id[index]),split_group_id=int(dataset.split_group_ids[index]),split_strategy=dataset.split_strategy,**resolution,**extra)
     rows = [row('Fine FEM reference',solution,problem.ndofs,0.,online,role='reference')]
     started = perf_counter()
     P = coarse_prolongation(problem.coordinates,n_coarse)

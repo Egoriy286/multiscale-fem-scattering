@@ -15,6 +15,8 @@ import torch
 from .basis import PODBasis
 from .grid import GridTransfer
 from .models import ChebyshevSNO, FNO2d, SVDSNO
+from .losses import PODFEMLoss
+from .data import update_array_digest
 
 
 @dataclass
@@ -56,10 +58,13 @@ def dataset_fingerprint(dataset):
     digest = hashlib.sha256()
     for name in ("A", "n", "u_scat", "theta", "k0", "medium_id", "split",
                  "coordinates", "triangles"):
-        values = np.ascontiguousarray(getattr(dataset, name))
+        values = np.asanyarray(getattr(dataset, name))
         digest.update(name.encode())
         digest.update(str((values.shape, values.dtype.str)).encode())
-        digest.update(values.tobytes())
+        update_array_digest(digest, values)
+    if dataset.split_strategy != "medium":
+        digest.update(dataset.split_strategy.encode())
+        update_array_digest(digest, dataset.frequency_id)
     return digest.hexdigest()
 
 
@@ -148,8 +153,9 @@ def _svd_preprocessing(dataset, config, train, val):
         if "energy" in state:
             state["energy"] = np.asarray(bases[key].energy)[:chosen].tolist()
         bases[key] = PODBasis.from_dict(state)
-    features = np.concatenate((bases["A"].encode(dataset.A[train]),
-                               bases["n"].encode(dataset.n[train])), axis=1)
+    features = np.concatenate([
+        bases[name].encode(getattr(dataset, name)[train]) if bases[name].rank
+        else np.empty((len(train), 0)) for name in ("A", "n")], axis=1)
     out = np.zeros((len(train), chosen, 2))
     for component, key in enumerate(("real", "imag")):
         basis = bases[key]
@@ -257,9 +263,17 @@ class Predictor:
         result = values[..., 0] + 1j*values[..., 1]
         return result[0] if single else result
 
-    def predict_dataset(self, dataset, indices=None, batch_size=32):
+    def on_mesh(self, coordinates, triangles=None):
+        """Prepare physical P1 transfer of this frozen model onto another mesh."""
+        from .mesh_inference import MeshPredictor
+        return MeshPredictor(self, coordinates, triangles)
+
+    def predict_dataset(self, dataset, indices=None, batch_size=32, *, allow_mesh_transfer=False):
         if (not np.array_equal(dataset.triangles, self.triangles)
                 or not np.array_equal(dataset.coordinates, self.coordinates)):
+            if allow_mesh_transfer:
+                return self.on_mesh(dataset.coordinates, dataset.triangles).predict_dataset(
+                    dataset, indices, batch_size)
             raise ValueError("Dataset geometry/node ordering differs from the saved model.")
         indices = np.arange(len(dataset.A)) if indices is None else np.asarray(indices)
         return self.predict(dataset.A[indices], dataset.n[indices],
@@ -322,6 +336,8 @@ def train_model(dataset, output_dir, config=None, *, verbose=True):
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     started = perf_counter()
+    if verbose:
+        print(f"Preparing {config.method}: {len(train)} train samples, POD={config.pod_method}", flush=True)
     if config.method == "svd":
         prep = _svd_preprocessing(dataset, config, train, val)
         inputs = sum(PODBasis.from_dict(prep["bases"][k]).rank for k in ("A", "n")) + 3
@@ -339,10 +355,23 @@ def train_model(dataset, output_dir, config=None, *, verbose=True):
     features = predictor.encode(dataset.A, dataset.n, dataset.theta, dataset.k0)
     # The feature transform is fixed. Test labels are never used by optimisation.
     x = torch.as_tensor(features, device=predictor.device)
-    target = torch.as_tensor(np.stack([dataset.u_scat.real, dataset.u_scat.imag], axis=-1),
-                             dtype=torch.float32, device=predictor.device)
-    loss_fn = FEMLoss(dataset.coordinates, dataset.triangles).to(predictor.device)
+    if config.method == "svd":
+        loss_fn = PODFEMLoss(predictor, dataset, dataset.u_scat,
+                             target_dtype=np.float32).to(predictor.device)
+
+        def batch_loss(indices):
+            return loss_fn(predictor.model(x[indices]), indices)
+
+    else:
+        target = torch.as_tensor(np.stack([dataset.u_scat.real, dataset.u_scat.imag], axis=-1),
+                                 dtype=torch.float32, device=predictor.device)
+        loss_fn = FEMLoss(dataset.coordinates, dataset.triangles).to(predictor.device)
+
+        def batch_loss(indices):
+            return loss_fn(predictor.decode(predictor.model(x[indices])), target[indices])
     preprocessing_seconds = perf_counter()-started
+    if verbose:
+        print(f"Preprocessing ready in {preprocessing_seconds:.2f}s; starting optimization", flush=True)
     optimizer = torch.optim.AdamW(predictor.model.parameters(), lr=config.learning_rate,
                                  weight_decay=1e-5)
     history = {"train": [], "val": [], "lr": []}
@@ -357,8 +386,7 @@ def train_model(dataset, output_dir, config=None, *, verbose=True):
         for first in range(0, len(order), config.batch_size):
             indices = torch.as_tensor(order[first:first+config.batch_size], device=predictor.device)
             optimizer.zero_grad(set_to_none=True)
-            prediction = predictor.decode(predictor.model(x[indices]))
-            loss = loss_fn(prediction, target[indices])
+            loss = batch_loss(indices)
             if not torch.isfinite(loss):
                 raise FloatingPointError("Nonfinite FEM L2 loss during training.")
             loss.backward()
@@ -370,7 +398,7 @@ def train_model(dataset, output_dir, config=None, *, verbose=True):
         with torch.inference_mode():
             for first in range(0, len(val), config.batch_size):
                 j = torch.as_tensor(val[first:first+config.batch_size], device=predictor.device)
-                val_total += float(loss_fn(predictor.decode(predictor.model(x[j])), target[j])) * len(j)
+                val_total += float(batch_loss(j)) * len(j)
         validation = val_total/len(val)
         history["train"].append(total/len(train))
         history["val"].append(validation)
@@ -400,6 +428,10 @@ def train_model(dataset, output_dir, config=None, *, verbose=True):
         "method": config.method, "field": "scattered", "metric": "consistent_complex_FEM_L2",
         "dataset_fingerprint": dataset_fingerprint(dataset), "config": asdict(config),
         "train_samples": len(train), "val_samples": len(val), "test_samples": len(test),
+        "split_strategy": dataset.split_strategy,
+        "physical_media": len(np.unique(dataset.medium_id)),
+        "split_groups": {name: len(np.unique(dataset.split_group_ids[indices]))
+                         for name, indices in zip(("train", "validation", "test"), (train, val, test))},
         "completed_epochs": len(history["train"]), "best_epoch": best_epoch,
         "best_val_fem_l2": best_value, "stop_reason": stop_reason,
         "parameters": sum(p.numel() * (2 if p.is_complex() else 1)
@@ -408,6 +440,8 @@ def train_model(dataset, output_dir, config=None, *, verbose=True):
         "preprocessing_seconds": preprocessing_seconds, "training_seconds": training_seconds,
         "test_batch_seconds": inference_seconds, "test_seconds_per_sample": inference_seconds/len(test),
         "test_fem_l2": summarize(errors),
+        "training_loss_evaluation": ("consistent_FEM_POD_quadratic" if config.method == "svd"
+                                      else "consistent_FEM_field_reconstruction"),
         "versions": {"torch": str(torch.__version__), "numpy": str(np.__version__)},
     }
     if config.method == "svd":
@@ -416,6 +450,10 @@ def train_model(dataset, output_dir, config=None, *, verbose=True):
         metrics["projection_fem_l2"] = summarize(dataset.relative_l2(dataset.u_scat[test], projection))
         metrics["ranks"] = {k: b.rank for k, b in predictor.bases.items()}
         metrics["rank_target_attained"] = prep["rank_validation"]["target_attained"]
+        metric_indices = torch.as_tensor(test, device=predictor.device)
+        optimal_floor = torch.sqrt(loss_fn.floor_squared[metric_indices] /
+                                   loss_fn.norm_squared[metric_indices].clamp_min(1e-24))
+        metrics["consistent_projection_floor_fem_l2"] = summarize(optimal_floor.detach().cpu().numpy())
     predictor.save(output_dir / "model.pt", metadata=metrics)
     (output_dir / "config.json").write_text(json.dumps(asdict(config), indent=2)+"\n")
     (output_dir / "metrics.json").write_text(json.dumps(metrics, indent=2)+"\n")

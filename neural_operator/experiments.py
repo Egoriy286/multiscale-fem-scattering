@@ -24,6 +24,7 @@ def per_sample_errors(dataset, indices, prediction, method):
     absolute = np.sqrt(np.maximum(np.real(np.sum(delta.conj() *
                        (dataset.mass_matrix @ delta.T).T, axis=1)), 0.))
     return [{"method": method, "sample_index": int(index),
+             "split_group_id": int(dataset.split_group_ids[index]), "split_strategy": dataset.split_strategy,
              "medium_id": int(dataset.medium_id[index]), "k": float(dataset.k0[index]),
              "error_fem_l2": float(relative[j]), "absolute_fem_l2": float(absolute[j])}
             for j, index in enumerate(indices)]
@@ -48,6 +49,7 @@ def evaluate_run(dataset, run_dir, indices=None):
     summary = {"method": METHOD_NAMES[predictor.method],
                **summarize([row["error_fem_l2"] for row in rows]),
                "samples": len(indices), "media": len(np.unique(dataset.medium_id[indices])),
+               "groups": len(np.unique(dataset.split_group_ids[indices])), "split_strategy": dataset.split_strategy,
                "batch_seconds_per_sample": batch_seconds/len(indices),
                "single_seconds_median": float(np.median(single_times)),
                "preprocessing_seconds": metrics["preprocessing_seconds"],
@@ -56,18 +58,18 @@ def evaluate_run(dataset, run_dir, indices=None):
     return predictor, rows, summary
 
 
-def compare_methods(dataset, run_dirs, output_dir, *, n_media=3, n_coarse=4,
+def compare_methods(dataset, run_dirs, output_dir, *, n_groups=3, n_coarse=4,
                     modes=(1, 2, 4), basis_types=(1, 2)):
-    """Classical and learned methods see the same held-out sample of each medium.
+    """Classical and learned methods see the same held-out group samples.
 
     Full-test neural results are saved separately from the smaller, paired
     classical comparison. GMsFEM bases are rebuilt for every changed medium/k.
     """
     test = dataset.split_indices()[2]
-    _, first = np.unique(dataset.medium_id[test], return_index=True)
-    selected = test[first[:n_media]]
+    _, first = np.unique(dataset.split_group_ids[test], return_index=True)
+    selected = test[first[:n_groups]]
     if not len(selected):
-        raise ValueError("No held-out media for comparison.")
+        raise ValueError("No held-out groups for comparison.")
     paired, all_test, full_summaries = [], [], []
     for index in selected:
         paired.extend(compare_classical(dataset, int(index), n_coarse=n_coarse,
@@ -122,7 +124,7 @@ def evaluate_frequency_shift(low_run_dirs, high_dataset, output_dir, high_run_di
                 projection = br.decode(br.encode(fields.real)) + 1j*bi.decode(bi.encode(fields.imag))
                 summary["pod_projection_mean"] = float(high_dataset.relative_l2(fields, projection).mean())
             summaries.append(summary)
-    _, first = np.unique(high_dataset.medium_id[test], return_index=True)
+    _, first = np.unique(high_dataset.split_group_ids[test], return_index=True)
     resolution = [{"sample_index": int(index), "k": float(high_dataset.k0[index]),
                    **mesh_resolution(high_dataset, int(index))} for index in test[first]]
     output_dir = Path(output_dir)
@@ -133,12 +135,12 @@ def evaluate_frequency_shift(low_run_dirs, high_dataset, output_dir, high_run_di
     return all_rows, summaries, resolution
 
 
-def refinement_study(dataset, output_dir, n_media=3):
+def refinement_study(dataset, output_dir, n_groups=3):
     test = dataset.split_indices()[2]
-    _, first = np.unique(dataset.medium_id[test], return_index=True)
-    # Largest k among the selected held-out media is checked first.
+    _, first = np.unique(dataset.split_group_ids[test], return_index=True)
+    # Largest k among the held-out frequency/material groups is checked first.
     choices = test[first]
-    choices = choices[np.argsort(dataset.k0[choices])[::-1]][:n_media]
+    choices = choices[np.argsort(dataset.k0[choices])[::-1]][:n_groups]
     rows = []
     for index in choices:
         rows.append({"sample_index": int(index), "k": float(dataset.k0[index]),

@@ -24,11 +24,14 @@ def write_csv(path, rows):
         writer.writerows(rows)
 
 
-def svd_diagnostics(dataset, output_dir, max_rank=64, seed=42):
+def svd_diagnostics(dataset, output_dir, max_rank=64, seed=42, methods=("full", "randomized")):
     """Compare invariant subspaces, not the arbitrary signs of singular vectors."""
     train, val, _ = dataset.split_indices()
     if not len(train) or not len(val):
         raise ValueError("SVD diagnostics require train and validation samples.")
+    if not methods or any(method not in ("full", "randomized") for method in methods):
+        raise ValueError("methods must contain full, randomized, or both")
+    methods = tuple(method for method in ("full", "randomized") if method in methods)
     _, first = np.unique(dataset.medium_id[train], return_index=True)
     unique_train = train[first]
     weights = dataset.lumped_weights
@@ -38,7 +41,7 @@ def svd_diagnostics(dataset, output_dir, max_rank=64, seed=42):
                                    ("real", dataset.u_scat.real, train),
                                    ("imag", dataset.u_scat.imag, train)):
         bases[name] = {}
-        for method in ("full", "randomized"):
+        for method in methods:
             started = perf_counter()
             basis = PODBasis.fit(fields[indices], rank=max_rank, weights=weights,
                                  method=method, seed=seed)
@@ -46,14 +49,15 @@ def svd_diagnostics(dataset, output_dir, max_rank=64, seed=42):
             bases[name][method] = basis
             gram = basis.modes.T @ (weights[:, None] * basis.modes)
             row = {"field": name, "method": method, "snapshots": len(indices),
-                   "algorithm_used": ("full" if method == "full" or min(max_rank, len(indices), fields.shape[1])+10
+                   "algorithm_used": ("constant" if basis.total_energy == 0 else
+                                      "full" if method == "full" or min(max_rank, len(indices), fields.shape[1])+10
                                       >= min(len(indices), fields.shape[1]) else "randomized"),
                    "computed_rank": basis.rank, "seconds": elapsed,
                    "orthogonality_fro": float(np.linalg.norm(gram-np.eye(basis.rank))),
                    "retained_centered_energy": float(basis.energy[-1]) if basis.rank else 0.,
                    "snapshot_array_bytes": int(fields[indices].nbytes),
                    "mode_array_bytes": int(basis.modes.nbytes)}
-            if method == "randomized":
+            if method == "randomized" and "full" in bases[name]:
                 exact = bases[name]["full"]
                 rank = min(exact.rank, basis.rank)
                 if rank:
@@ -64,7 +68,7 @@ def svd_diagnostics(dataset, output_dir, max_rank=64, seed=42):
                         exact.singular_values[:rank]-basis.singular_values[:rank])) / exact.singular_values[0])
             rows.append(row)
     curves = []
-    for method in ("full", "randomized"):
+    for method in methods:
         br, bi = bases["real"][method], bases["imag"][method]
         cr, ci = br.encode(dataset.u_scat[val].real), bi.encode(dataset.u_scat[val].imag)
         for rank in range(1, min(br.rank, bi.rank)+1):
@@ -85,6 +89,7 @@ def svd_diagnostics(dataset, output_dir, max_rank=64, seed=42):
     np.savez_compressed(output_dir/"spectra.npz", **spectra)
     (output_dir/"protocol.json").write_text(json.dumps({
         "seed": seed, "max_rank": max_rank, "pod_metric": "mass_lumped",
+        "methods": list(methods),
         "reconstruction_metric": "consistent_complex_FEM_L2", "split": "validation_only",
         "randomized_oversampling": 10, "power_iterations": 2,
         "small_problem_fallback": "full SVD if requested rank + 10 reaches the smaller matrix dimension",

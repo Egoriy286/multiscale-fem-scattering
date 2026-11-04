@@ -7,12 +7,13 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import splu
 from .data import Dataset, group_split, load_dataset
+from .settings import N_MEDIA, N_DIRECTIONS
 
 
 @dataclass(frozen=True)
 class DatasetConfig:
-    n_media: int = 48
-    n_directions: int = 4
+    n_media: int = N_MEDIA
+    n_directions: int = N_DIRECTIONS
     h: float = .10
     n_coarse: int = 4
     k_range: tuple = (1., 2.)
@@ -216,3 +217,99 @@ def generate_dataset(output_dir, config=DatasetConfig(), progress=print):
     temporary.replace(directory/'fem_dataset.npz')
     return Dataset(**arrays,coordinates=solver.coordinates,triangles=solver.triangles,
                    cell_tags=solver.cell_tags,circles=circles,directory=directory)
+
+
+@dataclass(frozen=True)
+class StaticDatasetConfig:
+    n_frequencies: int = 1000
+    n_directions: int = 8
+    h: float = .1
+    n_coarse: int = 4
+    k_range: tuple = (1., 2.)
+    seed: int = 2026
+    fixed_medium_id: int = 0
+    active_range: tuple = (3, 10)
+    a_range: tuple = (.6, .9)
+    n_range: tuple = (1.5, 3.)
+    split_fractions: tuple = (.67, .17, .16)
+
+
+def generate_static_dataset(output_dir, config=StaticDatasetConfig(), progress=print):
+    """One fixed physical medium, with held-out groups of incident frequencies.
+
+    The material draw exactly reproduces the dynamic generator's medium draw,
+    including its initial discarded frequency draw. Coefficients are stored
+    once and exposed as broadcast views for the common Dataset interface.
+    """
+    from gmsfem.geometry import inclusion_circles
+    for name,minimum in (('n_frequencies',3),('n_directions',1),('n_coarse',1)):
+        value = getattr(config,name)
+        if isinstance(value,bool) or not isinstance(value,(int,np.integer)) or value < minimum:
+            raise ValueError(f'{name} must be an integer >= {minimum}')
+    if not np.isfinite(config.h) or config.h <= 0:
+        raise ValueError('Positive finite mesh size required')
+    if not isinstance(config.fixed_medium_id,(int,np.integer)) or config.fixed_medium_id < 0:
+        raise ValueError('fixed_medium_id must be a nonnegative integer')
+    if not 0 < config.k_range[0] < config.k_range[1] or not np.all(np.isfinite(config.k_range)):
+        raise ValueError('Static frequencies require a positive finite range with lo < hi')
+    for interval in (config.a_range,config.n_range):
+        if not 0 < interval[0] <= interval[1] or not np.all(np.isfinite(interval)):
+            raise ValueError('Positive finite material ranges required')
+    if not 0 <= config.active_range[0] <= config.active_range[1] <= 24:
+        raise ValueError('active_range must lie in [0,24]')
+    frequencies = np.linspace(*config.k_range,config.n_frequencies)
+    if len(np.unique(frequencies)) != config.n_frequencies:
+        raise ValueError('Frequency range must produce unique floating-point frequencies')
+    frequency_ids = np.repeat(np.arange(config.n_frequencies,dtype=np.int32),config.n_directions)
+    split = group_split(frequency_ids,config.split_fractions,config.seed)
+    directory = Path(output_dir).expanduser().resolve()
+    directory.mkdir(parents=True,exist_ok=True)
+    cfg = json.loads(json.dumps(dict(asdict(config),medium_mode='static')))
+    config_path = directory/'config.json'
+    if config_path.exists() and json.loads(config_path.read_text()) != cfg:
+        raise ValueError('Output directory contains a different configuration or medium mode')
+    if (directory/'fem_dataset.npz').exists():
+        if not config_path.exists():
+            raise ValueError('Existing dataset has no configuration')
+        return load_dataset(directory, mmap=True)
+    config_path.write_text(json.dumps(cfg,indent=2)+'\n')
+    generate_mesh(directory/'etal.msh',h=config.h,n_coarse=config.n_coarse)
+    solver = HelmholtzSolver(directory/'etal.msh')
+    circles = inclusion_circles().copy()
+    circles[:,3] = np.arange(2,26)
+    np.savez_compressed(directory/'geometry.npz',dof_coords=solver.coordinates,triangles=solver.triangles,cell_tags=solver.cell_tags,etal_circles=circles)
+    rng = np.random.default_rng([config.seed,config.fixed_medium_id])
+    rng.uniform(*config.k_range)  # Dynamic medium's initial frequency draw.
+    alpha,n = np.ones(len(solver.triangles)),np.ones(len(solver.triangles))
+    chosen = rng.choice(24,size=rng.integers(config.active_range[0],config.active_range[1]+1),replace=False)
+    for cid in chosen:
+        cells = solver.cell_tags == cid+2
+        alpha[cells] = np.exp(rng.uniform(*np.log(config.a_range)))
+        n[cells] = np.exp(rng.uniform(*np.log(config.n_range)))
+    ns,nn = len(frequency_ids),len(solver.coordinates)
+    compact = dict(A=solver.nodal_coefficients(alpha)[None],n=solver.nodal_coefficients(n)[None],A_cells=alpha[None],n_cells=n[None])
+    arrays = dict(u_scat=np.empty((ns,nn),dtype=np.complex128),theta=np.empty(ns,dtype=np.float64),k0=np.repeat(frequencies,config.n_directions),medium_id=np.full(ns,config.fixed_medium_id,dtype=np.int32),frequency_id=frequency_ids,split=split)
+    def report(completed):
+        if progress is not None:
+            message = f'Static FEM dataset: {completed}/{config.n_frequencies} frequencies, {completed*config.n_directions}/{ns} fields'
+            if progress is print:
+                print(message,flush=True)
+            else:
+                progress(message)
+    report(0)
+    for fid,k in enumerate(frequencies):
+        direction_rng = np.random.default_rng([config.seed,fid,2])
+        offset = direction_rng.uniform(0,2*np.pi/config.n_directions)
+        for direction,theta in enumerate(offset+2*np.pi*np.arange(config.n_directions)/config.n_directions):
+            sample = fid*config.n_directions+direction
+            arrays['theta'][sample] = theta
+            arrays['u_scat'][sample] = solver.solve(alpha,n,k,theta)
+        if fid == 0 or (fid+1)%25 == 0 or fid+1 == config.n_frequencies:
+            report(fid+1)
+    temporary = directory/'fem_dataset.tmp.npz'
+    with temporary.open('wb') as stream:
+        np.savez_compressed(stream,**compact,**arrays,split_strategy=np.asarray('frequency'))
+    temporary.replace(directory/'fem_dataset.npz')
+    expanded = {key: np.broadcast_to(value,(ns,value.shape[1])) for key,value in compact.items()}
+    return Dataset(**expanded,**arrays,coordinates=solver.coordinates,triangles=solver.triangles,
+                   cell_tags=solver.cell_tags,circles=circles,directory=directory,split_strategy='frequency')

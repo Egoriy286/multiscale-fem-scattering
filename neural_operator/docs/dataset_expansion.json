@@ -1,0 +1,398 @@
+{
+  "samples_per_band": 8000,
+  "total_samples": 16000,
+  "test_suite": "28 passed",
+  "neural_training_performed": false,
+  "datasets": [
+    {
+      "directory": "data/low_frequency_1000x8",
+      "info": {
+        "samples": 8000,
+        "media": 1000,
+        "nodes": 3221,
+        "triangles": 6280,
+        "k_range_observed": [
+          1.0007037099084442,
+          1.998834121740662
+        ],
+        "splits": [
+          {
+            "name": "train",
+            "samples": 5360,
+            "media": 670
+          },
+          {
+            "name": "validation",
+            "samples": 1360,
+            "media": 170
+          },
+          {
+            "name": "test",
+            "samples": 1280,
+            "media": 160
+          }
+        ],
+        "arrays": {
+          "A": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "float64",
+            "bytes": 206144000
+          },
+          "n": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "float64",
+            "bytes": 206144000
+          },
+          "u_scat": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "complex128",
+            "bytes": 412288000
+          },
+          "A_cells": {
+            "shape": [
+              8000,
+              6280
+            ],
+            "dtype": "float64",
+            "bytes": 401920000
+          },
+          "n_cells": {
+            "shape": [
+              8000,
+              6280
+            ],
+            "dtype": "float64",
+            "bytes": 401920000
+          },
+          "theta": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64",
+            "bytes": 64000
+          },
+          "k0": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64",
+            "bytes": 64000
+          },
+          "medium_id": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int32",
+            "bytes": 32000
+          },
+          "split": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int8",
+            "bytes": 8000
+          },
+          "coordinates": {
+            "shape": [
+              3221,
+              2
+            ],
+            "dtype": "float64",
+            "bytes": 51536
+          },
+          "triangles": {
+            "shape": [
+              6280,
+              3
+            ],
+            "dtype": "int32",
+            "bytes": 75360
+          },
+          "cell_tags": {
+            "shape": [
+              6280
+            ],
+            "dtype": "int32",
+            "bytes": 25120
+          },
+          "circles": {
+            "shape": [
+              24,
+              4
+            ],
+            "dtype": "float64",
+            "bytes": 768
+          }
+        },
+        "field_sha256": {
+          "A": "84bbcd8f1810e5ad7dfba95177b2f3fb7b6a5a1cf3fe1cb71c8f529dea525dbe",
+          "n": "ff15ecae407960480fdc90e67cf7dc84d16d0ac56241b00c4ec180a2a0f8fef5",
+          "u_scat": "ab8d87eb264329263f81d4129a64b35bd7a08d92eabd6c3517f7f76b9f610564",
+          "A_cells": "f4ce25764964cfc74cff57ac955f7f708af8f830fd01aaecd39658008d46351d",
+          "n_cells": "b4f22398d2575bfd0c60aa3a1f8b60d96cb1375b21fc1f7004e247a1c36971e8",
+          "theta": "3d4030b4513efe02e623a46d04193e5dfa237708885cf03efce2da2593e7784c",
+          "k0": "5df05111ea20fdb4e61b83c0734b2b35fd3e7d62a71c19056f8e14dc9ae56252",
+          "medium_id": "59d737ffca8affeb844d02fc508ffca1aaca1dc2d56072e3d574f09f2340fbb4",
+          "split": "7bfc76a631131bf9cb9de363de6eb2681f5f6183e55136648213ea1edd20e92c",
+          "coordinates": "299e51908030a1421f4d414f6a8f96140c6917f6f1ca891691024f9c9615732e",
+          "triangles": "3ad617dd504e5ee34f3805ac107ec9b2ec2dec23ae45fe218c8e1929033f16d5",
+          "cell_tags": "11364bf65a9b28ba261da035efba845211a52b8af618583c03b6aa5c06292284",
+          "circles": "64eb94ce2cc2aba3e77fcfad989ab062415772ef7247631f87c3c369d45528c0"
+        },
+        "files": {
+          "fem_dataset.npz": 406706174,
+          "geometry.npz": 63647,
+          "etal.msh": 273657
+        }
+      },
+      "generation": {
+        "dataset": "low_frequency_1000x8",
+        "elapsed_seconds": 142.33539652299805,
+        "samples": 8000,
+        "n_media": 1000,
+        "n_directions": 8,
+        "k_range": [
+          1,
+          2
+        ]
+      },
+      "repeat_solve_checks": [
+        {
+          "split": "train",
+          "sample_index": 1512,
+          "k": 1.998834121740662,
+          "repeat_solve_relative_fem_l2": 0.0,
+          "relative_linear_residual": 2.3947773730460647e-14
+        },
+        {
+          "split": "validation",
+          "sample_index": 5632,
+          "k": 1.9922697673081,
+          "repeat_solve_relative_fem_l2": 0.0,
+          "relative_linear_residual": 2.8934204959330235e-14
+        },
+        {
+          "split": "test",
+          "sample_index": 576,
+          "k": 1.995358785439705,
+          "repeat_solve_relative_fem_l2": 0.0,
+          "relative_linear_residual": 1.8075488076444905e-14
+        }
+      ],
+      "validation_seconds": 3.9231755010005145
+    },
+    {
+      "directory": "data/high_frequency_1000x8",
+      "info": {
+        "samples": 8000,
+        "media": 1000,
+        "nodes": 3221,
+        "triangles": 6280,
+        "k_range_observed": [
+          4.002814839633777,
+          7.995336486962648
+        ],
+        "splits": [
+          {
+            "name": "train",
+            "samples": 5360,
+            "media": 670
+          },
+          {
+            "name": "validation",
+            "samples": 1360,
+            "media": 170
+          },
+          {
+            "name": "test",
+            "samples": 1280,
+            "media": 160
+          }
+        ],
+        "arrays": {
+          "A": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "float64",
+            "bytes": 206144000
+          },
+          "n": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "float64",
+            "bytes": 206144000
+          },
+          "u_scat": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "complex128",
+            "bytes": 412288000
+          },
+          "A_cells": {
+            "shape": [
+              8000,
+              6280
+            ],
+            "dtype": "float64",
+            "bytes": 401920000
+          },
+          "n_cells": {
+            "shape": [
+              8000,
+              6280
+            ],
+            "dtype": "float64",
+            "bytes": 401920000
+          },
+          "theta": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64",
+            "bytes": 64000
+          },
+          "k0": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64",
+            "bytes": 64000
+          },
+          "medium_id": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int32",
+            "bytes": 32000
+          },
+          "split": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int8",
+            "bytes": 8000
+          },
+          "coordinates": {
+            "shape": [
+              3221,
+              2
+            ],
+            "dtype": "float64",
+            "bytes": 51536
+          },
+          "triangles": {
+            "shape": [
+              6280,
+              3
+            ],
+            "dtype": "int32",
+            "bytes": 75360
+          },
+          "cell_tags": {
+            "shape": [
+              6280
+            ],
+            "dtype": "int32",
+            "bytes": 25120
+          },
+          "circles": {
+            "shape": [
+              24,
+              4
+            ],
+            "dtype": "float64",
+            "bytes": 768
+          }
+        },
+        "field_sha256": {
+          "A": "84bbcd8f1810e5ad7dfba95177b2f3fb7b6a5a1cf3fe1cb71c8f529dea525dbe",
+          "n": "ff15ecae407960480fdc90e67cf7dc84d16d0ac56241b00c4ec180a2a0f8fef5",
+          "u_scat": "48b2c42f98db11f5e602c6684bbe9c7f6c13802881bb79af998cddbe40fc98a6",
+          "A_cells": "f4ce25764964cfc74cff57ac955f7f708af8f830fd01aaecd39658008d46351d",
+          "n_cells": "b4f22398d2575bfd0c60aa3a1f8b60d96cb1375b21fc1f7004e247a1c36971e8",
+          "theta": "3d4030b4513efe02e623a46d04193e5dfa237708885cf03efce2da2593e7784c",
+          "k0": "568c45b99b4ffa260e59071a3e7eca65e3896702ca296c5bad6f57e216e698d1",
+          "medium_id": "59d737ffca8affeb844d02fc508ffca1aaca1dc2d56072e3d574f09f2340fbb4",
+          "split": "7bfc76a631131bf9cb9de363de6eb2681f5f6183e55136648213ea1edd20e92c",
+          "coordinates": "299e51908030a1421f4d414f6a8f96140c6917f6f1ca891691024f9c9615732e",
+          "triangles": "3ad617dd504e5ee34f3805ac107ec9b2ec2dec23ae45fe218c8e1929033f16d5",
+          "cell_tags": "11364bf65a9b28ba261da035efba845211a52b8af618583c03b6aa5c06292284",
+          "circles": "64eb94ce2cc2aba3e77fcfad989ab062415772ef7247631f87c3c369d45528c0"
+        },
+        "files": {
+          "fem_dataset.npz": 407018354,
+          "geometry.npz": 63647,
+          "etal.msh": 273657
+        }
+      },
+      "generation": {
+        "dataset": "high_frequency_1000x8",
+        "elapsed_seconds": 100.54093521400137,
+        "samples": 8000,
+        "n_media": 1000,
+        "n_directions": 8,
+        "k_range": [
+          4,
+          8
+        ]
+      },
+      "repeat_solve_checks": [
+        {
+          "split": "train",
+          "sample_index": 1512,
+          "k": 7.995336486962648,
+          "repeat_solve_relative_fem_l2": 0.0,
+          "relative_linear_residual": 1.5467043871311333e-14
+        },
+        {
+          "split": "validation",
+          "sample_index": 5632,
+          "k": 7.9690790692324,
+          "repeat_solve_relative_fem_l2": 0.0,
+          "relative_linear_residual": 1.4699865929173956e-14
+        },
+        {
+          "split": "test",
+          "sample_index": 576,
+          "k": 7.98143514175882,
+          "repeat_solve_relative_fem_l2": 0.0,
+          "relative_linear_residual": 1.3491224868324655e-14
+        }
+      ],
+      "validation_seconds": 3.4179094189967145
+    }
+  ],
+  "identical_across_bands": [
+    "A",
+    "n",
+    "A_cells",
+    "n_cells",
+    "theta",
+    "medium_id",
+    "split",
+    "coordinates",
+    "triangles",
+    "cell_tags",
+    "circles"
+  ],
+  "distinct_across_bands": [
+    "k0",
+    "u_scat"
+  ],
+  "pilot_models_preserved": 6
+}

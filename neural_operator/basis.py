@@ -24,11 +24,13 @@ class PODBasis:
             raise ValueError("weights must contain one positive finite value per dof")
         if method not in ("full", "randomized"):
             raise ValueError("method must be 'full' or 'randomized'")
-        offsets = fields - fields[0]
-        average_offset = offsets.mean(axis=0)
+        weighted = np.array(fields, dtype=np.float64, order="C", copy=True)
+        weighted -= fields[0]
+        average_offset = weighted.mean(axis=0)
         mean = fields[0] + average_offset
-        weighted = (offsets - average_offset) * np.sqrt(weights)
-        total_energy = float(np.sum(weighted ** 2))
+        weighted -= average_offset
+        weighted *= np.sqrt(weights)
+        total_energy = float(np.einsum("ij,ij->", weighted, weighted))
         k = min(int(rank), *weighted.shape)
         if k == 0 or total_energy == 0:
             return cls(mean, np.empty((fields.shape[1], 0)), np.empty(0), total_energy, weights)
@@ -43,7 +45,7 @@ class PODBasis:
             _, s, vh = np.linalg.svd(q.T @ weighted, full_matrices=False)
         # Centering removes the mean but does not remove its rounding scale.
         # A nearly constant, order-one field must not produce noise-only modes.
-        field_scale = float(np.sqrt(np.sum(fields ** 2 * weights)))
+        field_scale = float(np.sqrt(np.einsum("ij,ij,j->", fields, fields, weights)))
         tolerance = np.finfo(np.float64).eps * max(weighted.shape) * max(s[0], field_scale)
         k = min(k, int(np.count_nonzero(s > tolerance)))
         return cls(mean, vh[:k].T / np.sqrt(weights)[:, None], s[:k], total_energy, weights)
@@ -58,6 +60,8 @@ class PODBasis:
         return np.cumsum(self.singular_values ** 2) / self.total_energy if self.total_energy > 0 else np.zeros(self.rank)
 
     def encode(self, fields):
+        if self.rank == 0:
+            return np.empty((*np.shape(fields)[:-1], 0), dtype=np.float64)
         return ((np.asarray(fields) - self.mean) * self.weights) @ self.modes
 
     def decode(self, coefficients):
