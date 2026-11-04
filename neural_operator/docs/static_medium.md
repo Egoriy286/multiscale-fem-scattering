@@ -30,7 +30,7 @@
 
 `fem_dataset.npz` содержит A,n,A_cells,n_cells одной строкой. Loader выдаёт read-only broadcast views общего формата `[samples,nodes/cells]`; повторные материалы не занимают отдельную строку для каждого решения на диске. `u_scat` хранится явно как `complex128` по всем 8000 комбинациям `(k,θ)`. Фактическая сетка содержит 3221 узел и 6280 треугольников при h=0.1 и coarse grid 4×4; формы и mesh hashes проверены после генерации. В каталоге также сохраняются `geometry.npz`, physical cell tags и `etal.msh`.
 
-Корневые notebooks используют full SVD и будущие model paths `runs/static_low_frequency_1000x8` / `runs/static_high_frequency_1000x8`. [Randomized-вариант](../randomized/README.md) читает те же данные и пишет в `randomized/runs/low_frequency_static_1000x8` / `randomized/runs/high_frequency_static_1000x8`. Различается алгоритм POD, а не физика. Восемь wrapper notebooks используют общую реализацию; копировать исходники модели и материалы не требуется.
+Общий CLI выбирает `--pod-method full|randomized`. Full-профиль пишет в `runs/static_low_frequency_1000x8` / `runs/static_high_frequency_1000x8`, randomized — в `randomized/runs/low_frequency_static_1000x8` / `randomized/runs/high_frequency_static_1000x8`. Данные и физика общие; различается алгоритм POD. Повторяющиеся wrappers объединены в [общие notebooks](../notebooks/), для SVD-SNO оставлены [два варианта](../sno/). См. [структуру проекта](structure.md).
 
 ## Нулевой входной ранг и самостоятельный inference
 

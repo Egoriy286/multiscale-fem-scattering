@@ -1,6 +1,8 @@
 # multiscale-fem-scattering
 Master's degree research on generalized multiscale finite element methods (GMsFEM) for wave scattering problems.
 
+Нейрооператоры SVD-SNO, Chebyshev-SNO и FNO: [структура, данные и запуск](neural_operator/README.md).
+
 ## DOLFINx Complex
 
 Окружение Docker содержит DOLFINx 0.11.0.post0, PETSc с типом
