@@ -1,26 +1,12 @@
-"""Local conforming FEM generation and exact material reuse by GMsFEM."""
-from dataclasses import dataclass, asdict
+"""Conforming Helmholtz FEM backend and legacy dataset-generation entry points."""
 from pathlib import Path
 from time import perf_counter
-import json
+import sys
 import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import splu
-from .data import Dataset, group_split, load_dataset
-
-
-@dataclass(frozen=True)
-class DatasetConfig:
-    n_media: int = 48
-    n_directions: int = 4
-    h: float = .10
-    n_coarse: int = 4
-    k_range: tuple = (1., 2.)
-    seed: int = 2026
-    active_range: tuple = (3, 10)
-    a_range: tuple = (.6, .9)
-    n_range: tuple = (1.5, 3.)
-    split_fractions: tuple = (.67, .17, .16)
+from .data import load_dataset
+from .datasets.config import DatasetConfig, StaticDatasetConfig
 
 
 def generate_mesh(path, *, h=.10, n_coarse=4):
@@ -141,78 +127,14 @@ def build_fine_problem(dataset, index=0):
         raise ValueError('Mesh DOF ordering differs from stored labels')
     return solver.build_problem(dataset.A_cells[index],dataset.n_cells[index],dataset.k0[index],dataset.theta[index])
 
-
 def generate_dataset(output_dir, config=DatasetConfig(), progress=print):
-    from gmsfem.geometry import inclusion_circles
-    if config.n_media < 1 or config.n_directions < 1 or config.n_coarse < 1 or config.h <= 0:
-        raise ValueError('Positive sample counts, coarse resolution and h required')
-    if not 0 <= config.active_range[0] <= config.active_range[1] <= 24:
-        raise ValueError('active_range must lie in [0,24]')
-    for interval in (config.k_range,config.a_range,config.n_range):
-        if not 0 < interval[0] <= interval[1]:
-            raise ValueError('Positive ordered parameter ranges required')
-    directory = Path(output_dir).expanduser().resolve()
-    directory.mkdir(parents=True,exist_ok=True)
-    cfg = json.loads(json.dumps(asdict(config)))
-    config_path = directory/'config.json'
-    if config_path.exists() and json.loads(config_path.read_text()) != cfg:
-        raise ValueError('Output directory contains a different configuration')
-    if (directory/'fem_dataset.npz').exists():
-        if not config_path.exists():
-            raise ValueError('Existing dataset has no configuration')
-        return load_dataset(directory)
-    config_path.write_text(json.dumps(cfg,indent=2)+'\n')
-    generate_mesh(directory/'etal.msh',h=config.h,n_coarse=config.n_coarse)
-    solver = HelmholtzSolver(directory/'etal.msh')
-    circles = inclusion_circles().copy()
-    circles[:,3] = np.arange(2,26)
-    np.savez_compressed(directory/'geometry.npz',dof_coords=solver.coordinates,triangles=solver.triangles,cell_tags=solver.cell_tags,etal_circles=circles)
-    ns = config.n_media*config.n_directions
-    nn, nc = len(solver.coordinates),len(solver.triangles)
-    arrays = {key: np.empty((ns,nn),dtype=np.float64) for key in ('A','n')}
-    arrays.update({key: np.empty((ns,nc),dtype=np.float64) for key in ('A_cells','n_cells')})
-    arrays['u_scat'] = np.empty((ns,nn),dtype=np.complex128)
-    arrays.update({key: np.empty(ns,dtype=np.float64) for key in ('theta','k0')})
-    arrays['medium_id'] = np.empty(ns,dtype=np.int32)
-    def report(completed):
-        if progress is not None:
-            message = f'FEM dataset: {completed}/{config.n_media} media, {completed*config.n_directions}/{ns} fields'
-            if progress is print:
-                print(message,flush=True)
-            else:
-                progress(message)
-    report(0)
-    for mid in range(config.n_media):
-        rng = np.random.default_rng([config.seed,mid])
-        k = rng.uniform(*config.k_range)
-        alpha,n = np.ones(len(solver.triangles)),np.ones(len(solver.triangles))
-        chosen = rng.choice(24,size=rng.integers(config.active_range[0],config.active_range[1]+1),replace=False)
-        for cid in chosen:
-            cells = solver.cell_tags == cid+2
-            alpha[cells] = np.exp(rng.uniform(*np.log(config.a_range)))
-            n[cells] = np.exp(rng.uniform(*np.log(config.n_range)))
-        offset = rng.uniform(0,2*np.pi/config.n_directions)
-        first = mid*config.n_directions
-        rows = slice(first,first+config.n_directions)
-        # Nodal averages are medium properties, computed once for all directions.
-        arrays['A'][rows] = solver.nodal_coefficients(alpha)
-        arrays['n'][rows] = solver.nodal_coefficients(n)
-        arrays['A_cells'][rows] = alpha
-        arrays['n_cells'][rows] = n
-        arrays['k0'][rows] = k
-        arrays['medium_id'][rows] = mid
-        for direction,theta in enumerate(offset+2*np.pi*np.arange(config.n_directions)/config.n_directions):
-            sample = first+direction
-            arrays['theta'][sample] = theta
-            arrays['u_scat'][sample] = solver.solve(alpha,n,k,theta)
-        if mid == 0 or (mid+1)%25 == 0 or mid+1 == config.n_media:
-            report(mid+1)
-    arrays['split'] = group_split(arrays['medium_id'],config.split_fractions,config.seed)
-    # Passing an open file avoids NumPy adding a suffix; replace is atomic on
-    # this filesystem and an interrupted save never becomes a valid cache.
-    temporary = directory/'fem_dataset.tmp.npz'
-    with temporary.open('wb') as stream:
-        np.savez_compressed(stream,**arrays)
-    temporary.replace(directory/'fem_dataset.npz')
-    return Dataset(**arrays,coordinates=solver.coordinates,triangles=solver.triangles,
-                   cell_tags=solver.cell_tags,circles=circles,directory=directory)
+    """Legacy variable-medium default; new callers use neural_operator.datasets."""
+    from .datasets.generation import generate_dataset as generate
+    return generate(output_dir, config, progress, _backend=sys.modules[__name__])
+
+
+def generate_static_dataset(output_dir, config=StaticDatasetConfig(), progress=print):
+    """Compatibility entry point for the fixed-medium experiment."""
+    if not isinstance(config, StaticDatasetConfig):
+        raise TypeError('Expected StaticDatasetConfig')
+    return generate_dataset(output_dir, config, progress)

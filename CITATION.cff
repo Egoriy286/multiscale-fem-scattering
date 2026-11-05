@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it and record the commit and experiment configuration."
+type: software
+title: "Multiscale FEM Scattering: GMsFEM and Neural Operators for 2D Helmholtz Wave Scattering"
+authors:
+  - family-names: Monastyrev
+    given-names: Egoriy
+repository-code: "https://github.com/Egoriy286/multiscale-fem-scattering"
+url: "https://github.com/Egoriy286/multiscale-fem-scattering"
+license: MIT
+abstract: >-
+  Research software for two-dimensional heterogeneous Helmholtz wave scattering.
+  The project combines complex-valued P1 finite element reference solutions,
+  generalized multiscale finite element methods with elliptic and Helmholtz
+  snapshot spaces, POD/SVD coefficient-space spectral neural operators,
+  Chebyshev spectral neural operators, and Fourier Neural Operators.
+  Docker-based Python workflows support mesh and dataset generation, training,
+  inference, consistent FEM L2 evaluation, and mesh-refinement studies.
+  Reported neural results describe held-out wave parameters in one fixed medium.
+keywords:
+  - Helmholtz equation
+  - wave scattering
+  - heterogeneous media
+  - finite element method
+  - generalized multiscale finite element method
+  - reduced-order modeling
+  - proper orthogonal decomposition
+  - spectral neural operators
+  - Fourier Neural Operator
+  - Chebyshev polynomials
+  - FEniCSx
+  - DOLFINx

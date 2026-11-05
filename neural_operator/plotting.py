@@ -52,12 +52,13 @@ def plot_prediction(dataset, index, prediction, title=""):
 
 def plot_svd(curves, spectra):
     fig, axes = plt.subplots(1, 3, figsize=(14, 3.5), constrained_layout=True)
+    reference = "full" if "real_full" in spectra else "randomized"
     for field in ("A", "n", "real", "imag"):
-        singular = spectra[f"{field}_full"]
+        singular = spectra[f"{field}_{reference}"]
         if len(singular):
             axes[0].semilogy(np.arange(1, len(singular)+1), singular/singular[0], label=field)
-            axes[1].plot(np.arange(1, len(singular)+1), spectra[f"{field}_full_energy"], label=field)
-    for method in ("full", "randomized"):
+            axes[1].plot(np.arange(1, len(singular)+1), spectra[f"{field}_{reference}_energy"], label=field)
+    for method in dict.fromkeys(row["method"] for row in curves):
         chosen = [r for r in curves if r["method"] == method]
         axes[2].semilogy([r["rank"] for r in chosen], [r["mean_fem_l2"] for r in chosen], label=method+" mean")
         axes[2].semilogy([r["rank"] for r in chosen], [r["p95_fem_l2"] for r in chosen], ":", label=method+" p95")

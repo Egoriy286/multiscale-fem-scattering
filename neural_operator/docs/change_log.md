@@ -1,4 +1,21 @@
-# Аудит исходного SVD-SNO.ipynb
+# История переработки
+
+## Структура методов и общий workflow (2026-11-04)
+
+- SVD-SNO, Chebyshev-SNO и FNO разнесены по `sno/`, `chebyshev/`, `fno/`; модели используют общее обучение, оценку и inference. Старые Python-импорты сохранены как совместимые входы.
+- Конфигурации, планирование и единый цикл FEM-генерации собраны в `datasets/`; статичная постановка остаётся default, прежняя variable-medium постановка сохранена.
+- Единый CLI поддерживает план `data --dry-run`, read-only `inspect` и выбор `--pod-method full|randomized`. Генерация данных не запускает обучение.
+- 17 neural-operator notebooks сокращены до 10: общие Dataset, SVD-data-checks, Inference, Comparison и High-frequency перенесены в `notebooks/`; training notebooks — в папки методов. Оба варианта SVD-SNO сохранены, дубли Chebyshev/FNO и общих wrappers удалены.
+- Перед объединением сравнены исходные ячейки обоих наборов. Полезные randomized отличия (`METHODS=['svd']`, графики по фактическим методам) и все его записанные outputs перенесены в общие notebooks; добавлен явный выбор профиля. Dataset сохранён из основного набора. Cross-mesh исследование перенесено целиком с outputs. Существенные записанные результаты не очищались.
+- Существующие `data/`, `runs/`, `randomized/runs/`, checkpoints и RESULTS.md не перемещаются. Сохранённые модели не переобучались; проверки генерации и обучения выполнялись на временных малых наборах.
+- README сокращён до карты и последовательности data → train → compare → inference. Детали вынесены в [structure.md](structure.md) и [datasets.md](datasets.md); исторические научные отчёты сохранены.
+- Исправлен выбор каталогов CLI: `--pod-method randomized` выбирает существующий randomized-профиль, `--band high` — high-band данные и runs. Для custom dataset используются отдельные runs, `compare --runs` задаёт источник моделей независимо от каталога отчёта. Paired comparison читает `n_coarse` из сохранённой конфигурации сетки.
+- При усечении POD-базиса убрано преобразование массивов в списки и обратно и недостижимая ветка обработки `energy`.
+- Проверки: baseline — 76 тестов; после переработки — 133 теста и 14 subtests. Безопасные bootstrap/import/config ячейки всех 10 notebooks выполнены в отдельных чистых Python-процессах Docker из новых каталогов. Полные training/study ячейки notebooks повторно не выполнялись.
+- На реальных временных FEM-наборах variable 3×2 и static 6×2 массивы и fingerprints совпадают с baseline побитово. Прежние randomized модели обеих полос загружаются и на четырёх held-out запросах дают точно прежние predictions. CLI прошёл цепочку data → inspect → train all → compare all → high-frequency all на временном static наборе 6×2 (две эпохи для проверки исполнения, без оценки сходимости); временные файлы удалены.
+
+## Исторический аудит исходного SVD-SNO.ipynb
+
 
 Проверены именно JSON `cells[].source` исходного `neural_operator/SVD-SNO.ipynb` (62 ячейки; номера ниже с нуля), а не только сохранённые outputs. Этот файл фиксирует обнаруженное исходное состояние, а не утверждает прохождение ещё не выполненного обучения.
 

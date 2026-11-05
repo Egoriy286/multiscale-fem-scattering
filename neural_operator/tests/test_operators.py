@@ -4,9 +4,11 @@ import json
 import unittest
 import numpy as np
 import torch
-from neural_operator.basis import PODBasis
+from neural_operator.sno.basis import PODBasis
 from neural_operator.grid import GridTransfer
-from neural_operator.models import SVDSNO, ChebyshevSNO, FNO2d, SpectralConv2d, chebyshev_matrices
+from neural_operator.sno.model import SVDSNO
+from neural_operator.chebyshev.model import ChebyshevSNO, chebyshev_matrices
+from neural_operator.fno.model import FNO2d, SpectralConv2d
 
 
 class PODTests(unittest.TestCase):

@@ -1,0 +1,34 @@
+# Работа с датасетами
+
+Стандартный набор описывает **одну фиксированную среду**: геометрия, A,n и поэлементные DG0-материалы постоянны. Варьируются только частота k и направление θ. Полосы `low` и `high` задают k∈[1,2] и k∈[4,8]. По умолчанию каждая содержит 1000 частот × 8 направлений = 8000 FEM-полей. Подробная физическая спецификация: [static_medium.md](static_medium.md).
+
+## План → генерация → просмотр
+
+Из корня репозитория, в окружении DOLFINx Complex:
+
+```bash
+python3 -m neural_operator.run data --band low --dry-run
+python3 -m neural_operator.run data --band high --dry-run
+python3 -m neural_operator.run data --band low --n-frequencies 6 --n-directions 2 --dataset neural_operator/data/static_low_frequency_6x2
+python3 -m neural_operator.run inspect --dataset neural_operator/data/static_low_frequency_6x2
+```
+
+`--dry-run` показывает конфигурацию, размер и путь без FEM solves. `inspect` читает метаданные существующего архива без обучения или загрузки FEM/PyTorch. `data` создаёт набор либо использует совместимый существующий; **генерация никогда не обучает модель**. Для обучения затем отдельно запустите `train`.
+
+Размер задаётся двумя числами: `--n-frequencies` и `--n-directions`. `--band`, `--k-range`, `--h`, `--seed`, `--fixed-medium-id` меняют физическую конфигурацию. При изменении размера стандартный путь получает соответствующее имя, например `static_low_frequency_6x2`; для другой сетки/seed/среды укажите отдельный `--dataset PATH`. Явный `--k-range` требует `--dataset PATH`, чтобы пользовательский диапазон не попал в стандартный каталог полосы. Конфликт существующей конфигурации завершает работу ошибкой, без перезаписи.
+
+Python API сосредоточен в `neural_operator.datasets`: `StaticDatasetConfig`, `plan_dataset`, `generate_dataset`, `load_config`, `load_dataset`, `inspect_dataset`, `write_dataset_info`. Настройки планирования отделены от тяжёлого FEM backend. Старые импорты данных и генератора остаются совместимыми.
+
+## Воспроизводимость и split
+
+Частоты задаются равномерным `linspace`; направления равномерны с воспроизводимым угловым offset. Seed и `fixed_medium_id` фиксируют материал прежнего генератора. При seed=2026 и ID=0 сохраняется исходная среда 0; это не повторная случайная выборка материала на каждый snapshot.
+
+Split группирует направления по `frequency_id`, поэтому одна частота не пересекает train/val/test. Для defaults это 670/170/160 частот и 5360/1360/1280 полей. Материал общий для всех split намеренно. Такая проверка измеряет удержанные волновые параметры одной среды; перенос на новую геометрию или A,n требует отдельного исследования. POD и нормировки обучаются только по train, rank/checkpoint выбираются по val.
+
+## Файлы и повторное использование
+
+Каталог содержит `config.json`, архив `fem_dataset.npz`, `dataset_info.json`, геометрию `geometry.npz` и FEM mesh `etal.msh`. В `fem_dataset.npz` находятся комплексные решения, параметры волны, split IDs, узловые и DG0-материалы. Узлы, connectivity, physical tags и геометрия включений хранятся отдельно в `geometry.npz`. A,n и `A_cells`/`n_cells` сохранены одной строкой; loader отдаёт broadcast views. Не изменяйте их на месте.
+
+Обучение читает `u_scat` через read-only mmap: при первом чтении создаётся проверяемый кэш NPY в `.array_cache`, затем он переиспользуется. Кэш не заменяет исходный архив. Совместимость completed runs дополнительно проверяется по конфигурации и fingerprint данных.
+
+Старые variable-medium наборы `data/low_frequency_1000x8`, `data/high_frequency_1000x8` и pilot 48×4 сохранены для прежних исследований. Они генерируют разные среды и используют соответствующий split; не смешивайте их метрики со static-профилем. [Исторический отчёт](local_results.md) относится к pilot, [актуальные randomized результаты](../randomized/RESULTS.md) — к фиксированной среде.
