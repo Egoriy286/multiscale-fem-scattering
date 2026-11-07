@@ -1,0 +1,268 @@
+{
+  "experiment": "Current PyTorch randomized SVD-SNO on one fixed physical medium",
+  "split": "Held-out frequencies; not new media",
+  "training_epochs_performed_by_this_script": 0,
+  "fem_solves_performed_by_this_script": 0,
+  "bands": {
+    "low": {
+      "band": "low",
+      "dataset": "neural_operator/data/static_low_frequency_1000x8",
+      "run": "neural_operator/randomized/runs/low_frequency_static_1000x8/svd",
+      "files": {
+        "checkpoint": {
+          "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/svd/model.pt",
+          "sha256": "69df4534f4922306c4f20026a14d95752a8dcedd09a5f42bc7db75bbf303253f"
+        },
+        "metrics": {
+          "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/svd/metrics.json",
+          "sha256": "bd0e25de492fdfcb8be9a9f94c52a71bf283a8865eade2ed90ec34de62d0a0bf"
+        },
+        "saved_predictions": {
+          "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/svd/test_predictions.npz",
+          "sha256": "33e839d8797ac94ca829ba2775d786aa8b503f670b5882bd5125e13399379b6f"
+        },
+        "dataset_archive": {
+          "path": "neural_operator/data/static_low_frequency_1000x8/fem_dataset.npz",
+          "sha256": "1e79c7bded8dffb70223287ea5d5cb718e8d1a10a49a45b7aceb4cce16123e06"
+        },
+        "geometry_archive": {
+          "path": "neural_operator/data/static_low_frequency_1000x8/geometry.npz",
+          "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a"
+        }
+      },
+      "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+      "samples": 8000,
+      "physical_media": 1,
+      "frequency_groups": 1000,
+      "directions_per_frequency": 8,
+      "direction_sampling": "Eight distinct directions sampled separately for each frequency; not one shared angle grid",
+      "nodes": 3221,
+      "triangles": 6280,
+      "split_strategy": "frequency",
+      "split_counts": {
+        "train": {
+          "samples": 5360,
+          "frequency_groups": 670
+        },
+        "validation": {
+          "samples": 1360,
+          "frequency_groups": 170
+        },
+        "test": {
+          "samples": 1280,
+          "frequency_groups": 160
+        }
+      },
+      "observed_k_range": [
+        1.0,
+        2.0
+      ],
+      "sample": {
+        "selection": "Nearest to the median saved complex FEM L2 error across all 1280 test fields; first occurrence on ties",
+        "selection_expression": "np.argmin(np.abs(saved_errors - np.median(saved_errors)))",
+        "position_in_test": 299,
+        "index": 2211,
+        "medium_id": 0,
+        "frequency_id": 276,
+        "k0": 1.2762762762762763,
+        "theta_radians": 2.7820133448353443,
+        "complex_consistent_fem_l2": 0.008824747538577557,
+        "error_percent": 0.8824747538577556
+      },
+      "test_complex_consistent_fem_l2": {
+        "mean": 0.009613946273391481,
+        "median": 0.008823853075454188,
+        "p95": 0.01679190349275576,
+        "max": 0.029480048710368762
+      },
+      "mean_test_error_percent": 0.9613946273391482,
+      "config": {
+        "method": "svd",
+        "epochs": 200,
+        "batch_size": 32,
+        "learning_rate": 0.002,
+        "width": 24,
+        "depth": 3,
+        "rank": 48,
+        "input_rank": 32,
+        "target_projection_error": 0.01,
+        "pod_method": "randomized",
+        "resolution": 32,
+        "modes": 8,
+        "padding": 8,
+        "patience": 50,
+        "min_epochs": 50,
+        "seed": 42,
+        "threads": 2,
+        "device": "cpu"
+      },
+      "ranks": {
+        "A": 0,
+        "n": 0,
+        "real": 10,
+        "imag": 10
+      },
+      "completed_epochs": 200,
+      "best_epoch": 170,
+      "checkpoint_vs_saved_prediction_max_abs_difference": 0.0,
+      "checks": {
+        "dataset_checkpoint_metrics_fingerprints_match": true,
+        "checkpoint_metrics_configs_match": true,
+        "checkpoint_metrics_experiment_metadata_match": true,
+        "frequency_groups_1000_with_8_distinct_directions_each": true,
+        "frequency_split_counts_5360_1360_1280": true,
+        "frequency_groups_disjoint_between_splits": true,
+        "geometry_and_node_order_match": true,
+        "physical_media_one_input_ranks_zero": true,
+        "all_1280_test_indices_match_saved_split": true,
+        "all_1280_saved_errors_match_recomputed_consistent_fem_l2": true,
+        "test_metric_summaries_match_saved_predictions": true,
+        "checkpoint_prediction_matches_saved_prediction": true
+      }
+    },
+    "high": {
+      "band": "high",
+      "dataset": "neural_operator/data/static_high_frequency_1000x8",
+      "run": "neural_operator/randomized/runs/high_frequency_static_1000x8/svd",
+      "files": {
+        "checkpoint": {
+          "path": "neural_operator/randomized/runs/high_frequency_static_1000x8/svd/model.pt",
+          "sha256": "e78ab5332aa834654e13032f7714558e79b9e9fc5eb2712ee88019d80c8f4333"
+        },
+        "metrics": {
+          "path": "neural_operator/randomized/runs/high_frequency_static_1000x8/svd/metrics.json",
+          "sha256": "9f06d71397ced6c700c812da938b8ebfaf34962e25cec42bd546149041d7c7dd"
+        },
+        "saved_predictions": {
+          "path": "neural_operator/randomized/runs/high_frequency_static_1000x8/svd/test_predictions.npz",
+          "sha256": "dc62c5b50ba8aaee35c731514ff8367ed167fd4a2299e64b98c0d9a6a6c4321a"
+        },
+        "dataset_archive": {
+          "path": "neural_operator/data/static_high_frequency_1000x8/fem_dataset.npz",
+          "sha256": "aa93c68e16f507d96851a32271bbf3984d8729ba11c6289ce41e638bd5029f59"
+        },
+        "geometry_archive": {
+          "path": "neural_operator/data/static_high_frequency_1000x8/geometry.npz",
+          "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a"
+        }
+      },
+      "dataset_fingerprint": "198c3b0ad024b64aa349ddb7750183352e6a5065626895709b35fbb4d64a096a",
+      "samples": 8000,
+      "physical_media": 1,
+      "frequency_groups": 1000,
+      "directions_per_frequency": 8,
+      "direction_sampling": "Eight distinct directions sampled separately for each frequency; not one shared angle grid",
+      "nodes": 3221,
+      "triangles": 6280,
+      "split_strategy": "frequency",
+      "split_counts": {
+        "train": {
+          "samples": 5360,
+          "frequency_groups": 670
+        },
+        "validation": {
+          "samples": 1360,
+          "frequency_groups": 170
+        },
+        "test": {
+          "samples": 1280,
+          "frequency_groups": 160
+        }
+      },
+      "observed_k_range": [
+        4.0,
+        8.0
+      ],
+      "sample": {
+        "selection": "Nearest to the median saved complex FEM L2 error across all 1280 test fields; first occurrence on ties",
+        "selection_expression": "np.argmin(np.abs(saved_errors - np.median(saved_errors)))",
+        "position_in_test": 941,
+        "index": 6077,
+        "medium_id": 0,
+        "frequency_id": 759,
+        "k0": 7.039039039039039,
+        "theta_radians": 4.245364524506854,
+        "complex_consistent_fem_l2": 0.05066962603943987,
+        "error_percent": 5.0669626039439875
+      },
+      "test_complex_consistent_fem_l2": {
+        "mean": 0.05537525831383929,
+        "median": 0.0506831967266671,
+        "p95": 0.09035695414735936,
+        "max": 0.17859506890449298
+      },
+      "mean_test_error_percent": 5.537525831383929,
+      "config": {
+        "method": "svd",
+        "epochs": 200,
+        "batch_size": 32,
+        "learning_rate": 0.002,
+        "width": 24,
+        "depth": 3,
+        "rank": 48,
+        "input_rank": 32,
+        "target_projection_error": 0.01,
+        "pod_method": "randomized",
+        "resolution": 32,
+        "modes": 8,
+        "padding": 8,
+        "patience": 50,
+        "min_epochs": 50,
+        "seed": 42,
+        "threads": 2,
+        "device": "cpu"
+      },
+      "ranks": {
+        "A": 0,
+        "n": 0,
+        "real": 48,
+        "imag": 48
+      },
+      "completed_epochs": 200,
+      "best_epoch": 198,
+      "checkpoint_vs_saved_prediction_max_abs_difference": 0.0,
+      "checks": {
+        "dataset_checkpoint_metrics_fingerprints_match": true,
+        "checkpoint_metrics_configs_match": true,
+        "checkpoint_metrics_experiment_metadata_match": true,
+        "frequency_groups_1000_with_8_distinct_directions_each": true,
+        "frequency_split_counts_5360_1360_1280": true,
+        "frequency_groups_disjoint_between_splits": true,
+        "geometry_and_node_order_match": true,
+        "physical_media_one_input_ranks_zero": true,
+        "all_1280_test_indices_match_saved_split": true,
+        "all_1280_saved_errors_match_recomputed_consistent_fem_l2": true,
+        "test_metric_summaries_match_saved_predictions": true,
+        "checkpoint_prediction_matches_saved_prediction": true
+      }
+    }
+  },
+  "versions": {
+    "numpy": "2.4.6",
+    "torch": "2.15.0+cpu",
+    "matplotlib": "3.10.9"
+  },
+  "generator": {
+    "path": "paper/svd_sno_revision_2026-11-06/prepare_static_predictions.py",
+    "sha256": "36f9f4d9a85b826bcb0b8c2a0700d70d41d486747fcb70f0be7109b0171cd689"
+  },
+  "fno_checkpoint_audit": {
+    "scope": "All model.pt checkpoints below neural_operator/",
+    "matching_static_checkpoint_available": false,
+    "candidates": [
+      {
+        "path": "neural_operator/runs/high_frequency/fno/model.pt",
+        "sha256": "ada651b9accb681849ad1f689ca21e213e4fe484ecdd70f42e96cd356d16c501",
+        "dataset_fingerprint": "b3ab143dfd3b8a7de40ac06def5aba72b50a5cd13d055c2287fd84e4ae6ff7fe",
+        "matches_current_static_dataset": false
+      },
+      {
+        "path": "neural_operator/runs/low_frequency/fno/model.pt",
+        "sha256": "c7ffb25cf2beca27cc36d07e5392efab22524060d2113ec7c87be083df6a0203",
+        "dataset_fingerprint": "643f882b18d6e82cb75552e8dacb245c72eab30da13a1eff40ee0f97d0ce9746",
+        "matches_current_static_dataset": false
+      }
+    ]
+  },
+  "fno_static_checkpoint_available": false
+}

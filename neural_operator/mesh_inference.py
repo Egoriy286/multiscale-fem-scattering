@@ -6,6 +6,7 @@ import numpy as np
 import torch
 
 from .mesh_transfer import P1Transfer
+from .fields import scattering_components
 
 
 class MeshPredictor:
@@ -88,6 +89,14 @@ class MeshPredictor:
         result = self._from_source_inputs(A, n, theta, k0, batch_size)
         return result[0] if single else result
 
+    def predict_components(self, A, n, theta, k0, batch_size=32):
+        """Return Re, Im and Abs after reconstructing on the target mesh."""
+        return scattering_components(self.predict(A, n, theta, k0, batch_size))
+
+    def predict_static_components(self, theta, k0, batch_size=32):
+        """Return Re, Im and Abs for a fixed medium on the target mesh."""
+        return scattering_components(self.predict_static(theta, k0, batch_size))
+
     def predict_dataset(self, dataset, indices=None, batch_size=32):
         if (self.triangles is None or not np.array_equal(dataset.coordinates, self.coordinates)
                 or not np.array_equal(dataset.triangles, self.triangles)):
@@ -95,3 +104,7 @@ class MeshPredictor:
         indices = np.arange(len(dataset.A)) if indices is None else np.asarray(indices)
         return self.predict(dataset.A[indices], dataset.n[indices],
                             dataset.theta[indices], dataset.k0[indices], batch_size)
+
+    def predict_dataset_components(self, dataset, indices=None, batch_size=32):
+        """Return physical components for selected target-mesh samples."""
+        return scattering_components(self.predict_dataset(dataset, indices, batch_size))

@@ -43,6 +43,18 @@ def test_training_bundle_roundtrip_and_batch_parity(tiny_dataset, tmp_path, meth
     single = saved.predict(tiny_dataset.A[indices[0]], tiny_dataset.n[indices[0]],
                            tiny_dataset.theta[indices[0]], tiny_dataset.k0[indices[0]])
     np.testing.assert_allclose(single, actual[0], atol=2e-6)
+    components = saved.predict_components(tiny_dataset.A[indices[0]], tiny_dataset.n[indices[0]],
+                                          tiny_dataset.theta[indices[0]], tiny_dataset.k0[indices[0]])
+    batch_components = saved.predict_dataset_components(tiny_dataset, indices)
+    for name, expected_component in (("real", actual.real), ("imag", actual.imag),
+                                     ("abs", np.abs(actual))):
+        assert components[name].shape == (len(tiny_dataset.coordinates),)
+        np.testing.assert_allclose(components[name], expected_component[0], atol=2e-6)
+        np.testing.assert_allclose(batch_components[name], expected_component, atol=1e-7)
+    with np.load(tmp_path/method/"test_predictions.npz") as archive:
+        for name in ("real", "imag", "abs"):
+            np.testing.assert_allclose(archive[f"prediction_{name}"], batch_components[name], atol=1e-7)
+        np.testing.assert_allclose(archive["prediction"], actual, atol=1e-7)
     assert metrics["best_epoch"] in (1, 2)
     assert np.isfinite(metrics["test_fem_l2"]["mean"])
 

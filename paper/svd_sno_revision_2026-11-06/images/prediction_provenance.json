@@ -1,0 +1,153 @@
+{
+  "experiment": "Separate paired PyTorch pilot; not the article's historical JAX run",
+  "comparison_scope": "Identical dataset, geometry and test sample; training configurations differ. This visual example does not establish an architecture ranking.",
+  "training_epochs_performed_by_this_script": 0,
+  "fem_solves_performed_by_this_script": 0,
+  "dataset": "neural_operator/data/low_frequency",
+  "dataset_archive_sha256": "fefb0c8b6b3a357a9cd670b59f768951d6bc1e9a7f0e3f3145037eba961e3d64",
+  "geometry_archive_sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a",
+  "dataset_fingerprint": "643f882b18d6e82cb75552e8dacb245c72eab30da13a1eff40ee0f97d0ce9746",
+  "samples": 192,
+  "media": 48,
+  "nodes": 3221,
+  "triangles": 6280,
+  "split_strategy": "medium",
+  "split_counts": {
+    "train": {
+      "samples": 128,
+      "media": 32
+    },
+    "validation": {
+      "samples": 32,
+      "media": 8
+    },
+    "test": {
+      "samples": 32,
+      "media": 8
+    }
+  },
+  "observed_k_range": [
+    1.0166046627139034,
+    1.9622124248854718
+  ],
+  "sample": {
+    "selection": "First test index, independent of either model's errors",
+    "index": 16,
+    "medium_id": 4,
+    "k0": 1.944886701701821,
+    "theta_radians": 1.1718322839974176,
+    "split": "test"
+  },
+  "models": {
+    "svd": {
+      "label": "SVD-SNO",
+      "checkpoint": "neural_operator/runs/low_frequency/svd/model.pt",
+      "checkpoint_sha256": "07b28db121cf5c9e8c0f7343c83f5d77628c6ce593cffe86a07a3128cc663989",
+      "metrics": "neural_operator/runs/low_frequency/svd/metrics.json",
+      "metrics_sha256": "6c833e656ebbeca5107d492af4815b810214dcd278defd1766a145c6d7562fd3",
+      "saved_predictions": "neural_operator/runs/low_frequency/svd/test_predictions.npz",
+      "saved_predictions_sha256": "d1f4089f1e6714e80447ede32b1c353df42cc30f8087af3d29ad5621fa4a304f",
+      "sample_complex_consistent_fem_l2": 0.6887067474841007,
+      "sample_error_percent": 68.87067474841007,
+      "test_complex_consistent_fem_l2": {
+        "mean": 0.7401152711371259,
+        "median": 0.7077323955976993,
+        "p95": 1.00676834100757,
+        "max": 1.0446969164093771
+      },
+      "checkpoint_vs_saved_prediction_max_abs_difference": 0.0,
+      "config": {
+        "method": "svd",
+        "epochs": 500,
+        "batch_size": 128,
+        "learning_rate": 0.002,
+        "width": 64,
+        "depth": 4,
+        "rank": 128,
+        "input_rank": 32,
+        "target_projection_error": 0.01,
+        "pod_method": "full",
+        "resolution": 128,
+        "modes": 8,
+        "padding": 8,
+        "patience": 50,
+        "min_epochs": 50,
+        "seed": 42,
+        "threads": 2,
+        "device": "cpu"
+      },
+      "completed_epochs": 66,
+      "best_epoch": 16,
+      "ranks": {
+        "A": 24,
+        "n": 24,
+        "real": 85,
+        "imag": 85
+      }
+    },
+    "fno": {
+      "label": "FNO",
+      "checkpoint": "neural_operator/runs/low_frequency/fno/model.pt",
+      "checkpoint_sha256": "c7ffb25cf2beca27cc36d07e5392efab22524060d2113ec7c87be083df6a0203",
+      "metrics": "neural_operator/runs/low_frequency/fno/metrics.json",
+      "metrics_sha256": "5065422846bfbf3cb26b5c46ac129c9be79d7905bf305d5daa00966589781df0",
+      "saved_predictions": "neural_operator/runs/low_frequency/fno/test_predictions.npz",
+      "saved_predictions_sha256": "a85d96b2f5c6968fa10f7d54202cfed9d5460282d2fccba2cdb5554013fed57a",
+      "sample_complex_consistent_fem_l2": 0.3788519345218557,
+      "sample_error_percent": 37.885193452185575,
+      "test_complex_consistent_fem_l2": {
+        "mean": 0.38838678314279534,
+        "median": 0.37202371045839117,
+        "p95": 0.5964930485835055,
+        "max": 0.6738086827979459
+      },
+      "checkpoint_vs_saved_prediction_max_abs_difference": 0.0,
+      "config": {
+        "method": "fno",
+        "epochs": 200,
+        "batch_size": 32,
+        "learning_rate": 0.002,
+        "width": 24,
+        "depth": 3,
+        "rank": 48,
+        "input_rank": 32,
+        "target_projection_error": 0.01,
+        "pod_method": "full",
+        "resolution": 32,
+        "modes": 8,
+        "padding": 8,
+        "patience": 50,
+        "min_epochs": 50,
+        "seed": 42,
+        "threads": 2,
+        "device": "cpu"
+      },
+      "completed_epochs": 200,
+      "best_epoch": 194,
+      "ranks": null
+    }
+  },
+  "checks": {
+    "dataset_and_both_model_fingerprints_match": true,
+    "checkpoint_and_metrics_configs_match": true,
+    "both_model_meshes_and_node_orderings_match_dataset": true,
+    "both_saved_test_index_vectors_match_dataset": true,
+    "saved_test_errors_match_recomputed_consistent_fem_l2": true,
+    "metrics_test_summaries_match_saved_predictions": true,
+    "checkpoint_predictions_match_saved_predictions": true
+  },
+  "plot_conventions": {
+    "field": "Nodal scattered complex field, not total field",
+    "amplitude": "Computed from reconstructed real/imag, before plotting",
+    "error_real": "abs(Re(prediction) - Re(FEM))",
+    "error_imag": "abs(Im(prediction) - Im(FEM))",
+    "error_abs": "abs(abs(prediction) - abs(FEM))",
+    "interpolation": "Gouraud display on the saved FEM triangles",
+    "color_scales": "Full data range; shared for both models in each component"
+  },
+  "versions": {
+    "numpy": "2.4.6",
+    "torch": "2.15.0+cpu",
+    "matplotlib": "3.10.9"
+  }
+}

@@ -37,6 +37,7 @@ def build_parser(settings=default_settings):
             command.add_argument("--runs", type=Path, help="Source model root containing method folders")
         if action in ("train", "high-frequency"):
             command.add_argument("--epochs", type=int, default=200)
+            command.add_argument("--device", default="cpu", help="PyTorch training device, e.g. cpu, mps or cuda")
             command.add_argument("--retrain", action="store_true")
         if action == "high-frequency":
             command.add_argument("--high-dataset", type=Path, default=settings.HIGH_DATA_DIR)
@@ -105,7 +106,8 @@ def _execute(args):
 
         def train(target, destination):
             for method in methods:
-                config = TrainConfig(method=method, epochs=args.epochs, pod_method=args.pod_method)
+                config = TrainConfig(method=method, epochs=args.epochs, pod_method=args.pod_method,
+                                     device=args.device)
                 _, metrics, _ = run_experiment(target, destination/method, config, retrain=args.retrain)
                 print(method, metrics["test_fem_l2"], flush=True)
 

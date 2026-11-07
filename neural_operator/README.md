@@ -1,6 +1,6 @@
 # Нейрооператоры для рассеяния волн
 
-Три метода решают одну FEM-задачу: **SVD-SNO**, **Chebyshev-SNO** и **FNO**. Каждый метод имеет свою папку; данные, обучение и оценка общие. Full и randomized — два алгоритма POD для SVD-SNO. [Карта проекта](docs/structure.md) · [Датасеты](docs/datasets.md) · [Формулы](docs/methods.md).
+Три метода решают одну FEM-задачу: **SVD-SNO**, **Chebyshev-SNO** и **FNO**. Каждый метод имеет свою папку; данные, обучение и оценка общие. Full и randomized — два алгоритма POD для SVD-SNO. [Карта проекта](docs/structure.md) · [Датасеты](docs/datasets.md) · [Формулы](docs/methods.md) · [Методичка по SVD, SNO и FNO](docs/svd_sno_guide.md).
 
 Готовые randomized SVD-SNO модели дают среднюю test FEM L2 ошибку **0.96%** на k∈[1,2] и **5.54%** на k∈[4,8]. Это удержанные частоты **одной фиксированной среды**, а не перенос на новые материалы. [Результаты и ограничения](randomized/RESULTS.md), [проверка других сеток](docs/cross_mesh_inference.md). Остальные профили обучения оцениваются отдельно.
 
@@ -36,6 +36,8 @@ python3 -m neural_operator.run compare --method svd --pod-method randomized
 
 `--method chebyshev|fno|all` выбирает другие методы; `all` в сравнении требует готовности всех выбранных моделей. `--band high` выбирает k∈[4,8]; генерация high-band не запускает обучение. `high-frequency` отдельно обучает high-band модели и проверяет перенос frozen low-band. `--help` показывает параметры каждого действия. Старый `python3 -m neural_operator.randomized.run` сохранён как совместимый вход.
 
+Обучение принимает `--device` (по умолчанию `cpu`). На совместимом Mac в локальном Python-окружении с зависимостями проекта FNO можно обучать через `python3 -m neural_operator.run train --method fno --pod-method randomized --band low --epochs 200 --device mps`; для второй полосы замените `low` на `high`. Устройство обучения сохраняется в конфигурации. Готовые веса загружаются на CPU через `load_predictor(path, device="cpu")`; FNO notebook проверяет настройки и fingerprint, затем использует доступное устройство для inference.
+
 Завершённый run повторно используется только при совпадении конфигурации и fingerprint данных. При несовпадении выберите другой `--output` для обучения; `--retrain` явно начинает обучение заново. Автоматического resume нет. Для сравнения `--runs` задаёт каталог моделей, `--output` — каталог отчёта.
 
 ## Notebooks
@@ -48,6 +50,7 @@ python3 -m neural_operator.run compare --method svd --pod-method randomized
 | Chebyshev-SNO | [Train](chebyshev/Train.ipynb) |
 | FNO | [Train](fno/Train.ipynb) |
 | Самостоятельный inference | [Inference](notebooks/Inference.ipynb) |
+| Готовые static SNO/FNO: метрики и Re/Im/Abs без обучения | [Static-predictions](notebooks/Static-predictions.ipynb) |
 | FEM/GMsFEM/neural comparison | [Comparison](notebooks/Comparison.ipynb) |
 | Частотный перенос и уточнение FEM | [High-frequency](notebooks/High-frequency.ipynb) |
 | Frozen inference на других сетках | [Cross-mesh-inference](notebooks/Cross-mesh-inference.ipynb) |
@@ -64,10 +67,17 @@ from neural_operator.training import load_predictor
 predictor = load_predictor(
     "neural_operator/randomized/runs/low_frequency_static_1000x8/svd/model.pt"
 )
-u_scat = predictor.predict(A_input, n_input, theta=0.3, k0=1.5)
+result = predictor.predict_components(A_input, n_input, theta=0.3, k0=1.5)
+re_u = result["real"]  # Re(u_scattering)
+im_u = result["imag"]  # Im(u_scattering)
+abs_u = result["abs"]  # Abs(u_scattering) = sqrt(re_u**2 + im_u**2)
 ```
 
-Поля A,n передаются в сохранённом порядке FEM-узлов; `predict_dataset` дополнительно проверяет сетку. У текущих static моделей входные POD-ранги равны нулю: они используют k,θ и не реагируют на новую среду. На другой сетке переносятся прежние P1 mean/modes. [Протокол изменения включений](docs/changed_inclusions.md) описывает это ограничение.
+Этот интерфейс общий для SVD-SNO, Chebyshev-SNO и FNO. Для одного входа каждая компонента имеет форму `[nodes]`, для batch — `[samples, nodes]`. Метод `predict(...)` по-прежнему возвращает комплексный массив `u_scattering`; его можно разобрать функцией `neural_operator.fields.scattering_components`. Метод `predict_dataset_components(dataset, indices)` возвращает те же три компоненты для выборки. Модуль вычисляется после восстановления и денормировки поля; переобучение сохранённых моделей для такого вывода не требуется.
+
+Общий `plot_prediction` показывает три строки **Re / Im / Abs** и три столбца **FEM / prediction / абсолютная ошибка соответствующей компоненты**. Для FEM и prediction используются одинаковые цветовые шкалы внутри каждой строки. Ошибка модуля — `abs(abs(u_pred) - abs(u_FEM))`; комплексная FEM L2 метрика дополнительно учитывает фазу. Новые `test_predictions.npz` сохраняют `prediction_real`, `prediction_imag`, `prediction_abs` вместе с комплексным `prediction`.
+
+Поля A,n передаются в сохранённом порядке FEM-узлов; `predict_dataset` дополнительно проверяет сетку. У текущих static SVD-SNO моделей входные POD-ранги равны нулю: они используют k,θ и не реагируют на новую среду. FNO получает A,n на регулярной сетке, но обучение на одной среде само по себе не проверяет перенос на другие материалы. У SVD-SNO на другой сетке переносятся прежние P1 mean/modes. [Протокол изменения включений](docs/changed_inclusions.md) описывает это ограничение.
 
 Основная метрика — consistent комплексная FEM L2. POD reconstruction и transfer error измеряются отдельно; они не доказывают точность сети или сходимость FEM. [Исторический pilot](docs/local_results.md), [спецификация среды](docs/static_medium.md), [история переработки](docs/change_log.md), [источники](docs/references.md).
 

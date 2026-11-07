@@ -1,0 +1,16 @@
+{
+  "article_original": {
+    "path": "/Users/egoriy/Downloads/main_original.tex",
+    "sha256": "fe0266a45fc98ad418c40ba590cbc6a73e8095197d4fb6fde1ebc536710e343f"
+  },
+  "experiment_notebook": {
+    "path": "/Users/egoriy/Downloads/Helmholtz_SVD_SNO_GMSH_N96-2.ipynb",
+    "sha256": "7d16395f702182c2be6663f272f501ec60e508df27c6a8014e72e3df2256933c"
+  },
+  "basis_method": "full SVD, as saved in cells 25 and 54",
+  "data_available_in_bundle": false,
+  "checkpoint_available_in_bundle": false,
+  "results_recomputed": false,
+  "notebook_executed": false,
+  "excluded_source": "Copy_of_Helmholtz_SVD_SNO_GMSH_N96.ipynb has edited generator settings inconsistent with saved outputs; not used as primary evidence."
+}

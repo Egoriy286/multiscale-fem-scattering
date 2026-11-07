@@ -1,0 +1,374 @@
+{
+  "experiment": "Current PyTorch fixed-medium randomized SVD-SNO versus FNO",
+  "status": "Interim low band only; high FNO still training",
+  "generated_at_utc": "2026-11-06T06:26:01.446649+00:00",
+  "training_epochs_performed_by_this_script": 0,
+  "fem_solves_performed_by_this_script": 0,
+  "generator": {
+    "path": "paper/svd_sno_revision_2026-11-06/prepare_static_comparison.py",
+    "sha256": "e75c27d4f540338a2c9f3d9cdd4fe319552190cc181460cf1a89f953264b8e47"
+  },
+  "versions": {
+    "numpy": "2.4.6",
+    "torch": "2.15.0+cpu",
+    "matplotlib": "3.10.9"
+  },
+  "bands": {
+    "low": {
+      "band": "low",
+      "dataset": "neural_operator/data/static_low_frequency_1000x8",
+      "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+      "samples": 8000,
+      "physical_media": 1,
+      "nodes": 3221,
+      "triangles": 6280,
+      "frequency_groups": 1000,
+      "directions_per_frequency": 8,
+      "direction_sampling": "Eight distinct directions sampled separately for each frequency; not one shared angle grid",
+      "split_counts": {
+        "train": {
+          "samples": 5360,
+          "frequency_groups": 670
+        },
+        "validation": {
+          "samples": 1360,
+          "frequency_groups": 170
+        },
+        "test": {
+          "samples": 1280,
+          "frequency_groups": 160
+        }
+      },
+      "split_strategy": "frequency",
+      "observed_k_range": [
+        1.0,
+        2.0
+      ],
+      "sample": {
+        "selection": "Nearest to the median saved complex FEM L2 error across all 1280 test fields; first occurrence on ties",
+        "selection_expression": "np.argmin(np.abs(saved_errors - np.median(saved_errors)))",
+        "position_in_test": 299,
+        "index": 2211,
+        "medium_id": 0,
+        "frequency_id": 276,
+        "k0": 1.2762762762762763,
+        "theta_radians": 2.7820133448353443,
+        "complex_consistent_fem_l2": 0.008824747538577557,
+        "error_percent": 0.8824747538577556
+      },
+      "selection_depends_on": "SNO saved test error only; FNO does not influence sample selection",
+      "configuration_differences": {
+        "method": {
+          "svd": "svd",
+          "fno": "fno"
+        },
+        "device": {
+          "svd": "cpu",
+          "fno": "mps"
+        }
+      },
+      "hardware_comparison": "Training devices may differ; no runtime or throughput ranking is made. Verification inference uses CPU for both checkpoints.",
+      "models": {
+        "svd": {
+          "band": "low",
+          "dataset": "neural_operator/data/static_low_frequency_1000x8",
+          "run": "neural_operator/randomized/runs/low_frequency_static_1000x8/svd",
+          "files": {
+            "checkpoint": {
+              "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/svd/model.pt",
+              "sha256": "69df4534f4922306c4f20026a14d95752a8dcedd09a5f42bc7db75bbf303253f"
+            },
+            "metrics": {
+              "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/svd/metrics.json",
+              "sha256": "bd0e25de492fdfcb8be9a9f94c52a71bf283a8865eade2ed90ec34de62d0a0bf"
+            },
+            "saved_predictions": {
+              "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/svd/test_predictions.npz",
+              "sha256": "33e839d8797ac94ca829ba2775d786aa8b503f670b5882bd5125e13399379b6f"
+            },
+            "dataset_archive": {
+              "path": "neural_operator/data/static_low_frequency_1000x8/fem_dataset.npz",
+              "sha256": "1e79c7bded8dffb70223287ea5d5cb718e8d1a10a49a45b7aceb4cce16123e06"
+            },
+            "geometry_archive": {
+              "path": "neural_operator/data/static_low_frequency_1000x8/geometry.npz",
+              "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a"
+            }
+          },
+          "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+          "samples": 8000,
+          "physical_media": 1,
+          "frequency_groups": 1000,
+          "directions_per_frequency": 8,
+          "direction_sampling": "Eight distinct directions sampled separately for each frequency; not one shared angle grid",
+          "nodes": 3221,
+          "triangles": 6280,
+          "split_strategy": "frequency",
+          "split_counts": {
+            "train": {
+              "samples": 5360,
+              "frequency_groups": 670
+            },
+            "validation": {
+              "samples": 1360,
+              "frequency_groups": 170
+            },
+            "test": {
+              "samples": 1280,
+              "frequency_groups": 160
+            }
+          },
+          "observed_k_range": [
+            1.0,
+            2.0
+          ],
+          "sample": {
+            "selection": "Nearest to the median saved complex FEM L2 error across all 1280 test fields; first occurrence on ties",
+            "selection_expression": "np.argmin(np.abs(saved_errors - np.median(saved_errors)))",
+            "position_in_test": 299,
+            "index": 2211,
+            "medium_id": 0,
+            "frequency_id": 276,
+            "k0": 1.2762762762762763,
+            "theta_radians": 2.7820133448353443,
+            "complex_consistent_fem_l2": 0.008824747538577557,
+            "error_percent": 0.8824747538577556
+          },
+          "test_complex_consistent_fem_l2": {
+            "mean": 0.009613946273391481,
+            "median": 0.008823853075454188,
+            "p95": 0.01679190349275576,
+            "max": 0.029480048710368762
+          },
+          "mean_test_error_percent": 0.9613946273391482,
+          "config": {
+            "method": "svd",
+            "epochs": 200,
+            "batch_size": 32,
+            "learning_rate": 0.002,
+            "width": 24,
+            "depth": 3,
+            "rank": 48,
+            "input_rank": 32,
+            "target_projection_error": 0.01,
+            "pod_method": "randomized",
+            "resolution": 32,
+            "modes": 8,
+            "padding": 8,
+            "patience": 50,
+            "min_epochs": 50,
+            "seed": 42,
+            "threads": 2,
+            "device": "cpu"
+          },
+          "ranks": {
+            "A": 0,
+            "n": 0,
+            "real": 10,
+            "imag": 10
+          },
+          "completed_epochs": 200,
+          "best_epoch": 170,
+          "checkpoint_vs_saved_prediction_max_abs_difference": 0.0,
+          "checks": {
+            "dataset_checkpoint_metrics_fingerprints_match": true,
+            "checkpoint_metrics_configs_match": true,
+            "checkpoint_metrics_experiment_metadata_match": true,
+            "frequency_groups_1000_with_8_distinct_directions_each": true,
+            "frequency_split_counts_5360_1360_1280": true,
+            "frequency_groups_disjoint_between_splits": true,
+            "geometry_and_node_order_match": true,
+            "physical_media_one_input_ranks_zero": true,
+            "all_1280_test_indices_match_saved_split": true,
+            "all_1280_saved_errors_match_recomputed_consistent_fem_l2": true,
+            "test_metric_summaries_match_saved_predictions": true,
+            "checkpoint_prediction_matches_saved_prediction": true
+          },
+          "method": "svd",
+          "sample_error_percent": 0.8824747538577556,
+          "sample_complex_consistent_fem_l2": 0.008824747538577557,
+          "training_versions": {
+            "torch": "2.15.0+cpu",
+            "numpy": "2.4.6"
+          },
+          "verification_inference_device": "cpu"
+        },
+        "fno": {
+          "method": "fno",
+          "run": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno",
+          "files": {
+            "checkpoint": {
+              "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno/model.pt",
+              "sha256": "2e30e513e405582a492358e2e760e0301fdc676055402196b049f8d693734d51"
+            },
+            "metrics": {
+              "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno/metrics.json",
+              "sha256": "516e769f96eadd54d0d82e93ec64b5c1bd27f22e76e275dd6eeff94f8056793f"
+            },
+            "saved_predictions": {
+              "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno/test_predictions.npz",
+              "sha256": "b1e3d561ba887bdb13fcb0add4794df6197f84d33473e75f41fcb03f1cc7782c"
+            }
+          },
+          "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+          "config": {
+            "method": "fno",
+            "epochs": 200,
+            "batch_size": 32,
+            "learning_rate": 0.002,
+            "width": 24,
+            "depth": 3,
+            "rank": 48,
+            "input_rank": 32,
+            "target_projection_error": 0.01,
+            "pod_method": "randomized",
+            "resolution": 32,
+            "modes": 8,
+            "padding": 8,
+            "patience": 50,
+            "min_epochs": 50,
+            "seed": 42,
+            "threads": 2,
+            "device": "mps"
+          },
+          "completed_epochs": 142,
+          "training_versions": {
+            "torch": "2.15.0",
+            "numpy": "2.5.4"
+          },
+          "verification_inference_device": "cpu",
+          "best_epoch": 92,
+          "test_complex_consistent_fem_l2": {
+            "mean": 0.016598919414494616,
+            "median": 0.01632905463702357,
+            "p95": 0.019505487729113848,
+            "max": 0.02230463038700699
+          },
+          "mean_test_error_percent": 1.6598919414494615,
+          "sample_error_percent": 1.7488128028459355,
+          "sample_complex_consistent_fem_l2": 0.017488128028459355,
+          "checkpoint_vs_saved_prediction_max_abs_difference": 3.9786116623474754e-09,
+          "checks": {
+            "dataset_checkpoint_metrics_fingerprints_match": true,
+            "checkpoint_metrics_config_and_experiment_metadata_match": true,
+            "same_config_as_sno_except_method_and_device": true,
+            "geometry_and_node_order_match": true,
+            "all_1280_test_indices_match_saved_split": true,
+            "all_1280_saved_errors_match_recomputed_consistent_fem_l2": true,
+            "test_metric_summaries_match_saved_predictions": true,
+            "checkpoint_prediction_matches_saved_prediction": true,
+            "sample_index_selected_by_sno_only": true
+          }
+        }
+      },
+      "outputs": {
+        "components": {
+          "files": [
+            {
+              "path": "paper/svd_sno_revision_2026-11-06/images/prediction_static_low_comparison_components.pdf",
+              "sha256": "5dff4b229101d441a260df49fc37929a458e93f8e7cf0536ff93a8c8cb9fa9ce"
+            },
+            {
+              "path": "paper/svd_sno_revision_2026-11-06/images/prediction_static_low_comparison_components.png",
+              "sha256": "0085165880dd439b97db810c9991ebb55c027fae3a9b6cd91a66d8c2d268f31c"
+            }
+          ],
+          "methods": [
+            "svd",
+            "fno"
+          ],
+          "color_scales": {
+            "real": {
+              "field_min": -0.017519047483801842,
+              "field_max": 0.017519047483801842,
+              "absolute_error_min": 0,
+              "absolute_error_max": 0.002196312659304309
+            },
+            "imag": {
+              "field_min": -0.029453560709953308,
+              "field_max": 0.029453560709953308,
+              "absolute_error_min": 0,
+              "absolute_error_max": 0.006081515339485671
+            },
+            "abs": {
+              "field_min": 0,
+              "field_max": 0.029797736555337906,
+              "absolute_error_min": 0,
+              "absolute_error_max": 0.00633125827767269
+            }
+          }
+        },
+        "sno_components": {
+          "files": [
+            {
+              "path": "paper/svd_sno_revision_2026-11-06/images/prediction_static_low_comparison_sno_components.pdf",
+              "sha256": "6f8978a1392dca8707b6e941ad5660bdd458f8b5d018ceeadbf76f2df8255433"
+            },
+            {
+              "path": "paper/svd_sno_revision_2026-11-06/images/prediction_static_low_comparison_sno_components.png",
+              "sha256": "8778897ce4f189e523fcb3a52e699cf6ff141ce0d48c8728d678fea47ddb14ad"
+            }
+          ],
+          "methods": [
+            "svd"
+          ],
+          "color_scales": {
+            "real": {
+              "field_min": -0.017519047483801842,
+              "field_max": 0.017519047483801842,
+              "absolute_error_min": 0,
+              "absolute_error_max": 0.002196312659304309
+            },
+            "imag": {
+              "field_min": -0.029453560709953308,
+              "field_max": 0.029453560709953308,
+              "absolute_error_min": 0,
+              "absolute_error_max": 0.006081515339485671
+            },
+            "abs": {
+              "field_min": 0,
+              "field_max": 0.029797736555337906,
+              "absolute_error_min": 0,
+              "absolute_error_max": 0.00633125827767269
+            }
+          }
+        },
+        "fno_components": {
+          "files": [
+            {
+              "path": "paper/svd_sno_revision_2026-11-06/images/prediction_static_low_comparison_fno_components.pdf",
+              "sha256": "ca431705963259f29e75966cfe233a988a966c71864590b8c4af098467e61981"
+            },
+            {
+              "path": "paper/svd_sno_revision_2026-11-06/images/prediction_static_low_comparison_fno_components.png",
+              "sha256": "80c6765e4a6956682d3da890fbbeabefc0aa23486de8d978c61f2062f12a64da"
+            }
+          ],
+          "methods": [
+            "fno"
+          ],
+          "color_scales": {
+            "real": {
+              "field_min": -0.017519047483801842,
+              "field_max": 0.017519047483801842,
+              "absolute_error_min": 0,
+              "absolute_error_max": 0.002196312659304309
+            },
+            "imag": {
+              "field_min": -0.029453560709953308,
+              "field_max": 0.029453560709953308,
+              "absolute_error_min": 0,
+              "absolute_error_max": 0.006081515339485671
+            },
+            "abs": {
+              "field_min": 0,
+              "field_max": 0.029797736555337906,
+              "absolute_error_min": 0,
+              "absolute_error_max": 0.00633125827767269
+            }
+          }
+        }
+      }
+    }
+  }
+}

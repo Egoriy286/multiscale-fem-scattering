@@ -19,6 +19,7 @@ from .fno.model import FNO2d
 from .sno.model import SVDSNO
 from .losses import PODFEMLoss
 from .data import update_array_digest
+from .fields import scattering_components
 
 
 @dataclass
@@ -249,6 +250,7 @@ class Predictor:
         return self.output_mean + self.decoder(outputs) * self.output_scale
 
     def predict(self, A, n, theta, k0, batch_size=32):
+        """Reconstruct complex u_scattering at the checkpoint's FEM nodes."""
         single = np.ndim(A) == 1
         self.model.eval()
         features = self.encode(A, n, theta, k0)
@@ -260,6 +262,10 @@ class Predictor:
         values = np.concatenate(predictions)
         result = values[..., 0] + 1j*values[..., 1]
         return result[0] if single else result
+
+    def predict_components(self, A, n, theta, k0, batch_size=32):
+        """Return real, imag and abs arrays of the physical scattered field."""
+        return scattering_components(self.predict(A, n, theta, k0, batch_size))
 
     def on_mesh(self, coordinates, triangles=None):
         """Prepare physical P1 transfer of this frozen model onto another mesh."""
@@ -276,6 +282,12 @@ class Predictor:
         indices = np.arange(len(dataset.A)) if indices is None else np.asarray(indices)
         return self.predict(dataset.A[indices], dataset.n[indices],
                             dataset.theta[indices], dataset.k0[indices], batch_size=batch_size)
+
+    def predict_dataset_components(self, dataset, indices=None, batch_size=32, *,
+                                   allow_mesh_transfer=False):
+        """Return real, imag and abs for selected samples, including mesh transfer."""
+        return scattering_components(self.predict_dataset(
+            dataset, indices, batch_size, allow_mesh_transfer=allow_mesh_transfer))
 
     def save(self, path, metadata=None):
         path = Path(path)
@@ -457,5 +469,7 @@ def train_model(dataset, output_dir, config=None, *, verbose=True):
     (output_dir / "metrics.json").write_text(json.dumps(metrics, indent=2)+"\n")
     (output_dir / "history.json").write_text(json.dumps(history, indent=2)+"\n")
     np.savez_compressed(output_dir / "test_predictions.npz", indices=test,
-                        prediction=predictions, fem_l2=errors)
+                        prediction=predictions, fem_l2=errors,
+                        **{f"prediction_{name}": values
+                           for name, values in scattering_components(predictions).items()})
     return predictor, metrics, history
