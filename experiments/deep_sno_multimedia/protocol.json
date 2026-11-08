@@ -1,0 +1,278 @@
+{
+  "schema_version": 1,
+  "experiment_id": "deep_sno_multimedia_v1",
+  "status": "planned_not_executed",
+  "date": "2026-11-08",
+  "objective": "Measure whether greater SNO depth improves generalization to held-out media after controlling data allocation, representation and parameter count",
+  "problem": {
+    "domain": [
+      -2.0,
+      2.0,
+      -2.0,
+      2.0
+    ],
+    "k_range": [
+      1.0,
+      2.0
+    ],
+    "geometry": "fixed 24 candidate circles from gmsfem.geometry.inclusion_circles",
+    "medium_definition": "active circle mask plus exact DG0 alpha and n; centers/radii fixed",
+    "active_count": [
+      3,
+      10
+    ],
+    "active_count_distribution": "uniform integer; training stratified across counts",
+    "mask_distribution": "uniform subset conditional on active count",
+    "alpha_active": [
+      0.6,
+      0.9
+    ],
+    "n_active": [
+      1.5,
+      3.0
+    ],
+    "coefficient_distribution": "independent log-uniform per active circle; background=1",
+    "test_population": "independent draws of the same declared medium distribution; no arbitrary moving-geometry claim"
+  },
+  "seeds": {
+    "material": 20261108,
+    "split": 20261109,
+    "pod": 20261110,
+    "scout_initializations": [
+      11,
+      23,
+      37
+    ],
+    "final_initializations": [
+      11,
+      23,
+      37,
+      53,
+      71
+    ],
+    "bootstrap": 20261111
+  },
+  "budget": {
+    "unit": "one complex FEM field at one mesh/medium/k/theta",
+    "train": 7200,
+    "validation": 800,
+    "test": 1600,
+    "qa_cap": 400,
+    "total_cap": 10000,
+    "qa_wall_time_equivalence_to_coarse": false
+  },
+  "scout": {
+    "arms": [
+      {
+        "name": "few_media_dense_k",
+        "media": 20,
+        "frequencies": 20,
+        "directions": 4,
+        "fields": 1600
+      },
+      {
+        "name": "balanced",
+        "media": 40,
+        "frequencies": 10,
+        "directions": 4,
+        "fields": 1600
+      },
+      {
+        "name": "many_media_sparse_k",
+        "media": 80,
+        "frequencies": 5,
+        "directions": 4,
+        "fields": 1600
+      }
+    ],
+    "nested_medium_counts": [
+      20,
+      40,
+      80
+    ],
+    "nested_frequency_counts": [
+      5,
+      10,
+      20
+    ],
+    "union_fields": 3200,
+    "union_factorizations": 800,
+    "baseline_depth": 3,
+    "baseline_width": 64,
+    "output_rank_cap": 128,
+    "preprocessing": "each arm fits its own output POD and all statistics on its own train subset only",
+    "input_encoding": "known 24 circle contrasts for alpha plus 24 for n; train-only feature scaling"
+  },
+  "completion": {
+    "decision": "undecided_until_validation_only_scout",
+    "additional_train_fields": 4000,
+    "fallback_frequency": {
+      "train_media": 90,
+      "frequencies_per_medium": 20,
+      "directions": 4,
+      "train_fields": 7200
+    },
+    "alternative_diversity": {
+      "scout_train_media": 80,
+      "additional_media": 200,
+      "frequencies_per_new_medium": 5,
+      "directions": 4,
+      "final_train_media": 280,
+      "train_fields": 7200
+    },
+    "selection_policy": {
+      "score": "macro-medium mean of 0.5 shared-query +0.3 frequency-interpolation +0.2 shifted-angle cohort means",
+      "required_relative_mean_improvement": 0.1,
+      "max_relative_p95_regression": 0.05,
+      "paired_medium_bootstrap_ci_must_exclude_zero": true,
+      "inconclusive_action": "fallback_frequency",
+      "test_used": false,
+      "references": [
+        "few_media_dense_k",
+        "balanced"
+      ],
+      "rule": "many_media_sparse_k must satisfy all thresholds versus BOTH other scout arms, using seed-averaged paired per-medium validation scores"
+    }
+  },
+  "evaluation": {
+    "validation_media": 20,
+    "test_media": 40,
+    "queries_per_medium": 40,
+    "cohorts": [
+      {
+        "name": "shared_query_new_medium",
+        "frequencies": 5,
+        "directions": 4,
+        "fields_per_medium": 20,
+        "phase": 0.0
+      },
+      {
+        "name": "interlaced_k_new_medium",
+        "frequencies": 3,
+        "directions": 4,
+        "fields_per_medium": 12,
+        "phase": 0.0
+      },
+      {
+        "name": "shifted_angle_new_medium",
+        "shared_frequencies": 2,
+        "directions": 4,
+        "fields_per_medium": 8,
+        "validation_phase": "pi/8",
+        "test_phase": "pi/4"
+      }
+    ],
+    "frequency_policy": "five common train anchors; disjoint reserved interlaced val/test frequencies outside train master20",
+    "material_split": "all queries of a physical medium stay in one split; exact DG0 hash deduplication",
+    "test_policy": "sealed until all allocation, preprocessing, architecture and optimizer choices are frozen",
+    "claims": "new media; separate joint new-medium/frequency and new-medium/angle cohorts; no isolated seen-medium angular claim"
+  },
+  "physics_gate": {
+    "production_h": "selected by independent QA, not assumed from the retained static dataset",
+    "candidate_h": [
+      0.1,
+      0.05,
+      0.025
+    ],
+    "preferred_max_refinement_relative_l2": 0.005,
+    "hard_max_refinement_relative_l2": 0.01,
+    "interpretation": "sampled mesh-stability policy, not a proven continuum-error bound",
+    "checks": [
+      "finite/positive/hash/connectivity/node ordering",
+      "exact DG0 material identity across meshes",
+      "homogeneous zero-scattering control",
+      "normalized linear residual",
+      "quadrature consistency",
+      "stratified endpoint-k and high-contrast h/h2 and selected h/4"
+    ],
+    "initial_qa_cap": 200,
+    "reserved_qa_cap": 200,
+    "failure_policy": "halt and revise the entire recipe/mesh; count all attempts; never drop hard test rows",
+    "exterior_accuracy": "requires a separately budgeted boundary/domain study; finite-domain surrogate is the primary claim"
+  },
+  "representation_gate": {
+    "input": "exact known 24-mask contrasts; learned input-POD is a separate controlled ablation",
+    "scout_output": "same rank cap, separate own-train POD per arm; report each exact consistent-mass decoder floor",
+    "final_output_rank_candidates": [
+      32,
+      64,
+      128,
+      256
+    ],
+    "final_output_mean_floor_target": 0.01,
+    "final_output_p95_floor_target": 0.02,
+    "final_rank_selection": "validation-only exact consistent-mass oracle projection; freeze one POD and stats for every depth/init seed",
+    "pod_seed_separate_from_init_seed": true
+  },
+  "depth_study": {
+    "architecture_version": 2,
+    "depths": [
+      3,
+      6,
+      12
+    ],
+    "fixed_width": 64,
+    "matched_parameter_target": "depth12,width64 at the same frozen modal dimension R",
+    "parameter_formula": "8*H+2+L*(2*H*H+H+R*R)",
+    "rank_may_change_for_matching": false,
+    "initializations": [
+      11,
+      23,
+      37,
+      53,
+      71
+    ],
+    "optimizer": "AdamW",
+    "learning_rate": 0.002,
+    "weight_decay": 1e-05,
+    "gradient_clip_norm": 1.0,
+    "batch_size": 64,
+    "max_epochs": 300,
+    "min_epochs": 100,
+    "patience": 60,
+    "training_budget": "equal optimizer-update ceiling plus separately recorded wall time; compare compute curves, not epochs alone",
+    "winner_selection": "validation only; final test is a preregistered confirmation, not a selection round",
+    "statistics": "paired resampling of whole test media; seed spread separately; CI crossing zero means inconclusive",
+    "primary_confirmatory_contrast": "depth12,H64 versus depth3,matched-parameter width, at the same frozen R and preprocessing",
+    "secondary_comparisons": "fixed-width and depth6 comparisons are reported separately; test does not choose a winning architecture",
+    "bootstrap_repetitions": 5000,
+    "bootstrap_ci_level": 0.95,
+    "practical_relative_gain_threshold": 0.05
+  },
+  "implementation_blockers": [
+    "new hierarchical M*F*D recipe with frequency/query/cohort IDs",
+    "compact per-medium material storage and batched gather; avoid dense repeated DG0 arrays",
+    "val-only training mode and separate final-test evaluator",
+    "consistent-mass oracle rank selector",
+    "persisted shared preprocessing with independent POD/model seeds",
+    "known-mask input encoding adapter",
+    "medium-aware macro metrics and paired bootstrap"
+  ],
+  "execution_state": {
+    "fem_fields_generated": 0,
+    "models_trained": 0,
+    "planner_generates_metadata_only": true
+  },
+  "sources": [
+    {
+      "title": "NSNO, Chen et al., 2024, section 6.2",
+      "url": "https://arxiv.org/html/2401.13494v1#S6.SS2",
+      "support": "1000 train/100 test MNIST scatterers and four axial training waves; different operator/architecture"
+    },
+    {
+      "title": "WaveBench author Helmholtz loader",
+      "url": "https://raw.githubusercontent.com/wavebench/wavebench/main/wavebench/dataloaders/helmholtz_loader.py",
+      "support": "defaults 49000/500/500 realizations; separate frequency datasets; not a sample-size prescription"
+    },
+    {
+      "title": "Spectral Neural Operators, v2, 2024",
+      "url": "https://arxiv.org/html/2205.10573v2",
+      "support": "coefficient-space framework; local POD-SNO is an adaptation, not the original architecture"
+    },
+    {
+      "title": "Owen, On dropping the first Sobol point, 2021",
+      "url": "https://arxiv.org/abs/2008.08051",
+      "support": "no generic Sobol-net guarantee for arbitrary truncated sample counts; use explicit stratification here"
+    }
+  ]
+}

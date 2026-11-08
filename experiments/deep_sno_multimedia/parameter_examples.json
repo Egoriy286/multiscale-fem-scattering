@@ -1,0 +1,100 @@
+{
+  "status": "conditional shape examples only; no training or new data",
+  "rows": [
+    {
+      "output_rank": 64,
+      "modal_positions": 64,
+      "depth": 3,
+      "width": 64,
+      "actual_parameters": 37570,
+      "matched_target": 148738,
+      "relative_parameter_difference": 0.7474081942744961
+    },
+    {
+      "output_rank": 64,
+      "modal_positions": 64,
+      "depth": 3,
+      "width": 150,
+      "actual_parameters": 148940,
+      "matched_target": 148738,
+      "relative_parameter_difference": 0.001358092753701139
+    },
+    {
+      "output_rank": 64,
+      "modal_positions": 64,
+      "depth": 6,
+      "width": 64,
+      "actual_parameters": 74626,
+      "matched_target": 148738,
+      "relative_parameter_difference": 0.4982721295163307
+    },
+    {
+      "output_rank": 64,
+      "modal_positions": 64,
+      "depth": 6,
+      "width": 101,
+      "actual_parameters": 148404,
+      "matched_target": 148738,
+      "relative_parameter_difference": 0.0022455593056246556
+    },
+    {
+      "output_rank": 64,
+      "modal_positions": 64,
+      "depth": 12,
+      "width": 64,
+      "actual_parameters": 148738,
+      "matched_target": 148738,
+      "relative_parameter_difference": 0.0
+    },
+    {
+      "output_rank": 128,
+      "modal_positions": 128,
+      "depth": 3,
+      "width": 64,
+      "actual_parameters": 74434,
+      "matched_target": 296194,
+      "relative_parameter_difference": 0.7486984881530349
+    },
+    {
+      "output_rank": 128,
+      "modal_positions": 128,
+      "depth": 3,
+      "width": 202,
+      "actual_parameters": 296200,
+      "matched_target": 296194,
+      "relative_parameter_difference": 2.0256993727084276e-05
+    },
+    {
+      "output_rank": 128,
+      "modal_positions": 128,
+      "depth": 6,
+      "width": 64,
+      "actual_parameters": 148354,
+      "matched_target": 296194,
+      "relative_parameter_difference": 0.49913232543535657
+    },
+    {
+      "output_rank": 128,
+      "modal_positions": 128,
+      "depth": 6,
+      "width": 128,
+      "actual_parameters": 296706,
+      "matched_target": 296194,
+      "relative_parameter_difference": 0.0017285967980445248
+    },
+    {
+      "output_rank": 128,
+      "modal_positions": 128,
+      "depth": 12,
+      "width": 64,
+      "actual_parameters": 296194,
+      "matched_target": 296194,
+      "relative_parameter_difference": 0.0
+    }
+  ],
+  "source_sha256": {
+    "neural_operator/sno/model.py": "e25cbf5c1db3fc3fbbba683062760ffec92a7641563f03c9df20b67263990fcf",
+    "neural_operator/_layers.py": "03670c4b09969fde605e29cc61b89d1e65a5bb6d482bd5fdda883c528e7fd219",
+    "experiments/deep_sno_multimedia/plan.py": "9d7943c6adca404fcae3a406311ca256361ac4522e9e29309878f137cdbdf494"
+  }
+}
