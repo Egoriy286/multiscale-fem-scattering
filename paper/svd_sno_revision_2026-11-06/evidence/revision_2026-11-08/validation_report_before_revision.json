@@ -1,0 +1,14 @@
+{
+  "pdf_pages": 7,
+  "metric_table_values_checked": 16,
+  "source_sha256_matches": true,
+  "provided_files_unchanged": true,
+  "projection_identity_relative_difference": 2.0447358015315857e-16,
+  "network_parameter_count": 53958,
+  "latex_errors": false,
+  "overfull_boxes": false,
+  "undefined_references": false,
+  "visual_review": "passed: all 7 final rendered pages inspected",
+  "numerical_experiment_rerun": false,
+  "pdf_sha256": "bf8c6679e17dc3a81595ad591417f7925d4cc94a7863329b9462f152ae688fa8"
+}

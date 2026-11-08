@@ -1,6 +1,6 @@
 # Randomized SVD-SNO на фиксированной среде: локальные результаты
 
-Парное сравнение сохранённых SVD-SNO и FNO на тех же static-данных приведено в [FNO_RESULTS.md](FNO_RESULTS.md), [JSON](fno_results.json) и [Static-predictions notebook](../notebooks/Static-predictions.ipynb). Ниже сохранены исходные SVD-SNO результаты и отдельные исследования переноса/уточнения.
+Сопоставление сохранённых SVD-SNO и FNO на одном static-low test-наборе приведено в [отчёте ревизии](../docs/operator_revision.md), [FNO JSON](../docs/fno_static_low_verification_2026-11-08.json) и [Static-predictions notebook](../notebooks/Static-predictions.ipynb). Ниже сохранены исходные SVD-SNO результаты и отдельные исследования переноса/уточнения.
 
 Обучены и сохранены две модели SVD-SNO: для k∈[1,2] и k∈[4,8]. Каждая использует 8000 FEM-полей одной неизменной среды 0, 1000 уникальных частот и восемь направлений на частоту. Train/val/test — 670/170/160 частотных групп, 5360/1360/1280 полей. Test характеризует удержанные параметры волны той же среды; эти числа не являются проверкой новых материалов и не сопоставляются напрямую с прежним variable-medium pilot.
 
@@ -61,4 +61,4 @@ Randomized POD и нормировка построены только по trai
 - [High-band модель](runs/high_frequency_static_1000x8/svd/model.pt), [метрики](runs/high_frequency_static_1000x8/svd/metrics.json).
 - [Машинный отчёт](static_results.json), [частотные per-sample результаты](runs/static_evaluation/frequency_samples.csv), [refinement](runs/static_evaluation/refinement.csv).
 
-В этом отчёте описаны две SVD-SNO модели randomized-профиля. Обученные FNO этой же static-серии оценены отдельно в [парном отчёте](FNO_RESULTS.md). Корневой full-SVD и Chebyshev notebooks остаются отдельными сценариями; данные общие, результаты профилей независимы. [Инструкция](README.md), [точная фиксация среды](../docs/static_medium.md), [формулы и источники](../docs/methods.md).
+В этом отчёте описаны две SVD-SNO модели randomized-профиля. Сохранённый FNO низкой полосы повторно оценён по всем 1280 test-полям в [отчёте ревизии](../docs/operator_revision.md). Завершённого сравнения FNO высокой полосы этот отчёт не содержит. Корневой full-SVD и Chebyshev notebooks остаются отдельными сценариями; данные общие, результаты профилей независимы. [Инструкция](README.md), [точная фиксация среды](../docs/static_medium.md), [формулы и источники](../docs/methods.md).

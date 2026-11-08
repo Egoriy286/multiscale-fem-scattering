@@ -101,6 +101,20 @@ def test_custom_data_has_separate_default_runs(tmp_path, monkeypatch):
     assert destinations[0] != settings.LOW_RUNS/'fno'
 
 
+def test_grid_resolution_and_mode_budget_reach_training(monkeypatch):
+    from neural_operator import data, training
+    captured = []
+    monkeypatch.setattr(data, 'load_dataset', lambda *a, **k: object())
+
+    def train(dataset, destination, config, **kwargs):
+        captured.append((config.resolution, config.modes, config.sno_architecture_version))
+        return None, {'test_fem_l2': {}}, None
+
+    monkeypatch.setattr(training, 'run_experiment', train)
+    main(argv=['train', '--method', 'chebyshev', '--resolution', '48', '--modes', '12'])
+    assert captured == [(48, 12, 2)]
+
+
 def test_compare_explicit_model_root_is_independent_of_reports(tmp_path, monkeypatch):
     from neural_operator import data, experiments
     calls = []

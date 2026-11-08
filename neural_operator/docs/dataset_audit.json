@@ -1,0 +1,1818 @@
+{
+  "schema_version": 1,
+  "threshold": 0.02,
+  "policy": "whole-recipe quality gate; no model-test-error filtering",
+  "datasets": [
+    {
+      "dataset": "high_frequency",
+      "quality_threshold": 0.02,
+      "refinement": [
+        {
+          "sample_index": "16",
+          "k": "7.779546806807284",
+          "method": "Fine FEM vs refined FEM",
+          "error_fem_l2": 0.14939638373237757,
+          "dofs_original": "3221",
+          "dofs_refined": "8958",
+          "refined_h": "0.05",
+          "refined_solve_seconds": "0.0924440839989984",
+          "source": "runs/high_frequency/comparison/refinement.csv"
+        },
+        {
+          "sample_index": "28",
+          "k": "7.467663078257392",
+          "method": "Fine FEM vs refined FEM",
+          "error_fem_l2": 0.11607644917921715,
+          "dofs_original": "3221",
+          "dofs_refined": "8958",
+          "refined_h": "0.05",
+          "refined_solve_seconds": "0.10116154099887353",
+          "source": "runs/high_frequency/comparison/refinement.csv"
+        },
+        {
+          "sample_index": "124",
+          "k": "7.422830146707557",
+          "method": "Fine FEM vs refined FEM",
+          "error_fem_l2": 0.1149730636224727,
+          "dofs_original": "3221",
+          "dofs_refined": "8958",
+          "refined_h": "0.05",
+          "refined_solve_seconds": "0.0891013340005884",
+          "source": "runs/high_frequency/comparison/refinement.csv"
+        }
+      ],
+      "obsolete": false,
+      "reason": "Historical variable-medium pilot; retained with results as a stress case.",
+      "files": {
+        "fem_dataset.npz": {
+          "bytes": 9800290,
+          "sha256": "3e2f357b5f0ff2ca7648da379404a5fca6f1f044f636d05dcf6452792430b730",
+          "arrays": {
+            "A": {
+              "shape": [
+                192,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "748fc78764d1292c9a45766b507af836ed2ffba34c9ec67ecb33c85848f6598c"
+            },
+            "n": {
+              "shape": [
+                192,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "b7bd34d4522fa570a4492502c9b8abc7ec79418b5057d0bb5f35cfdb11a5914a"
+            },
+            "A_cells": {
+              "shape": [
+                192,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "959218291b05bb4dc5ce1a6d405a396f6c07bcbb260e97455b15878bcc7ffaaf"
+            },
+            "n_cells": {
+              "shape": [
+                192,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "1a521664c9e451d12774275a01370baa3ca93d43a0eb94546aa2741d76ced37e"
+            },
+            "u_scat": {
+              "shape": [
+                192,
+                3221
+              ],
+              "dtype": "complex128",
+              "order": "C",
+              "payload_sha256": "756f4c39535a3e3ba30134186996b9e74c4b04ae2fd89f5bd8edc1ea602d9694"
+            },
+            "theta": {
+              "shape": [
+                192
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "f5d3a142cf35d4618f258800305ef8ba4cc822d972e08b396a267f54f7bf596e"
+            },
+            "k0": {
+              "shape": [
+                192
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "2b13fd20652d8cbf13e80896c9766bf249c032eaf87962fd1adf92ea20649c95"
+            },
+            "medium_id": {
+              "shape": [
+                192
+              ],
+              "dtype": "int64",
+              "order": "C",
+              "payload_sha256": "dd3435dc509833a49aa67326715ce71d1da63c9d0a6f277c69defac071c002f6"
+            },
+            "split": {
+              "shape": [
+                192
+              ],
+              "dtype": "int8",
+              "order": "C",
+              "payload_sha256": "a3164ad9a3aac6b5fdb20a8dfbd90aad390093d098032dfee62e519367b6894b"
+            }
+          }
+        },
+        "geometry.npz": {
+          "bytes": 63647,
+          "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a",
+          "arrays": {
+            "dof_coords": {
+              "shape": [
+                3221,
+                2
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "299e51908030a1421f4d414f6a8f96140c6917f6f1ca891691024f9c9615732e"
+            },
+            "triangles": {
+              "shape": [
+                6280,
+                3
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "3ad617dd504e5ee34f3805ac107ec9b2ec2dec23ae45fe218c8e1929033f16d5"
+            },
+            "cell_tags": {
+              "shape": [
+                6280
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "11364bf65a9b28ba261da035efba845211a52b8af618583c03b6aa5c06292284"
+            },
+            "etal_circles": {
+              "shape": [
+                24,
+                4
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "64eb94ce2cc2aba3e77fcfad989ab062415772ef7247631f87c3c369d45528c0"
+            }
+          }
+        },
+        "config.json": {
+          "bytes": 293,
+          "sha256": "dffcf1f20162d91c776780dd3dd95e64096fcc885ef58eaf34f9c3773665063f"
+        },
+        "etal.msh": {
+          "bytes": 273657,
+          "sha256": "2172be2cb8c05272f72466715657c013a145653dfb2eea63e28b5bb6385e1720"
+        }
+      },
+      "integrity_errors": [],
+      "config": {
+        "n_media": 48,
+        "n_directions": 4,
+        "h": 0.1,
+        "n_coarse": 4,
+        "k_range": [
+          4.0,
+          8.0
+        ],
+        "seed": 2026,
+        "active_range": [
+          3,
+          10
+        ],
+        "a_range": [
+          0.6,
+          0.9
+        ],
+        "n_range": [
+          1.5,
+          3.0
+        ],
+        "split_fractions": [
+          0.67,
+          0.17,
+          0.16
+        ]
+      },
+      "inspection": {
+        "directory": "/workspace/multiscale-fem-scattering/neural_operator/data/high_frequency",
+        "samples": 192,
+        "nodes": 3221,
+        "media": 48,
+        "split_strategy": "medium",
+        "split_groups": 48,
+        "k_range_observed": [
+          4.0664186508556135,
+          7.848849699541887
+        ],
+        "splits": [
+          {
+            "name": "train",
+            "samples": 128,
+            "groups": 32
+          },
+          {
+            "name": "validation",
+            "samples": 32,
+            "groups": 8
+          },
+          {
+            "name": "test",
+            "samples": 32,
+            "groups": 8
+          }
+        ],
+        "stored_arrays": {
+          "A": {
+            "shape": [
+              192,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "n": {
+            "shape": [
+              192,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "A_cells": {
+            "shape": [
+              192,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "n_cells": {
+            "shape": [
+              192,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "u_scat": {
+            "shape": [
+              192,
+              3221
+            ],
+            "dtype": "complex128"
+          },
+          "theta": {
+            "shape": [
+              192
+            ],
+            "dtype": "float64"
+          },
+          "k0": {
+            "shape": [
+              192
+            ],
+            "dtype": "float64"
+          },
+          "medium_id": {
+            "shape": [
+              192
+            ],
+            "dtype": "int64"
+          },
+          "split": {
+            "shape": [
+              192
+            ],
+            "dtype": "int8"
+          }
+        },
+        "archive_bytes": 9800290
+      },
+      "status": "stress_only"
+    },
+    {
+      "dataset": "high_frequency_1000x8",
+      "quality_threshold": 0.02,
+      "refinement": [],
+      "obsolete": true,
+      "reason": "Superseded variable-medium expansion; no trained comparison belongs to this recipe. Remove complete generated recipe, preserving config/hashes and historical evidence; do not filter test samples.",
+      "files": {
+        "fem_dataset.npz": {
+          "bytes": 407018354,
+          "sha256": "8fae48930c5f7012865d37c718769c2e6092bcb4baaf41ddbd7041dcaed160c2",
+          "arrays": {
+            "A": {
+              "shape": [
+                8000,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "84bbcd8f1810e5ad7dfba95177b2f3fb7b6a5a1cf3fe1cb71c8f529dea525dbe"
+            },
+            "n": {
+              "shape": [
+                8000,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "ff15ecae407960480fdc90e67cf7dc84d16d0ac56241b00c4ec180a2a0f8fef5"
+            },
+            "A_cells": {
+              "shape": [
+                8000,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "f4ce25764964cfc74cff57ac955f7f708af8f830fd01aaecd39658008d46351d"
+            },
+            "n_cells": {
+              "shape": [
+                8000,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "b4f22398d2575bfd0c60aa3a1f8b60d96cb1375b21fc1f7004e247a1c36971e8"
+            },
+            "u_scat": {
+              "shape": [
+                8000,
+                3221
+              ],
+              "dtype": "complex128",
+              "order": "C",
+              "payload_sha256": "48b2c42f98db11f5e602c6684bbe9c7f6c13802881bb79af998cddbe40fc98a6"
+            },
+            "theta": {
+              "shape": [
+                8000
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "3d4030b4513efe02e623a46d04193e5dfa237708885cf03efce2da2593e7784c"
+            },
+            "k0": {
+              "shape": [
+                8000
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "568c45b99b4ffa260e59071a3e7eca65e3896702ca296c5bad6f57e216e698d1"
+            },
+            "medium_id": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "59d737ffca8affeb844d02fc508ffca1aaca1dc2d56072e3d574f09f2340fbb4"
+            },
+            "split": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int8",
+              "order": "C",
+              "payload_sha256": "7bfc76a631131bf9cb9de363de6eb2681f5f6183e55136648213ea1edd20e92c"
+            }
+          }
+        },
+        "geometry.npz": {
+          "bytes": 63647,
+          "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a",
+          "arrays": {
+            "dof_coords": {
+              "shape": [
+                3221,
+                2
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "299e51908030a1421f4d414f6a8f96140c6917f6f1ca891691024f9c9615732e"
+            },
+            "triangles": {
+              "shape": [
+                6280,
+                3
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "3ad617dd504e5ee34f3805ac107ec9b2ec2dec23ae45fe218c8e1929033f16d5"
+            },
+            "cell_tags": {
+              "shape": [
+                6280
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "11364bf65a9b28ba261da035efba845211a52b8af618583c03b6aa5c06292284"
+            },
+            "etal_circles": {
+              "shape": [
+                24,
+                4
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "64eb94ce2cc2aba3e77fcfad989ab062415772ef7247631f87c3c369d45528c0"
+            }
+          }
+        },
+        "config.json": {
+          "bytes": 295,
+          "sha256": "56aa87c303f6fc94c06a6c1054d336c802c6c548886ff39ec0a83c37be2f0346"
+        },
+        "dataset_info.json": {
+          "bytes": 3148,
+          "sha256": "25757474faba4f25eddc98bd1da401b00782fc375b3c3faec99d740be5e7d702"
+        },
+        "etal.msh": {
+          "bytes": 273657,
+          "sha256": "2172be2cb8c05272f72466715657c013a145653dfb2eea63e28b5bb6385e1720"
+        }
+      },
+      "integrity_errors": [],
+      "config": {
+        "n_media": 1000,
+        "n_directions": 8,
+        "h": 0.1,
+        "n_coarse": 4,
+        "k_range": [
+          4.0,
+          8.0
+        ],
+        "seed": 2026,
+        "active_range": [
+          3,
+          10
+        ],
+        "a_range": [
+          0.6,
+          0.9
+        ],
+        "n_range": [
+          1.5,
+          3.0
+        ],
+        "split_fractions": [
+          0.67,
+          0.17,
+          0.16
+        ]
+      },
+      "inspection": {
+        "directory": "/workspace/multiscale-fem-scattering/neural_operator/data/high_frequency_1000x8",
+        "samples": 8000,
+        "nodes": 3221,
+        "media": 1000,
+        "split_strategy": "medium",
+        "split_groups": 1000,
+        "k_range_observed": [
+          4.002814839633777,
+          7.995336486962648
+        ],
+        "splits": [
+          {
+            "name": "train",
+            "samples": 5360,
+            "groups": 670
+          },
+          {
+            "name": "validation",
+            "samples": 1360,
+            "groups": 170
+          },
+          {
+            "name": "test",
+            "samples": 1280,
+            "groups": 160
+          }
+        ],
+        "stored_arrays": {
+          "A": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "n": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "A_cells": {
+            "shape": [
+              8000,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "n_cells": {
+            "shape": [
+              8000,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "u_scat": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "complex128"
+          },
+          "theta": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64"
+          },
+          "k0": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64"
+          },
+          "medium_id": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int32"
+          },
+          "split": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int8"
+          }
+        },
+        "archive_bytes": 407018354
+      },
+      "verified_manifest_arrays": [
+        "A",
+        "n",
+        "u_scat",
+        "A_cells",
+        "n_cells",
+        "theta",
+        "k0",
+        "medium_id",
+        "split"
+      ],
+      "status": "obsolete_recipe"
+    },
+    {
+      "dataset": "low_frequency",
+      "quality_threshold": 0.02,
+      "refinement": [
+        {
+          "method": "Fine FEM vs refined FEM",
+          "error_fem_l2": 0.005758448316435245,
+          "dofs_original": 3221,
+          "dofs_refined": 8958,
+          "refined_h": 0.05,
+          "refined_solve_seconds": 0.1321243329985009,
+          "source": "runs/dataset/validation_refinement.json"
+        }
+      ],
+      "obsolete": false,
+      "reason": "",
+      "files": {
+        "fem_dataset.npz": {
+          "bytes": 9792940,
+          "sha256": "fefb0c8b6b3a357a9cd670b59f768951d6bc1e9a7f0e3f3145037eba961e3d64",
+          "arrays": {
+            "A": {
+              "shape": [
+                192,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "748fc78764d1292c9a45766b507af836ed2ffba34c9ec67ecb33c85848f6598c"
+            },
+            "n": {
+              "shape": [
+                192,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "b7bd34d4522fa570a4492502c9b8abc7ec79418b5057d0bb5f35cfdb11a5914a"
+            },
+            "A_cells": {
+              "shape": [
+                192,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "959218291b05bb4dc5ce1a6d405a396f6c07bcbb260e97455b15878bcc7ffaaf"
+            },
+            "n_cells": {
+              "shape": [
+                192,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "1a521664c9e451d12774275a01370baa3ca93d43a0eb94546aa2741d76ced37e"
+            },
+            "u_scat": {
+              "shape": [
+                192,
+                3221
+              ],
+              "dtype": "complex128",
+              "order": "C",
+              "payload_sha256": "e2e1e4494384812f4690358694e39270dc7364584ed996138c8c03e2800e8cf8"
+            },
+            "theta": {
+              "shape": [
+                192
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "f5d3a142cf35d4618f258800305ef8ba4cc822d972e08b396a267f54f7bf596e"
+            },
+            "k0": {
+              "shape": [
+                192
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "a3c610c014f43c3e2eabf9961b03de5ca8a163bac822b9ea7a64354538c2b0a6"
+            },
+            "medium_id": {
+              "shape": [
+                192
+              ],
+              "dtype": "int64",
+              "order": "C",
+              "payload_sha256": "dd3435dc509833a49aa67326715ce71d1da63c9d0a6f277c69defac071c002f6"
+            },
+            "split": {
+              "shape": [
+                192
+              ],
+              "dtype": "int8",
+              "order": "C",
+              "payload_sha256": "a3164ad9a3aac6b5fdb20a8dfbd90aad390093d098032dfee62e519367b6894b"
+            }
+          }
+        },
+        "geometry.npz": {
+          "bytes": 63647,
+          "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a",
+          "arrays": {
+            "dof_coords": {
+              "shape": [
+                3221,
+                2
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "299e51908030a1421f4d414f6a8f96140c6917f6f1ca891691024f9c9615732e"
+            },
+            "triangles": {
+              "shape": [
+                6280,
+                3
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "3ad617dd504e5ee34f3805ac107ec9b2ec2dec23ae45fe218c8e1929033f16d5"
+            },
+            "cell_tags": {
+              "shape": [
+                6280
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "11364bf65a9b28ba261da035efba845211a52b8af618583c03b6aa5c06292284"
+            },
+            "etal_circles": {
+              "shape": [
+                24,
+                4
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "64eb94ce2cc2aba3e77fcfad989ab062415772ef7247631f87c3c369d45528c0"
+            }
+          }
+        },
+        "config.json": {
+          "bytes": 293,
+          "sha256": "7da8c1d58ce0bbeb1a09e5d6c898df06555cc131cbed7c0b259a0da4f19a1d7e"
+        },
+        "etal.msh": {
+          "bytes": 273657,
+          "sha256": "2172be2cb8c05272f72466715657c013a145653dfb2eea63e28b5bb6385e1720"
+        }
+      },
+      "integrity_errors": [],
+      "config": {
+        "n_media": 48,
+        "n_directions": 4,
+        "h": 0.1,
+        "n_coarse": 4,
+        "k_range": [
+          1.0,
+          2.0
+        ],
+        "seed": 2026,
+        "active_range": [
+          3,
+          10
+        ],
+        "a_range": [
+          0.6,
+          0.9
+        ],
+        "n_range": [
+          1.5,
+          3.0
+        ],
+        "split_fractions": [
+          0.67,
+          0.17,
+          0.16
+        ]
+      },
+      "inspection": {
+        "directory": "/workspace/multiscale-fem-scattering/neural_operator/data/low_frequency",
+        "samples": 192,
+        "nodes": 3221,
+        "media": 48,
+        "split_strategy": "medium",
+        "split_groups": 48,
+        "k_range_observed": [
+          1.0166046627139034,
+          1.9622124248854718
+        ],
+        "splits": [
+          {
+            "name": "train",
+            "samples": 128,
+            "groups": 32
+          },
+          {
+            "name": "validation",
+            "samples": 32,
+            "groups": 8
+          },
+          {
+            "name": "test",
+            "samples": 32,
+            "groups": 8
+          }
+        ],
+        "stored_arrays": {
+          "A": {
+            "shape": [
+              192,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "n": {
+            "shape": [
+              192,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "A_cells": {
+            "shape": [
+              192,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "n_cells": {
+            "shape": [
+              192,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "u_scat": {
+            "shape": [
+              192,
+              3221
+            ],
+            "dtype": "complex128"
+          },
+          "theta": {
+            "shape": [
+              192
+            ],
+            "dtype": "float64"
+          },
+          "k0": {
+            "shape": [
+              192
+            ],
+            "dtype": "float64"
+          },
+          "medium_id": {
+            "shape": [
+              192
+            ],
+            "dtype": "int64"
+          },
+          "split": {
+            "shape": [
+              192
+            ],
+            "dtype": "int8"
+          }
+        },
+        "archive_bytes": 9792940
+      },
+      "status": "sampled_refinement_pass"
+    },
+    {
+      "dataset": "low_frequency_1000x8",
+      "quality_threshold": 0.02,
+      "refinement": [
+        {
+          "method": "Fine FEM vs refined FEM",
+          "error_fem_l2": 0.005628272508809894,
+          "dofs_original": 3221,
+          "dofs_refined": 8958,
+          "refined_h": 0.05,
+          "refined_solve_seconds": 0.14036037500045495,
+          "source": "runs/dataset_1000x8/validation_refinement.json"
+        }
+      ],
+      "obsolete": true,
+      "reason": "Superseded variable-medium expansion; no trained comparison belongs to this recipe. Remove complete generated recipe, preserving config/hashes and historical evidence; do not filter test samples.",
+      "files": {
+        "fem_dataset.npz": {
+          "bytes": 406706174,
+          "sha256": "b6af4dd88529d060d73a5612d56b345384964b94c3109febd3464c32610e7cbf",
+          "arrays": {
+            "A": {
+              "shape": [
+                8000,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "84bbcd8f1810e5ad7dfba95177b2f3fb7b6a5a1cf3fe1cb71c8f529dea525dbe"
+            },
+            "n": {
+              "shape": [
+                8000,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "ff15ecae407960480fdc90e67cf7dc84d16d0ac56241b00c4ec180a2a0f8fef5"
+            },
+            "A_cells": {
+              "shape": [
+                8000,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "f4ce25764964cfc74cff57ac955f7f708af8f830fd01aaecd39658008d46351d"
+            },
+            "n_cells": {
+              "shape": [
+                8000,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "b4f22398d2575bfd0c60aa3a1f8b60d96cb1375b21fc1f7004e247a1c36971e8"
+            },
+            "u_scat": {
+              "shape": [
+                8000,
+                3221
+              ],
+              "dtype": "complex128",
+              "order": "C",
+              "payload_sha256": "ab8d87eb264329263f81d4129a64b35bd7a08d92eabd6c3517f7f76b9f610564"
+            },
+            "theta": {
+              "shape": [
+                8000
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "3d4030b4513efe02e623a46d04193e5dfa237708885cf03efce2da2593e7784c"
+            },
+            "k0": {
+              "shape": [
+                8000
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "5df05111ea20fdb4e61b83c0734b2b35fd3e7d62a71c19056f8e14dc9ae56252"
+            },
+            "medium_id": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "59d737ffca8affeb844d02fc508ffca1aaca1dc2d56072e3d574f09f2340fbb4"
+            },
+            "split": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int8",
+              "order": "C",
+              "payload_sha256": "7bfc76a631131bf9cb9de363de6eb2681f5f6183e55136648213ea1edd20e92c"
+            }
+          }
+        },
+        "geometry.npz": {
+          "bytes": 63647,
+          "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a",
+          "arrays": {
+            "dof_coords": {
+              "shape": [
+                3221,
+                2
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "299e51908030a1421f4d414f6a8f96140c6917f6f1ca891691024f9c9615732e"
+            },
+            "triangles": {
+              "shape": [
+                6280,
+                3
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "3ad617dd504e5ee34f3805ac107ec9b2ec2dec23ae45fe218c8e1929033f16d5"
+            },
+            "cell_tags": {
+              "shape": [
+                6280
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "11364bf65a9b28ba261da035efba845211a52b8af618583c03b6aa5c06292284"
+            },
+            "etal_circles": {
+              "shape": [
+                24,
+                4
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "64eb94ce2cc2aba3e77fcfad989ab062415772ef7247631f87c3c369d45528c0"
+            }
+          }
+        },
+        "config.json": {
+          "bytes": 295,
+          "sha256": "17422ad1df5985068c5bee78536fdad2bd8ee80eef59b444515823129ba72013"
+        },
+        "dataset_info.json": {
+          "bytes": 3149,
+          "sha256": "e13617f1671e6d049cc211ba127322ede339374f1ea4dda2ffe93b1c72d4146a"
+        },
+        "etal.msh": {
+          "bytes": 273657,
+          "sha256": "2172be2cb8c05272f72466715657c013a145653dfb2eea63e28b5bb6385e1720"
+        }
+      },
+      "integrity_errors": [],
+      "config": {
+        "n_media": 1000,
+        "n_directions": 8,
+        "h": 0.1,
+        "n_coarse": 4,
+        "k_range": [
+          1.0,
+          2.0
+        ],
+        "seed": 2026,
+        "active_range": [
+          3,
+          10
+        ],
+        "a_range": [
+          0.6,
+          0.9
+        ],
+        "n_range": [
+          1.5,
+          3.0
+        ],
+        "split_fractions": [
+          0.67,
+          0.17,
+          0.16
+        ]
+      },
+      "inspection": {
+        "directory": "/workspace/multiscale-fem-scattering/neural_operator/data/low_frequency_1000x8",
+        "samples": 8000,
+        "nodes": 3221,
+        "media": 1000,
+        "split_strategy": "medium",
+        "split_groups": 1000,
+        "k_range_observed": [
+          1.0007037099084442,
+          1.998834121740662
+        ],
+        "splits": [
+          {
+            "name": "train",
+            "samples": 5360,
+            "groups": 670
+          },
+          {
+            "name": "validation",
+            "samples": 1360,
+            "groups": 170
+          },
+          {
+            "name": "test",
+            "samples": 1280,
+            "groups": 160
+          }
+        ],
+        "stored_arrays": {
+          "A": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "n": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "A_cells": {
+            "shape": [
+              8000,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "n_cells": {
+            "shape": [
+              8000,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "u_scat": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "complex128"
+          },
+          "theta": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64"
+          },
+          "k0": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64"
+          },
+          "medium_id": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int32"
+          },
+          "split": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int8"
+          }
+        },
+        "archive_bytes": 406706174
+      },
+      "verified_manifest_arrays": [
+        "A",
+        "n",
+        "u_scat",
+        "A_cells",
+        "n_cells",
+        "theta",
+        "k0",
+        "medium_id",
+        "split"
+      ],
+      "status": "obsolete_recipe"
+    },
+    {
+      "dataset": "static_high_frequency_1000x8",
+      "quality_threshold": 0.02,
+      "refinement": [
+        {
+          "sample_index": 7904,
+          "k": 7.955955955955956,
+          "method": "Fine FEM vs refined FEM",
+          "error_fem_l2": 0.13656360785296917,
+          "dofs_original": 3221,
+          "dofs_refined": 8958,
+          "refined_h": 0.05,
+          "refined_solve_seconds": 0.4681801259976055,
+          "source": "randomized/static_results.json#refinement"
+        },
+        {
+          "sample_index": 7888,
+          "k": 7.947947947947948,
+          "method": "Fine FEM vs refined FEM",
+          "error_fem_l2": 0.1359353063146571,
+          "dofs_original": 3221,
+          "dofs_refined": 8958,
+          "refined_h": 0.05,
+          "refined_solve_seconds": 0.23155408400270971,
+          "source": "randomized/static_results.json#refinement"
+        },
+        {
+          "sample_index": 7784,
+          "k": 7.895895895895896,
+          "method": "Fine FEM vs refined FEM",
+          "error_fem_l2": 0.1332185312773227,
+          "dofs_original": 3221,
+          "dofs_refined": 8958,
+          "refined_h": 0.05,
+          "refined_solve_seconds": 0.2214016249999986,
+          "source": "randomized/static_results.json#refinement"
+        }
+      ],
+      "obsolete": false,
+      "reason": "h=0.1 labels change by 13–14% at sampled high frequencies; stress-only until refinement.",
+      "files": {
+        "fem_dataset.npz": {
+          "bytes": 394869695,
+          "sha256": "aa93c68e16f507d96851a32271bbf3984d8729ba11c6289ce41e638bd5029f59",
+          "arrays": {
+            "A": {
+              "shape": [
+                1,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "4157e5b85d7ff9a5505efb20dabd2cdaf046fbd84f48961c37411af2bff51c70"
+            },
+            "n": {
+              "shape": [
+                1,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "defc7adc474695a682e1da81514d8ea976d3a99c0693e8c59c9ba1d8c94597e7"
+            },
+            "A_cells": {
+              "shape": [
+                1,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "1ed86cb2fa843e37e60d1a58551b54d58f1d1d3d0f0c504c2d91bce04c0f75a9"
+            },
+            "n_cells": {
+              "shape": [
+                1,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "71ee93e1e7711eea6f70d0409ef1f04c0c350f30a8ce59196890b76e0cd8f2df"
+            },
+            "u_scat": {
+              "shape": [
+                8000,
+                3221
+              ],
+              "dtype": "complex128",
+              "order": "C",
+              "payload_sha256": "9ad6761e5d6a4bc1acb92b82e6d6b0c4b8365cd9dedc10651a88ee1b3761efc1"
+            },
+            "theta": {
+              "shape": [
+                8000
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "c40c589e9f6c90f170c03e4b71600c361f94d2f8f8ac0993090cceff72b60b5e"
+            },
+            "k0": {
+              "shape": [
+                8000
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "73cbef78ecb7cd6a08530181e220739525d55539747a1b3fcda52dc4202e1f81"
+            },
+            "medium_id": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "0c92bddb4e96f3ea9ec9f0f64a668255a6c15527ac09f6f119cafde60c7c4a39"
+            },
+            "frequency_id": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "59d737ffca8affeb844d02fc508ffca1aaca1dc2d56072e3d574f09f2340fbb4"
+            },
+            "split": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int8",
+              "order": "C",
+              "payload_sha256": "7bfc76a631131bf9cb9de363de6eb2681f5f6183e55136648213ea1edd20e92c"
+            },
+            "split_strategy": {
+              "shape": [],
+              "dtype": "<U9",
+              "order": "C",
+              "payload_sha256": "b87d38494469610644b12e46ff082421b04c3f2d0764a7e304d2f622b295c30e"
+            }
+          }
+        },
+        "geometry.npz": {
+          "bytes": 63647,
+          "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a",
+          "arrays": {
+            "dof_coords": {
+              "shape": [
+                3221,
+                2
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "299e51908030a1421f4d414f6a8f96140c6917f6f1ca891691024f9c9615732e"
+            },
+            "triangles": {
+              "shape": [
+                6280,
+                3
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "3ad617dd504e5ee34f3805ac107ec9b2ec2dec23ae45fe218c8e1929033f16d5"
+            },
+            "cell_tags": {
+              "shape": [
+                6280
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "11364bf65a9b28ba261da035efba845211a52b8af618583c03b6aa5c06292284"
+            },
+            "etal_circles": {
+              "shape": [
+                24,
+                4
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "64eb94ce2cc2aba3e77fcfad989ab062415772ef7247631f87c3c369d45528c0"
+            }
+          }
+        },
+        "config.json": {
+          "bytes": 352,
+          "sha256": "f18adc67b35f04266bcfaabc917f4f28c792a67cb6850d46c48a4b76e6257015"
+        },
+        "dataset_info.json": {
+          "bytes": 3432,
+          "sha256": "cf3705646d471233d9c6c94999c87fffb5ab29a0aea3c316ee25381accddd88d"
+        },
+        "etal.msh": {
+          "bytes": 273657,
+          "sha256": "2172be2cb8c05272f72466715657c013a145653dfb2eea63e28b5bb6385e1720"
+        }
+      },
+      "integrity_errors": [],
+      "config": {
+        "n_frequencies": 1000,
+        "n_directions": 8,
+        "h": 0.1,
+        "n_coarse": 4,
+        "k_range": [
+          4.0,
+          8.0
+        ],
+        "seed": 2026,
+        "fixed_medium_id": 0,
+        "active_range": [
+          3,
+          10
+        ],
+        "a_range": [
+          0.6,
+          0.9
+        ],
+        "n_range": [
+          1.5,
+          3.0
+        ],
+        "split_fractions": [
+          0.67,
+          0.17,
+          0.16
+        ],
+        "medium_mode": "static"
+      },
+      "inspection": {
+        "directory": "/workspace/multiscale-fem-scattering/neural_operator/data/static_high_frequency_1000x8",
+        "samples": 8000,
+        "nodes": 3221,
+        "media": 1,
+        "split_strategy": "frequency",
+        "split_groups": 1000,
+        "k_range_observed": [
+          4.0,
+          8.0
+        ],
+        "splits": [
+          {
+            "name": "train",
+            "samples": 5360,
+            "groups": 670
+          },
+          {
+            "name": "validation",
+            "samples": 1360,
+            "groups": 170
+          },
+          {
+            "name": "test",
+            "samples": 1280,
+            "groups": 160
+          }
+        ],
+        "stored_arrays": {
+          "A": {
+            "shape": [
+              1,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "n": {
+            "shape": [
+              1,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "A_cells": {
+            "shape": [
+              1,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "n_cells": {
+            "shape": [
+              1,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "u_scat": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "complex128"
+          },
+          "theta": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64"
+          },
+          "k0": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64"
+          },
+          "medium_id": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int32"
+          },
+          "frequency_id": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int32"
+          },
+          "split": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int8"
+          },
+          "split_strategy": {
+            "shape": [],
+            "dtype": "<U9"
+          }
+        },
+        "archive_bytes": 394869695
+      },
+      "verified_manifest_arrays": [
+        "u_scat",
+        "theta",
+        "k0",
+        "medium_id",
+        "split",
+        "frequency_id"
+      ],
+      "status": "stress_only"
+    },
+    {
+      "dataset": "static_low_frequency_1000x8",
+      "quality_threshold": 0.02,
+      "refinement": [
+        {
+          "method": "Fine FEM vs refined FEM",
+          "error_fem_l2": 0.006576558407118588,
+          "dofs_original": 3221,
+          "dofs_refined": 8958,
+          "refined_h": 0.05,
+          "refined_solve_seconds": 0.5097185000013269,
+          "source": "runs/dataset_static_1000x8/validation_refinement.json"
+        }
+      ],
+      "obsolete": false,
+      "reason": "",
+      "files": {
+        "fem_dataset.npz": {
+          "bytes": 394564938,
+          "sha256": "1e79c7bded8dffb70223287ea5d5cb718e8d1a10a49a45b7aceb4cce16123e06",
+          "arrays": {
+            "A": {
+              "shape": [
+                1,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "4157e5b85d7ff9a5505efb20dabd2cdaf046fbd84f48961c37411af2bff51c70"
+            },
+            "n": {
+              "shape": [
+                1,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "defc7adc474695a682e1da81514d8ea976d3a99c0693e8c59c9ba1d8c94597e7"
+            },
+            "A_cells": {
+              "shape": [
+                1,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "1ed86cb2fa843e37e60d1a58551b54d58f1d1d3d0f0c504c2d91bce04c0f75a9"
+            },
+            "n_cells": {
+              "shape": [
+                1,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "71ee93e1e7711eea6f70d0409ef1f04c0c350f30a8ce59196890b76e0cd8f2df"
+            },
+            "u_scat": {
+              "shape": [
+                8000,
+                3221
+              ],
+              "dtype": "complex128",
+              "order": "C",
+              "payload_sha256": "f6c4f6417dd24fefa604e5ee953370cd54e3157f4d647c5cd2cf461e391f0a7a"
+            },
+            "theta": {
+              "shape": [
+                8000
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "c40c589e9f6c90f170c03e4b71600c361f94d2f8f8ac0993090cceff72b60b5e"
+            },
+            "k0": {
+              "shape": [
+                8000
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "e6c50f85c88890170f303df9c340d94752d080835e84a10959d9735879a32b9d"
+            },
+            "medium_id": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "0c92bddb4e96f3ea9ec9f0f64a668255a6c15527ac09f6f119cafde60c7c4a39"
+            },
+            "frequency_id": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "59d737ffca8affeb844d02fc508ffca1aaca1dc2d56072e3d574f09f2340fbb4"
+            },
+            "split": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int8",
+              "order": "C",
+              "payload_sha256": "7bfc76a631131bf9cb9de363de6eb2681f5f6183e55136648213ea1edd20e92c"
+            },
+            "split_strategy": {
+              "shape": [],
+              "dtype": "<U9",
+              "order": "C",
+              "payload_sha256": "b87d38494469610644b12e46ff082421b04c3f2d0764a7e304d2f622b295c30e"
+            }
+          }
+        },
+        "geometry.npz": {
+          "bytes": 63647,
+          "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a",
+          "arrays": {
+            "dof_coords": {
+              "shape": [
+                3221,
+                2
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "299e51908030a1421f4d414f6a8f96140c6917f6f1ca891691024f9c9615732e"
+            },
+            "triangles": {
+              "shape": [
+                6280,
+                3
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "3ad617dd504e5ee34f3805ac107ec9b2ec2dec23ae45fe218c8e1929033f16d5"
+            },
+            "cell_tags": {
+              "shape": [
+                6280
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "11364bf65a9b28ba261da035efba845211a52b8af618583c03b6aa5c06292284"
+            },
+            "etal_circles": {
+              "shape": [
+                24,
+                4
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "64eb94ce2cc2aba3e77fcfad989ab062415772ef7247631f87c3c369d45528c0"
+            }
+          }
+        },
+        "config.json": {
+          "bytes": 352,
+          "sha256": "5a3b004cae75e7832647d71dd6501150b3f7c812d96bdbe4c37fbc076032ffe2"
+        },
+        "dataset_info.json": {
+          "bytes": 3432,
+          "sha256": "188d9acd0226a4df6dbbadba83e2d5349e26243ef4b968eb7633c3b47cf063d0"
+        },
+        "etal.msh": {
+          "bytes": 273657,
+          "sha256": "2172be2cb8c05272f72466715657c013a145653dfb2eea63e28b5bb6385e1720"
+        }
+      },
+      "integrity_errors": [],
+      "config": {
+        "n_frequencies": 1000,
+        "n_directions": 8,
+        "h": 0.1,
+        "n_coarse": 4,
+        "k_range": [
+          1.0,
+          2.0
+        ],
+        "seed": 2026,
+        "fixed_medium_id": 0,
+        "active_range": [
+          3,
+          10
+        ],
+        "a_range": [
+          0.6,
+          0.9
+        ],
+        "n_range": [
+          1.5,
+          3.0
+        ],
+        "split_fractions": [
+          0.67,
+          0.17,
+          0.16
+        ],
+        "medium_mode": "static"
+      },
+      "inspection": {
+        "directory": "/workspace/multiscale-fem-scattering/neural_operator/data/static_low_frequency_1000x8",
+        "samples": 8000,
+        "nodes": 3221,
+        "media": 1,
+        "split_strategy": "frequency",
+        "split_groups": 1000,
+        "k_range_observed": [
+          1.0,
+          2.0
+        ],
+        "splits": [
+          {
+            "name": "train",
+            "samples": 5360,
+            "groups": 670
+          },
+          {
+            "name": "validation",
+            "samples": 1360,
+            "groups": 170
+          },
+          {
+            "name": "test",
+            "samples": 1280,
+            "groups": 160
+          }
+        ],
+        "stored_arrays": {
+          "A": {
+            "shape": [
+              1,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "n": {
+            "shape": [
+              1,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "A_cells": {
+            "shape": [
+              1,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "n_cells": {
+            "shape": [
+              1,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "u_scat": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "complex128"
+          },
+          "theta": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64"
+          },
+          "k0": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64"
+          },
+          "medium_id": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int32"
+          },
+          "frequency_id": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int32"
+          },
+          "split": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int8"
+          },
+          "split_strategy": {
+            "shape": [],
+            "dtype": "<U9"
+          }
+        },
+        "archive_bytes": 394564938
+      },
+      "verified_manifest_arrays": [
+        "u_scat",
+        "theta",
+        "k0",
+        "medium_id",
+        "split",
+        "frequency_id"
+      ],
+      "status": "sampled_refinement_pass"
+    }
+  ],
+  "cleanup": {
+    "date": "2026-11-08",
+    "operations": [
+      {
+        "action": "removed_obsolete_generated_recipe",
+        "path": "neural_operator/data/low_frequency_1000x8",
+        "bytes": 407047095,
+        "manifest_dataset": "low_frequency_1000x8"
+      },
+      {
+        "action": "removed_obsolete_generated_recipe",
+        "path": "neural_operator/data/high_frequency_1000x8",
+        "bytes": 407359275,
+        "manifest_dataset": "high_frequency_1000x8"
+      },
+      {
+        "action": "removed_rebuildable_array_cache",
+        "path": "neural_operator/data/low_frequency/.array_cache",
+        "bytes": 9895158
+      },
+      {
+        "action": "removed_rebuildable_array_cache",
+        "path": "neural_operator/data/static_high_frequency_1000x8/.array_cache",
+        "bytes": 412288251
+      }
+    ],
+    "total_bytes_removed": 1236589779,
+    "remaining_datasets": [
+      "low_frequency",
+      "high_frequency",
+      "static_low_frequency_1000x8",
+      "static_high_frequency_1000x8"
+    ],
+    "note": "Audit above was captured before cleanup. Existing pilot/static model evidence is preserved. Whole obsolete recipes removed; no selective test-sample filtering."
+  }
+}

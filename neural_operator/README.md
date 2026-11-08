@@ -2,7 +2,9 @@
 
 Три метода решают одну FEM-задачу: **SVD-SNO**, **Chebyshev-SNO** и **FNO**. Каждый метод имеет свою папку; данные, обучение и оценка общие. Full и randomized — два алгоритма POD для SVD-SNO. [Карта проекта](docs/structure.md) · [Датасеты](docs/datasets.md) · [Формулы](docs/methods.md) · [Методичка по SVD, SNO и FNO](docs/svd_sno_guide.md).
 
-Готовые randomized SVD-SNO модели дают среднюю test FEM L2 ошибку **0.96%** на k∈[1,2] и **5.54%** на k∈[4,8]. Это удержанные частоты **одной фиксированной среды**, а не перенос на новые материалы. [Результаты и ограничения](randomized/RESULTS.md), [проверка других сеток](docs/cross_mesh_inference.md). Остальные профили обучения оцениваются отдельно.
+Новая **SVD-SNO v2** обучена на static-low: средняя test FEM L2 ошибка **0.9475%** по 1280 полям; прежняя v1 на тех же данных даёт **0.9614%**. Это один seed и удержанные частоты **одной фиксированной среды**; небольшая разница не доказывает превосходство архитектуры. [Формулы, проверка всех test-предсказаний и provenance](docs/operator_revision.md). Старый high-band результат v1 **5.54%** относится к стрессовому набору: [аудит датасетов](docs/dataset_audit.md) отдельно указывает ограничение FEM-разрешения. [Legacy-результаты](randomized/RESULTS.md), [проверка других сеток](docs/cross_mesh_inference.md).
+
+На том же static-low test сохранённая **FNO** даёт **1.6599%** (MPS training, новая CPU-проверка), новый **Chebyshev-SNO modes8** — **7.9364%** после 200 эпох. Для Chebyshev точная validation-граница выбранного выходного пространства уже равна **7.6143%**: метод требует обоснованного выбора числа мод, а не обещания 1% от одного увеличения epochs. Полные конфигурации и ограничения сравнения приведены в [отчёте ревизии](docs/operator_revision.md).
 
 ## Быстрый запуск
 
@@ -28,13 +30,15 @@ python3 -m neural_operator.run data --band low --n-frequencies 6 --n-directions 
 
 # 2. Проверить POD, затем отдельно запустить обучение SVD-SNO.
 python3 -m neural_operator.run svd --pod-method randomized
-python3 -m neural_operator.run train --method svd --pod-method randomized --epochs 200
+python3 -m neural_operator.run train --method svd --pod-method randomized --epochs 200 --sno-architecture-version 2 --output neural_operator/runs/revision_2026-11-08/static_low
 
 # 3. Сравнить готовую модель с FEM/GMsFEM.
-python3 -m neural_operator.run compare --method svd --pod-method randomized
+python3 -m neural_operator.run compare --method svd --pod-method randomized --runs neural_operator/runs/revision_2026-11-08/static_low
 ```
 
 `--method chebyshev|fno|all` выбирает другие методы; `all` в сравнении требует готовности всех выбранных моделей. `--band high` выбирает k∈[4,8]; генерация high-band не запускает обучение. `high-frequency` отдельно обучает high-band модели и проверяет перенос frozen low-band. `--help` показывает параметры каждого действия. Старый `python3 -m neural_operator.randomized.run` сохранён как совместимый вход.
+
+`--sno-architecture-version 2` — новый coefficient-token lift и параллельные локальная/модальная ветви; `1` явно выбирает legacy. Старые checkpoint без версии загружаются как v1. Новый v2 run требует собственного `--output`; старые веса не переиспользуются для другой архитектуры. Два SVD training notebooks уже выбирают отдельные v2-каталоги. High-frequency notebook сохраняет явно заданную v1 для воспроизведения старого сравнения.
 
 Обучение принимает `--device` (по умолчанию `cpu`). На совместимом Mac в локальном Python-окружении с зависимостями проекта FNO можно обучать через `python3 -m neural_operator.run train --method fno --pod-method randomized --band low --epochs 200 --device mps`; для второй полосы замените `low` на `high`. Устройство обучения сохраняется в конфигурации. Готовые веса загружаются на CPU через `load_predictor(path, device="cpu")`; FNO notebook проверяет настройки и fingerprint, затем использует доступное устройство для inference.
 
@@ -65,7 +69,7 @@ python3 -m neural_operator.run compare --method svd --pod-method randomized
 from neural_operator.training import load_predictor
 
 predictor = load_predictor(
-    "neural_operator/randomized/runs/low_frequency_static_1000x8/svd/model.pt"
+    "neural_operator/runs/revision_2026-11-08/static_low/svd/model.pt"
 )
 result = predictor.predict_components(A_input, n_input, theta=0.3, k0=1.5)
 re_u = result["real"]  # Re(u_scattering)

@@ -1,0 +1,57 @@
+{
+  "method": "fno",
+  "field": "scattered",
+  "metric": "consistent_complex_FEM_L2",
+  "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+  "config": {
+    "method": "fno",
+    "epochs": 200,
+    "batch_size": 32,
+    "learning_rate": 0.002,
+    "width": 24,
+    "depth": 3,
+    "rank": 48,
+    "input_rank": 32,
+    "target_projection_error": 0.01,
+    "pod_method": "randomized",
+    "resolution": 32,
+    "modes": 8,
+    "padding": 8,
+    "patience": 50,
+    "min_epochs": 50,
+    "seed": 42,
+    "threads": 2,
+    "device": "mps"
+  },
+  "train_samples": 5360,
+  "val_samples": 1360,
+  "test_samples": 1280,
+  "split_strategy": "frequency",
+  "physical_media": 1,
+  "split_groups": {
+    "train": 670,
+    "validation": 170,
+    "test": 160
+  },
+  "completed_epochs": 142,
+  "best_epoch": 92,
+  "best_val_fem_l2": 0.016689817936104887,
+  "stop_reason": "validation_plateau",
+  "parameters": 445010,
+  "parameter_count_convention": "real scalar degrees of freedom; complex weight counts as two",
+  "preprocessing_seconds": 1.3038091669986898,
+  "training_seconds": 886.8800712920001,
+  "test_batch_seconds": 0.4918384590000642,
+  "test_seconds_per_sample": 0.00038424879609380016,
+  "test_fem_l2": {
+    "mean": 0.016598919414494616,
+    "median": 0.01632905463702357,
+    "p95": 0.019505487729113848,
+    "max": 0.02230463038700699
+  },
+  "training_loss_evaluation": "consistent_FEM_field_reconstruction",
+  "versions": {
+    "torch": "2.15.0",
+    "numpy": "2.5.4"
+  }
+}

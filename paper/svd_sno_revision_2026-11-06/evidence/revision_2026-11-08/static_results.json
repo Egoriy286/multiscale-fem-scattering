@@ -1,0 +1,235 @@
+{
+  "low_metrics": {
+    "method": "svd",
+    "field": "scattered",
+    "metric": "consistent_complex_FEM_L2",
+    "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+    "config": {
+      "method": "svd",
+      "epochs": 200,
+      "batch_size": 32,
+      "learning_rate": 0.002,
+      "width": 24,
+      "depth": 3,
+      "rank": 48,
+      "input_rank": 32,
+      "target_projection_error": 0.01,
+      "pod_method": "randomized",
+      "resolution": 32,
+      "modes": 8,
+      "padding": 8,
+      "patience": 50,
+      "min_epochs": 50,
+      "seed": 42,
+      "threads": 2,
+      "device": "cpu"
+    },
+    "train_samples": 5360,
+    "val_samples": 1360,
+    "test_samples": 1280,
+    "split_strategy": "frequency",
+    "physical_media": 1,
+    "split_groups": {
+      "train": 670,
+      "validation": 170,
+      "test": 160
+    },
+    "completed_epochs": 200,
+    "best_epoch": 170,
+    "best_val_fem_l2": 0.009953503335940405,
+    "stop_reason": "epoch_limit",
+    "parameters": 3110,
+    "parameter_count_convention": "real scalar degrees of freedom; complex weight counts as two",
+    "preprocessing_seconds": 25.502520095000364,
+    "training_seconds": 74.21566182600145,
+    "test_batch_seconds": 0.1985785839970049,
+    "test_seconds_per_sample": 0.00015513951874766008,
+    "test_fem_l2": {
+      "mean": 0.009613946273391481,
+      "median": 0.008823853075454188,
+      "p95": 0.01679190349275576,
+      "max": 0.029480048710368762
+    },
+    "training_loss_evaluation": "consistent_FEM_POD_quadratic",
+    "versions": {
+      "torch": "2.15.0+cpu",
+      "numpy": "2.4.6"
+    },
+    "projection_fem_l2": {
+      "mean": 0.009188586001252514,
+      "median": 0.008426885458693472,
+      "p95": 0.01600181293529646,
+      "max": 0.0283736236266671
+    },
+    "ranks": {
+      "A": 0,
+      "n": 0,
+      "real": 10,
+      "imag": 10
+    },
+    "rank_target_attained": true,
+    "consistent_projection_floor_fem_l2": {
+      "mean": 0.009187575772276288,
+      "median": 0.00842573459740539,
+      "p95": 0.015999655333231173,
+      "max": 0.028369915865750835
+    }
+  },
+  "high_metrics": {
+    "method": "svd",
+    "field": "scattered",
+    "metric": "consistent_complex_FEM_L2",
+    "dataset_fingerprint": "198c3b0ad024b64aa349ddb7750183352e6a5065626895709b35fbb4d64a096a",
+    "config": {
+      "method": "svd",
+      "epochs": 200,
+      "batch_size": 32,
+      "learning_rate": 0.002,
+      "width": 24,
+      "depth": 3,
+      "rank": 48,
+      "input_rank": 32,
+      "target_projection_error": 0.01,
+      "pod_method": "randomized",
+      "resolution": 32,
+      "modes": 8,
+      "padding": 8,
+      "patience": 50,
+      "min_epochs": 50,
+      "seed": 42,
+      "threads": 2,
+      "device": "cpu"
+    },
+    "train_samples": 5360,
+    "val_samples": 1360,
+    "test_samples": 1280,
+    "split_strategy": "frequency",
+    "physical_media": 1,
+    "split_groups": {
+      "train": 670,
+      "validation": 170,
+      "test": 160
+    },
+    "completed_epochs": 200,
+    "best_epoch": 198,
+    "best_val_fem_l2": 0.057179463438156705,
+    "stop_reason": "epoch_limit",
+    "parameters": 13370,
+    "parameter_count_convention": "real scalar degrees of freedom; complex weight counts as two",
+    "preprocessing_seconds": 26.522743679000996,
+    "training_seconds": 161.44406111499848,
+    "test_batch_seconds": 0.23031470799833187,
+    "test_seconds_per_sample": 0.00017993336562369678,
+    "test_fem_l2": {
+      "mean": 0.05537525831383929,
+      "median": 0.0506831967266671,
+      "p95": 0.09035695414735936,
+      "max": 0.17859506890449298
+    },
+    "training_loss_evaluation": "consistent_FEM_POD_quadratic",
+    "versions": {
+      "torch": "2.15.0+cpu",
+      "numpy": "2.4.6"
+    },
+    "projection_fem_l2": {
+      "mean": 0.01268960101071839,
+      "median": 0.011324985181390725,
+      "p95": 0.02037508904160953,
+      "max": 0.05790839039686711
+    },
+    "ranks": {
+      "A": 0,
+      "n": 0,
+      "real": 48,
+      "imag": 48
+    },
+    "rank_target_attained": false,
+    "consistent_projection_floor_fem_l2": {
+      "mean": 0.012685959873181111,
+      "median": 0.011321749424611827,
+      "p95": 0.020369418556176733,
+      "max": 0.0578864131115711
+    }
+  },
+  "high_band_comparison": [
+    {
+      "method": "SVD-SNO",
+      "mean": 1.4417806042393981,
+      "median": 1.4308894999593709,
+      "p95": 1.5495869767424924,
+      "max": 1.7408387026616439,
+      "samples": 1280,
+      "media": 1,
+      "groups": 160,
+      "split_strategy": "frequency",
+      "batch_seconds_per_sample": 0.0001559828124982232,
+      "single_seconds_median": 0.0006042500026524067,
+      "preprocessing_seconds": 25.502520095000364,
+      "training_seconds": 74.21566182600145,
+      "parameters": 3110,
+      "regime": "frozen_low_band",
+      "pod_projection_mean": 0.9677134777251377
+    },
+    {
+      "method": "SVD-SNO",
+      "mean": 0.05537525831383929,
+      "median": 0.0506831967266671,
+      "p95": 0.09035695414735936,
+      "max": 0.17859506890449298,
+      "samples": 1280,
+      "media": 1,
+      "groups": 160,
+      "split_strategy": "frequency",
+      "batch_seconds_per_sample": 0.0019261772148439604,
+      "single_seconds_median": 0.09626270800072234,
+      "preprocessing_seconds": 26.522743679000996,
+      "training_seconds": 161.44406111499848,
+      "parameters": 13370,
+      "regime": "retrained_high_band",
+      "pod_projection_mean": 0.01268960101071839
+    }
+  ],
+  "refinement": [
+    {
+      "sample_index": 7904,
+      "k": 7.955955955955956,
+      "method": "Fine FEM vs refined FEM",
+      "error_fem_l2": 0.13656360785296917,
+      "dofs_original": 3221,
+      "dofs_refined": 8958,
+      "refined_h": 0.05,
+      "refined_solve_seconds": 0.4681801259976055
+    },
+    {
+      "sample_index": 7888,
+      "k": 7.947947947947948,
+      "method": "Fine FEM vs refined FEM",
+      "error_fem_l2": 0.1359353063146571,
+      "dofs_original": 3221,
+      "dofs_refined": 8958,
+      "refined_h": 0.05,
+      "refined_solve_seconds": 0.23155408400270971
+    },
+    {
+      "sample_index": 7784,
+      "k": 7.895895895895896,
+      "method": "Fine FEM vs refined FEM",
+      "error_fem_l2": 0.1332185312773227,
+      "dofs_original": 3221,
+      "dofs_refined": 8958,
+      "refined_h": 0.05,
+      "refined_solve_seconds": 0.2214016249999986
+    }
+  ],
+  "inference_parity": "passed in fresh process for both bands",
+  "tests_passed": 56,
+  "datasets": "one static physical medium; held-out frequency groups; 1280 test fields per band",
+  "executed_notebooks": [
+    "Dataset.ipynb",
+    "SVD-data-checks.ipynb",
+    "SVD-SNO.ipynb",
+    "Inference.ipynb",
+    "Comparison.ipynb",
+    "High-frequency.ipynb"
+  ]
+}

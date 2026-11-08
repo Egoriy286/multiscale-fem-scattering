@@ -9,9 +9,15 @@ from neural_operator.grid import GridTransfer
 from neural_operator.sno.model import SVDSNO
 from neural_operator.chebyshev.model import ChebyshevSNO, chebyshev_matrices
 from neural_operator.fno.model import FNO2d, SpectralConv2d
+from neural_operator._layers import CoefficientBlock
 
 
 class PODTests(unittest.TestCase):
+    def test_real_pod_rejects_complex_and_empty_dofs(self):
+        for fields in (np.ones((4, 3), dtype=complex), np.empty((4, 0))):
+            with self.assertRaises(ValueError):
+                PODBasis.fit(fields, 2)
+
     def test_weighted_reconstruction_and_serialization(self):
         rng = np.random.default_rng(4)
         fields = rng.normal(size=(12, 19))
@@ -88,7 +94,8 @@ class ModelTests(unittest.TestCase):
 
     def test_shapes_gradients_and_state_round_trip(self):
         torch.manual_seed(0)
-        cases = [(SVDSNO, dict(input_dim=11,output_modes=5,width=8,depth=2), (2,11), (2,5,2)),
+        cases = [(SVDSNO, dict(input_dim=11,input_ranks=(3,5),output_modes=5,width=8,depth=2), (2,11), (2,5,2)),
+                 (SVDSNO, dict(input_dim=11,output_modes=5,width=8,depth=2,architecture_version=1), (2,11), (2,5,2)),
                  (ChebyshevSNO, dict(modes=(4,5),width=8,depth=2), (2,9,12,7), (2,9,12,2)),
                  (FNO2d, dict(modes=(4,5),width=8,depth=2,padding=3), (2,9,12,7), (2,9,12,2))]
         for constructor, config, shape, output_shape in cases:
@@ -109,6 +116,60 @@ class ModelTests(unittest.TestCase):
             restored = constructor(**config)
             restored.load_state_dict(torch.load(stream, weights_only=True))
             torch.testing.assert_close(restored(x.detach()), output.detach())
+
+    def test_sno_v2_independent_input_ranks_and_global_tokens(self):
+        model = SVDSNO(input_dim=12, input_ranks=(7, 2), output_modes=3, width=6, depth=2)
+        features = torch.arange(24, dtype=torch.float32).reshape(2, 12).requires_grad_()
+        tokens = model.coefficient_tokens(features)
+        self.assertEqual(tokens.shape, (2, 7, 5))
+        torch.testing.assert_close(tokens[..., 0], features[:, :7])
+        torch.testing.assert_close(tokens[:, :2, 1], features[:, 7:9])
+        torch.testing.assert_close(tokens[:, 2:, 1], torch.zeros(2, 5))
+        torch.testing.assert_close(tokens[..., 2:], features[:, None, -3:].expand(2, 7, 3))
+        model(features).square().sum().backward()
+        self.assertTrue(torch.isfinite(features.grad).all())
+        # In particular, material modes beyond the output rank reach readout.
+        self.assertTrue(torch.all(features.grad[:, 3:7].abs().sum(0) > 0))
+        static = SVDSNO(input_dim=3, output_modes=4, width=6, depth=1)
+        self.assertEqual(static(torch.randn(2, 3)).shape, (2, 4, 2))
+
+    def test_sno_v2_has_an_independent_local_branch(self):
+        block = CoefficientBlock(3, 2)
+        x = torch.tensor([[[1., 2.], [-1., .2], [.3, -.4]]])
+        with torch.no_grad():
+            block.modes.weight.zero_()
+            block.local.weight.copy_(torch.eye(2))
+            block.local.bias.zero_()
+        torch.testing.assert_close(block(x), x + torch.nn.functional.gelu(x))
+
+    def test_invalid_dimensions_fail_before_nan_transforms(self):
+        for size in (0, 1, 2.5):
+            with self.assertRaises(ValueError):
+                chebyshev_matrices(size)
+        for modes in (0, -2, (2, 0), (2, 3, 4), (2.5, 3)):
+            for constructor in (FNO2d, ChebyshevSNO):
+                with self.assertRaises(ValueError):
+                    constructor(modes=modes)
+        with self.assertRaises(ValueError):
+            SVDSNO(input_dim=8, input_ranks=(2, 2), output_modes=3)
+        with self.assertRaises(ValueError):
+            SVDSNO(input_dim=8, output_modes=3)
+        with self.assertRaises(ValueError):
+            FNO2d(padding=1.5)
+
+    def test_fourier_clipping_keeps_negative_frequency_weights(self):
+        conv = SpectralConv2d(1, 1, (8, 3))
+        with torch.no_grad():
+            conv.weight_positive.zero_()
+            conv.weight_negative.zero_()
+            conv.weight_negative[:, :, -1, 1] = 2
+        # A real wave whose stored rFFT coefficient is (q_y=-1, q_x=1).
+        # Its multiplier must stay attached to -1 as h clips the mode count.
+        for h, w in ((7, 11), (12, 13), (21, 17)):
+            y = torch.arange(h)[:, None] / h
+            x = torch.arange(w)[None, :] / w
+            wave = torch.cos(2 * torch.pi * (x - y))[None, None]
+            torch.testing.assert_close(conv(wave), 2 * wave, atol=2e-6, rtol=2e-6)
 
     def test_fourier_signed_modes_and_no_overlap(self):
         for h,w in ((7,9), (8,10)):

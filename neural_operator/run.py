@@ -37,6 +37,12 @@ def build_parser(settings=default_settings):
             command.add_argument("--runs", type=Path, help="Source model root containing method folders")
         if action in ("train", "high-frequency"):
             command.add_argument("--epochs", type=int, default=200)
+            command.add_argument("--resolution", type=int, default=32,
+                                 help="Tensor-grid points per axis for Chebyshev/FNO")
+            command.add_argument("--modes", type=int, default=8,
+                                 help="Retained Chebyshev/Fourier modes per axis")
+            command.add_argument("--sno-architecture-version", type=int, choices=(1, 2), default=2,
+                                 help="SNO network: 2=coefficient tokens/parallel branches, 1=legacy")
             command.add_argument("--device", default="cpu", help="PyTorch training device, e.g. cpu, mps or cuda")
             command.add_argument("--retrain", action="store_true")
         if action == "high-frequency":
@@ -107,7 +113,9 @@ def _execute(args):
         def train(target, destination):
             for method in methods:
                 config = TrainConfig(method=method, epochs=args.epochs, pod_method=args.pod_method,
-                                     device=args.device)
+                                     device=args.device,
+                                     sno_architecture_version=args.sno_architecture_version,
+                                     resolution=args.resolution, modes=args.modes)
                 _, metrics, _ = run_experiment(target, destination/method, config, retrain=args.retrain)
                 print(method, metrics["test_fem_l2"], flush=True)
 

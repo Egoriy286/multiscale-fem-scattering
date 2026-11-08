@@ -1,0 +1,123 @@
+{
+  "low_frequency": {
+    "refinement": [
+      {
+        "method": "Fine FEM vs refined FEM",
+        "error_fem_l2": 0.005758448316435245,
+        "dofs_original": 3221,
+        "dofs_refined": 8958,
+        "refined_h": 0.05,
+        "refined_solve_seconds": 0.1321243329985009,
+        "source": "runs/dataset/validation_refinement.json"
+      }
+    ]
+  },
+  "low_frequency_1000x8": {
+    "refinement": [
+      {
+        "method": "Fine FEM vs refined FEM",
+        "error_fem_l2": 0.005628272508809894,
+        "dofs_original": 3221,
+        "dofs_refined": 8958,
+        "refined_h": 0.05,
+        "refined_solve_seconds": 0.14036037500045495,
+        "source": "runs/dataset_1000x8/validation_refinement.json"
+      }
+    ],
+    "obsolete": true,
+    "reason": "Superseded variable-medium expansion; no trained comparison belongs to this recipe. Remove complete generated recipe, preserving config/hashes and historical evidence; do not filter test samples."
+  },
+  "static_low_frequency_1000x8": {
+    "refinement": [
+      {
+        "method": "Fine FEM vs refined FEM",
+        "error_fem_l2": 0.006576558407118588,
+        "dofs_original": 3221,
+        "dofs_refined": 8958,
+        "refined_h": 0.05,
+        "refined_solve_seconds": 0.5097185000013269,
+        "source": "runs/dataset_static_1000x8/validation_refinement.json"
+      }
+    ]
+  },
+  "high_frequency": {
+    "refinement": [
+      {
+        "sample_index": "16",
+        "k": "7.779546806807284",
+        "method": "Fine FEM vs refined FEM",
+        "error_fem_l2": 0.14939638373237757,
+        "dofs_original": "3221",
+        "dofs_refined": "8958",
+        "refined_h": "0.05",
+        "refined_solve_seconds": "0.0924440839989984",
+        "source": "runs/high_frequency/comparison/refinement.csv"
+      },
+      {
+        "sample_index": "28",
+        "k": "7.467663078257392",
+        "method": "Fine FEM vs refined FEM",
+        "error_fem_l2": 0.11607644917921715,
+        "dofs_original": "3221",
+        "dofs_refined": "8958",
+        "refined_h": "0.05",
+        "refined_solve_seconds": "0.10116154099887353",
+        "source": "runs/high_frequency/comparison/refinement.csv"
+      },
+      {
+        "sample_index": "124",
+        "k": "7.422830146707557",
+        "method": "Fine FEM vs refined FEM",
+        "error_fem_l2": 0.1149730636224727,
+        "dofs_original": "3221",
+        "dofs_refined": "8958",
+        "refined_h": "0.05",
+        "refined_solve_seconds": "0.0891013340005884",
+        "source": "runs/high_frequency/comparison/refinement.csv"
+      }
+    ],
+    "reason": "Historical variable-medium pilot; retained with results as a stress case."
+  },
+  "static_high_frequency_1000x8": {
+    "refinement": [
+      {
+        "sample_index": 7904,
+        "k": 7.955955955955956,
+        "method": "Fine FEM vs refined FEM",
+        "error_fem_l2": 0.13656360785296917,
+        "dofs_original": 3221,
+        "dofs_refined": 8958,
+        "refined_h": 0.05,
+        "refined_solve_seconds": 0.4681801259976055,
+        "source": "randomized/static_results.json#refinement"
+      },
+      {
+        "sample_index": 7888,
+        "k": 7.947947947947948,
+        "method": "Fine FEM vs refined FEM",
+        "error_fem_l2": 0.1359353063146571,
+        "dofs_original": 3221,
+        "dofs_refined": 8958,
+        "refined_h": 0.05,
+        "refined_solve_seconds": 0.23155408400270971,
+        "source": "randomized/static_results.json#refinement"
+      },
+      {
+        "sample_index": 7784,
+        "k": 7.895895895895896,
+        "method": "Fine FEM vs refined FEM",
+        "error_fem_l2": 0.1332185312773227,
+        "dofs_original": 3221,
+        "dofs_refined": 8958,
+        "refined_h": 0.05,
+        "refined_solve_seconds": 0.2214016249999986,
+        "source": "randomized/static_results.json#refinement"
+      }
+    ],
+    "reason": "h=0.1 labels change by 13–14% at sampled high frequencies; stress-only until refinement."
+  },
+  "high_frequency_1000x8": {
+    "obsolete": true,
+    "reason": "Superseded variable-medium expansion; no trained comparison belongs to this recipe. Remove complete generated recipe, preserving config/hashes and historical evidence; do not filter test samples."
+  }
+}

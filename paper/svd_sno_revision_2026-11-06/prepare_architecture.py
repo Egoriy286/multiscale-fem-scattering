@@ -111,7 +111,7 @@ def hidden_mixing():
     matrix(ax, 5.85, 2.34, bmat @ z, "BZ: 3 × 2", cell=.43, label_y=3.20)
     label(ax, 7.65, 2.34, "Строка 2 стала\nсредним строк\n1 и 2.", size=11, linespacing=1.6)
 
-    label(ax, 4.5, 1.38, "В текущем блоке: сначала W, затем B, GELU и остаточная связь", size=12)
+    label(ax, 4.5, 1.38, "В блоке legacy: сначала W, затем B, GELU и остаточная связь", size=12)
     label(ax, 4.5, .93, r"$Z_{\rm next}=Z+\mathrm{GELU}\!\left(B(ZW+\mathbf{1}b^T)\right)$", size=17)
     label(ax, 4.5, .34, "Числа условные. B — веса сети; пространственный POD-базис обозначен Φ.", size=11)
     save(fig, "sno_hidden_mixing")
@@ -121,7 +121,7 @@ def architecture():
     fig, ax = canvas(9, 10.9)
     label(ax, 4.5, 10.55, "SVD-SNO: архитектура от входа до поля", size=16)
     label(ax, 2.30, 10.04, "Исторический эксперимент статьи · JAX", size=12)
-    label(ax, 6.70, 10.04, "Текущий код проекта · PyTorch", size=12)
+    label(ax, 6.70, 10.04, "Сохранённая версия legacy · PyTorch", size=12)
     columns = [(2.30, True), (6.70, False)]
     for x, historical in columns:
         if historical:

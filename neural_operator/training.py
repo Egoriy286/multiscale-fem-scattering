@@ -17,7 +17,7 @@ from .grid import GridTransfer
 from .chebyshev.model import ChebyshevSNO
 from .fno.model import FNO2d
 from .sno.model import SVDSNO
-from .losses import PODFEMLoss
+from .losses import PODFEMLoss, relative_root_mean
 from .data import update_array_digest
 from .fields import scattering_components
 
@@ -32,6 +32,7 @@ class TrainConfig:
     depth: int = 3
     rank: int = 48
     input_rank: int = 32
+    sno_architecture_version: int = 2
     target_projection_error: float = .01
     pod_method: str = "full"
     resolution: int = 32
@@ -97,8 +98,7 @@ class FEMLoss(torch.nn.Module):
     def forward(self, prediction, target):
         error = self.squared_norm(prediction-target)
         reference = self.squared_norm(target)
-        # sqrt stabilisation affects only roundoff-level zero differences.
-        return torch.sqrt(error.clamp_min(1e-24) / reference.clamp_min(1e-24)).mean()
+        return relative_root_mean(error, reference)
 
 
 class GridDecoder(torch.nn.Module):
@@ -186,12 +186,15 @@ class Predictor:
 
     def __init__(self, method, model_kwargs, preprocessing, coordinates, triangles,
                  state_dict=None, device="cpu"):
-        self.method, self.model_kwargs = method, model_kwargs
+        self.method, self.model_kwargs = method, dict(model_kwargs)
+        if method == "svd":
+            # All unversioned saved SNO bundles used the dense-lift v1 model.
+            self.model_kwargs.setdefault("architecture_version", 1)
         self.preprocessing = preprocessing
         self.coordinates, self.triangles = np.asarray(coordinates), np.asarray(triangles)
         self.device = torch.device(device)
         classes = {"svd": SVDSNO, "chebyshev": ChebyshevSNO, "fno": FNO2d}
-        self.model = classes[method](**model_kwargs).to(self.device)
+        self.model = classes[method](**self.model_kwargs).to(self.device)
         if state_dict is not None:
             self.model.load_state_dict(state_dict)
         self.transfer = None
@@ -319,7 +322,14 @@ def run_experiment(dataset, output_dir, config=None, *, retrain=False, verbose=T
     directory = Path(output_dir)
     if not retrain and (directory/"model.pt").exists():
         metrics = json.loads((directory/"metrics.json").read_text())
-        if (metrics["config"] != asdict(config)
+        saved_config = dict(metrics["config"])
+        # v1 SNO predated this option; it remains reusable only when requested
+        # explicitly. For the other methods this SNO option has no effect.
+        if config.method == "svd":
+            saved_config.setdefault("sno_architecture_version", 1)
+        else:
+            saved_config["sno_architecture_version"] = config.sno_architecture_version
+        if (saved_config != asdict(config)
                 or metrics["dataset_fingerprint"] != dataset_fingerprint(dataset)):
             raise ValueError("Saved run uses different data/settings; change output_dir or set retrain=True.")
         history = json.loads((directory/"history.json").read_text())
@@ -350,9 +360,13 @@ def train_model(dataset, output_dir, config=None, *, verbose=True):
         print(f"Preparing {config.method}: {len(train)} train samples, POD={config.pod_method}", flush=True)
     if config.method == "svd":
         prep = _svd_preprocessing(dataset, config, train, val)
-        inputs = sum(PODBasis.from_dict(prep["bases"][k]).rank for k in ("A", "n")) + 3
+        input_ranks = [PODBasis.from_dict(prep["bases"][k]).rank for k in ("A", "n")]
+        inputs = sum(input_ranks) + 3
         kwargs = {"input_dim": inputs, "output_modes": prep["rank"],
-                  "width": config.width, "depth": config.depth}
+                  "width": config.width, "depth": config.depth,
+                  "architecture_version": config.sno_architecture_version}
+        if config.sno_architecture_version == 2:
+            kwargs["input_ranks"] = input_ranks
     else:
         prep = _grid_preprocessing(dataset, train)
         prep["resolution"] = config.resolution

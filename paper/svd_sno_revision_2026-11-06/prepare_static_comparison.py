@@ -2,11 +2,13 @@
 
 Run from the repository root inside dolfinx-complex. No training or FEM solves.
 Both methods use the sample selected by the existing SNO median-error rule;
-FNO errors do not influence sample selection. All four checkpoints must exist.
+FNO errors do not influence sample selection. Use --band low for the completed
+low-band pair; --band all also requires a completed high-band FNO checkpoint.
 """
 from __future__ import annotations
 
 import csv
+import argparse
 from datetime import datetime, timezone
 import io
 import json
@@ -202,7 +204,7 @@ def draw_comparison(dataset, index, predictions, record, methods, name):
 
 def summary_rows(provenance):
     rows = []
-    for band in BANDS:
+    for band in provenance["bands"]:
         record = provenance["bands"][band]
         for method in ("svd", "fno"):
             model = record["models"][method]
@@ -232,7 +234,7 @@ def write_manifest(provenance):
              "1280 сохранённых test-полей, первая позиция при равенстве. FNO не влияет на выбор; "
              "выбор не минимизирует ошибку одной из архитектур. Этот выбор типичен по ошибке SNO, "
              "но не гарантирует медианную ошибку FNO. Средние ошибки используют все test-поля.", ""]
-    for band in BANDS:
+    for band in provenance["bands"]:
         r = provenance["bands"][band]
         s = r["sample"]
         lines += [f"## {band}", "", f"- Датасет: `{r['dataset']}`.",
@@ -269,17 +271,22 @@ def write_manifest(provenance):
               "`prediction_static_comparison_provenance.json`. Метрики всех четырёх моделей: "
               "`prediction_static_comparison_summary.json` и `.csv` (ошибки в процентах).", "",
               "```sh", "docker compose exec -T dolfinx-complex python "
-              "paper/svd_sno_revision_2026-11-06/prepare_static_comparison.py", "```", "",
+              "paper/svd_sno_revision_2026-11-06/prepare_static_comparison.py --band "
+              + (next(iter(provenance["bands"])) if len(provenance["bands"]) == 1 else "all"), "```", "",
               "Скрипт не обучает модели и не выполняет FEM solves."]
     (IMAGES / "prediction_static_comparison_manifest.md").write_text("\n".join(lines) + "\n")
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--band", choices=("low", "high", "all"), default="all")
+    args = parser.parse_args()
+    bands = BANDS if args.band == "all" else (args.band,)
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 11,
                          "pdf.fonttype": 42, "ps.fonttype": 42,
                          "savefig.dpi": 300, "axes.unicode_minus": False})
     # Complete all numerical checks before authoring any deliverable.
-    verified = {band: verify_comparison(band) for band in BANDS}
+    verified = {band: verify_comparison(band) for band in bands}
     provenance = {
         "experiment": "Current PyTorch fixed-medium randomized SVD-SNO versus FNO",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),

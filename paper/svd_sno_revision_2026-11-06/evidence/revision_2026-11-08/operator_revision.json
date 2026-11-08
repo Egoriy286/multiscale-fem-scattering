@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "scope": "One fixed medium; held-out frequency groups; one seed; FEM-label error only",
+  "dataset": "neural_operator/data/static_low_frequency_1000x8",
+  "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+  "split_strategy": "frequency",
+  "optimizer": {
+    "name": "AdamW",
+    "learning_rate": 0.002,
+    "weight_decay": 1e-05,
+    "gradient_clip_norm": 1.0
+  },
+  "current": {
+    "directory": "neural_operator/runs/revision_2026-11-08/static_low/svd",
+    "model_kwargs": {
+      "input_dim": 3,
+      "output_modes": 10,
+      "width": 24,
+      "depth": 3,
+      "architecture_version": 2,
+      "input_ranks": [
+        0,
+        0
+      ]
+    },
+    "saved_metrics": {
+      "method": "svd",
+      "field": "scattered",
+      "metric": "consistent_complex_FEM_L2",
+      "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+      "config": {
+        "method": "svd",
+        "epochs": 200,
+        "batch_size": 32,
+        "learning_rate": 0.002,
+        "width": 24,
+        "depth": 3,
+        "rank": 48,
+        "input_rank": 32,
+        "sno_architecture_version": 2,
+        "target_projection_error": 0.01,
+        "pod_method": "randomized",
+        "resolution": 32,
+        "modes": 8,
+        "padding": 8,
+        "patience": 50,
+        "min_epochs": 50,
+        "seed": 42,
+        "threads": 2,
+        "device": "cpu"
+      },
+      "train_samples": 5360,
+      "val_samples": 1360,
+      "test_samples": 1280,
+      "split_strategy": "frequency",
+      "physical_media": 1,
+      "split_groups": {
+        "train": 670,
+        "validation": 170,
+        "test": 160
+      },
+      "completed_epochs": 165,
+      "best_epoch": 115,
+      "best_val_fem_l2": 0.009794136570270217,
+      "stop_reason": "validation_plateau",
+      "parameters": 4022,
+      "parameter_count_convention": "real scalar degrees of freedom; complex weight counts as two",
+      "preprocessing_seconds": 8.203564045000348,
+      "training_seconds": 39.293348809000236,
+      "test_batch_seconds": 0.02815237499999057,
+      "test_seconds_per_sample": 2.1994042968742632e-05,
+      "test_fem_l2": {
+        "mean": 0.009474553985233577,
+        "median": 0.008671413765938916,
+        "p95": 0.016534331131842342,
+        "max": 0.028961538800576368
+      },
+      "training_loss_evaluation": "consistent_FEM_POD_quadratic",
+      "versions": {
+        "torch": "2.15.0+cpu",
+        "numpy": "2.4.6"
+      },
+      "projection_fem_l2": {
+        "mean": 0.009188586001252514,
+        "median": 0.008426885458693472,
+        "p95": 0.01600181293529646,
+        "max": 0.0283736236266671
+      },
+      "ranks": {
+        "A": 0,
+        "n": 0,
+        "real": 10,
+        "imag": 10
+      },
+      "rank_target_attained": true,
+      "consistent_projection_floor_fem_l2": {
+        "mean": 0.009187575772276288,
+        "median": 0.00842573459740539,
+        "p95": 0.015999655333231173,
+        "max": 0.028369915865750835
+      }
+    },
+    "recomputed_test_fem_l2": {
+      "mean": 0.009474553985233577,
+      "median": 0.008671413765938916,
+      "p95": 0.016534331131842342,
+      "max": 0.028961538800576368
+    },
+    "verified_test_samples": 1280,
+    "max_abs_prediction_difference_from_archive": 0.0,
+    "sha256": {
+      "model.pt": "7b6c564a61e1f226133dff668e59b851525f9e035b4ee923b46ed292625e6ce1",
+      "config.json": "854700f754c1247db2f9da937b21686fa9e91e614e5446c767f55385fc856302",
+      "metrics.json": "ea9c3c3574639c702dd668c3387c9f6dd9018ed6298ec7f9c33266f52a789bdd",
+      "history.json": "bddf1aae9f9e60f69d6be5b35facc6011f30685335fcaebad44d020b835737df",
+      "test_predictions.npz": "234c24cde958b6558f2d97d60d12ee52b62103dc374bcf18f8f3b5b7192d785d"
+    }
+  },
+  "baseline": {
+    "directory": "neural_operator/randomized/runs/low_frequency_static_1000x8/svd",
+    "model_kwargs": {
+      "input_dim": 3,
+      "output_modes": 10,
+      "width": 24,
+      "depth": 3,
+      "architecture_version": 1
+    },
+    "saved_metrics": {
+      "method": "svd",
+      "field": "scattered",
+      "metric": "consistent_complex_FEM_L2",
+      "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+      "config": {
+        "method": "svd",
+        "epochs": 200,
+        "batch_size": 32,
+        "learning_rate": 0.002,
+        "width": 24,
+        "depth": 3,
+        "rank": 48,
+        "input_rank": 32,
+        "target_projection_error": 0.01,
+        "pod_method": "randomized",
+        "resolution": 32,
+        "modes": 8,
+        "padding": 8,
+        "patience": 50,
+        "min_epochs": 50,
+        "seed": 42,
+        "threads": 2,
+        "device": "cpu"
+      },
+      "train_samples": 5360,
+      "val_samples": 1360,
+      "test_samples": 1280,
+      "split_strategy": "frequency",
+      "physical_media": 1,
+      "split_groups": {
+        "train": 670,
+        "validation": 170,
+        "test": 160
+      },
+      "completed_epochs": 200,
+      "best_epoch": 170,
+      "best_val_fem_l2": 0.009953503335940405,
+      "stop_reason": "epoch_limit",
+      "parameters": 3110,
+      "parameter_count_convention": "real scalar degrees of freedom; complex weight counts as two",
+      "preprocessing_seconds": 25.502520095000364,
+      "training_seconds": 74.21566182600145,
+      "test_batch_seconds": 0.1985785839970049,
+      "test_seconds_per_sample": 0.00015513951874766008,
+      "test_fem_l2": {
+        "mean": 0.009613946273391481,
+        "median": 0.008823853075454188,
+        "p95": 0.01679190349275576,
+        "max": 0.029480048710368762
+      },
+      "training_loss_evaluation": "consistent_FEM_POD_quadratic",
+      "versions": {
+        "torch": "2.15.0+cpu",
+        "numpy": "2.4.6"
+      },
+      "projection_fem_l2": {
+        "mean": 0.009188586001252514,
+        "median": 0.008426885458693472,
+        "p95": 0.01600181293529646,
+        "max": 0.0283736236266671
+      },
+      "ranks": {
+        "A": 0,
+        "n": 0,
+        "real": 10,
+        "imag": 10
+      },
+      "rank_target_attained": true,
+      "consistent_projection_floor_fem_l2": {
+        "mean": 0.009187575772276288,
+        "median": 0.00842573459740539,
+        "p95": 0.015999655333231173,
+        "max": 0.028369915865750835
+      }
+    },
+    "recomputed_test_fem_l2": {
+      "mean": 0.009613946273391481,
+      "median": 0.008823853075454188,
+      "p95": 0.01679190349275576,
+      "max": 0.029480048710368762
+    },
+    "verified_test_samples": 1280,
+    "max_abs_prediction_difference_from_archive": 0.0,
+    "sha256": {
+      "model.pt": "69df4534f4922306c4f20026a14d95752a8dcedd09a5f42bc7db75bbf303253f",
+      "config.json": "25ee5b7faf15dc8504f78e764f9087bcceb41ec5e6ebc9d324cb3b465ea3f4bd",
+      "metrics.json": "bd0e25de492fdfcb8be9a9f94c52a71bf283a8865eade2ed90ec34de62d0a0bf",
+      "history.json": "95e49d2223ca4852979d00df1dde8f8941eb7734667d7569909428bc2028b2cc",
+      "test_predictions.npz": "33e839d8797ac94ca829ba2775d786aa8b503f670b5882bd5125e13399379b6f"
+    }
+  },
+  "additional_runs": [
+    {
+      "directory": "neural_operator/runs/revision_2026-11-08/static_low/chebyshev",
+      "model_kwargs": {
+        "input_channels": 7,
+        "modes": 8,
+        "width": 24,
+        "depth": 3
+      },
+      "saved_metrics": {
+        "method": "chebyshev",
+        "field": "scattered",
+        "metric": "consistent_complex_FEM_L2",
+        "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+        "config": {
+          "method": "chebyshev",
+          "epochs": 200,
+          "batch_size": 32,
+          "learning_rate": 0.002,
+          "width": 24,
+          "depth": 3,
+          "rank": 48,
+          "input_rank": 32,
+          "sno_architecture_version": 2,
+          "target_projection_error": 0.01,
+          "pod_method": "randomized",
+          "resolution": 32,
+          "modes": 8,
+          "padding": 8,
+          "patience": 50,
+          "min_epochs": 50,
+          "seed": 42,
+          "threads": 2,
+          "device": "cpu"
+        },
+        "train_samples": 5360,
+        "val_samples": 1360,
+        "test_samples": 1280,
+        "split_strategy": "frequency",
+        "physical_media": 1,
+        "split_groups": {
+          "train": 670,
+          "validation": 170,
+          "test": 160
+        },
+        "completed_epochs": 200,
+        "best_epoch": 199,
+        "best_val_fem_l2": 0.07926466429934782,
+        "stop_reason": "epoch_limit",
+        "parameters": 2426,
+        "parameter_count_convention": "real scalar degrees of freedom; complex weight counts as two",
+        "preprocessing_seconds": 1.1425977089993467,
+        "training_seconds": 885.2403326100002,
+        "test_batch_seconds": 0.29840183400028764,
+        "test_seconds_per_sample": 0.0002331264328127247,
+        "test_fem_l2": {
+          "mean": 0.07936406284402778,
+          "median": 0.07683830466128,
+          "p95": 0.0988107474482859,
+          "max": 0.11106546409123123
+        },
+        "training_loss_evaluation": "consistent_FEM_field_reconstruction",
+        "versions": {
+          "torch": "2.15.0+cpu",
+          "numpy": "2.4.6"
+        }
+      },
+      "recomputed_test_fem_l2": {
+        "mean": 0.07936406284402778,
+        "median": 0.07683830466128,
+        "p95": 0.0988107474482859,
+        "max": 0.11106546409123123
+      },
+      "verified_test_samples": 1280,
+      "max_abs_prediction_difference_from_archive": 0.0,
+      "sha256": {
+        "model.pt": "d03fd36eb3ab8e258e00718003052bc3f81616a34a79eff47feab24083d5ca2a",
+        "config.json": "b109d424f4a11fd7509609f83390e5606c93db23daea480ce162d40c8e890c62",
+        "metrics.json": "6c44af83739518e4fd3dfc22ec4682d6dece2f5d86783f418daf4f43817829c4",
+        "history.json": "6b0aa0c7d0bbd2a3d1bbd46de113feb1edbc6ad49c3abfa1a76c91d2ac0ed14a",
+        "test_predictions.npz": "9502fc0d9ccd510974b21de285b1dc5c7f2e35b23e738075dcc44a9faa3b45e0"
+      }
+    }
+  ],
+  "mean_error_difference": -0.00013939228815790412,
+  "source_sha256": {
+    "neural_operator/_layers.py": "03670c4b09969fde605e29cc61b89d1e65a5bb6d482bd5fdda883c528e7fd219",
+    "neural_operator/sno/model.py": "e25cbf5c1db3fc3fbbba683062760ffec92a7641563f03c9df20b67263990fcf",
+    "neural_operator/sno/basis.py": "7204528f5180bd5507da5aa2e238c42fbdb1e0b6dd02e03744b6efa7e9748fb7",
+    "neural_operator/chebyshev/model.py": "e4d29382b9c855104349cbc73f2c3caa07a61b9da7bb60e2b5c389e25331235b",
+    "neural_operator/fno/model.py": "4d7342156ccf9f698c8c6f1617b8f0df547a18b6bb58f7a995be76b2af6f361d",
+    "neural_operator/training.py": "3cfa92f1be317650c3014e7794d7651c34fc6ab744102c7da6eaf9a6028a736d",
+    "neural_operator/losses.py": "1fd45b01ed8a1e3bf153f573f9fc2faf71671f048fb1a774e2525ae32e18ea2a",
+    "neural_operator/revision_audit.py": "f8465425077534ee085d90b6ce7226cc1ca5a3674d91ef195c8f98f9f3297657"
+  },
+  "limitations": [
+    "No claim of statistical superiority from one seed",
+    "Training timings are separate runs, not a controlled speed benchmark",
+    "Zero input material POD ranks prevent generalization to new materials",
+    "Surrogate errors do not certify continuum Helmholtz accuracy"
+  ]
+}

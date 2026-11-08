@@ -6,7 +6,7 @@
 
 **English overview.** Research code for **2D heterogeneous Helmholtz wave scattering**, combining the finite element method (**FEM**), the generalized multiscale finite element method (**GMsFEM**), and spectral neural operator surrogates. Implementations include **POD/SVD-based SNO**, **Chebyshev spectral neural operators**, and **Fourier Neural Operators (FNO)**. Python, FEniCSx/DOLFINx, Gmsh, SciPy and PyTorch support complex-valued simulations, dataset generation, reduced-order modeling, training, inference and FEM L2 evaluation.
 
-[Методы](#что-можно-исследовать) · [Результаты](#опубликованные-результаты) · [Запуск](#быстрый-запуск) · [Документация](#карта-репозитория) · [Цитирование](#источники-и-цитирование)
+[Саммари](SUMMARY.md) · [Учебный маршрут GMsFEM](gmsfem/docs/learning_path.md) · [Методы](#что-можно-исследовать) · [Результаты](#сохранённые-результаты) · [Запуск](#быстрый-запуск) · [Документация](#карта-репозитория) · [Цитирование](#источники-и-цитирование)
 
 ![Полное волновое поле вокруг 24 проницаемых круговых включений: действительная часть, мнимая часть и модуль; комплексный P1 FEM](gmsfem/results/notebook/fine_total.png)
 
@@ -49,7 +49,7 @@ $$
 
 В GMsFEM-отчётах дополнительно разделены ошибки полного и рассеянного полей, компонентов и модуля; знаменатель нормы указан в каждой таблице. [Протокол нейрооператоров](neural_operator/docs/methods.md).
 
-## Опубликованные результаты
+## Сохранённые результаты
 
 ### GMsFEM: сокращение числа неизвестных
 
@@ -74,6 +74,8 @@ $$
 Источники: [отчёт и ограничения](neural_operator/randomized/RESULTS.md), [машинный отчёт JSON](neural_operator/randomized/static_results.json), [спецификация среды](neural_operator/docs/static_medium.md).
 
 Эти числа оценивают удержанные волновые параметры **той же среды**; перенос на новые материалы ими не проверен. Ошибка измерена относительно дискретных FEM-меток: для high band изменение reference при $h\to h/2$ составляет около **13–14%**. В таблице приведены результаты SVD-SNO; Chebyshev/FNO имеют отдельные реализации и сценарии обучения. Материалы и поля GMsFEM- и neural-экспериментов различаются, поэтому две таблицы выше описывают самостоятельные исследования.
+
+**Статус ревизии 8 ноября 2026.** SNO переработан с явной версией архитектуры и совместимой загрузкой старых bundles. На одном static-low test-наборе из 1280 полей получены SNO v2 **0,9475%** и Chebyshev-SNO **7,9364%** после нового обучения; сохранённый FNO повторно проверен текущим кодом: **1,6599%**. Это одна среда и один seed, с разными размерами моделей и затратами. [Конфигурации, проверки и ограничения](neural_operator/docs/operator_revision.md), [саммари](SUMMARY.md). [Аудит датасетов](neural_operator/docs/dataset_audit.md) отделяет основной low-band от high-band с недостаточно проверенной точностью FEM. Два устаревших variable-medium набора удалены целиком с сохранением конфигураций и хешей.
 
 **Что входит в Git.** GMsFEM-отчёты, численные архивы и рисунки; neural-отчёты Markdown/JSON и сохранённые outputs notebooks. Полноразмерные neural-датасеты и `model.pt` находятся в локальных `data/` и `runs/`, исключённых из Git. После клонирования их нужно сгенерировать и обучить по инструкциям ниже.
 
@@ -142,15 +144,15 @@ docker compose exec -T dolfinx-complex python3 -m pytest neural_operator/tests -
 | [`neural_operator/`](neural_operator/README.md) | Общие данные, обучение, оценка и самостоятельный inference |
 | [`sno/`](neural_operator/sno/), [`chebyshev/`](neural_operator/chebyshev/), [`fno/`](neural_operator/fno/) | Модели и training notebooks каждого neural-метода |
 | [`datasets/`](neural_operator/datasets/), [`notebooks/`](neural_operator/notebooks/) | Генерация данных и общие исследования спектров, частот и сеток |
-| [`laba4/`](laba4/README.md), [`laba6/`](laba6/README.md) | Подготовительные работы: сетки, крупные блоки и перекрывающиеся окрестности |
+| [`templates/`](templates/README.md) | Шаблоны лабораторных 4 и 6: крупные блоки, подсетки и перекрывающиеся окрестности |
 | [`FEniCSx_(dolfinx).ipynb`](FEniCSx_%28dolfinx%29.ipynb), [`FEniCSx_(dolfinx)_DG.ipynb`](FEniCSx_%28dolfinx%29_DG.ipynb) | Исходные CG/DG notebooks для контекста и истории постановки |
 | [`references/`](references/) | Локальные материалы по методу |
 
-`laba4/lr4.py` и Legacy-вариант лабораторной 6 используют DOLFIN 2019 и требуют отдельного окружения; современные FEM/neural workflow используют DOLFINx.
+`templates/laba4/lr4.py` и Legacy-вариант лабораторной 6 используют DOLFIN 2019 и требуют отдельного окружения; современные FEM/neural workflow используют DOLFINx.
 
 ## Для ChatGPT и исследовательских агентов
 
-Краткий индекс проекта: **[llms.txt](llms.txt)**. Метаданные программного обеспечения: **[CITATION.cff](CITATION.cff)**.
+Научное и практическое саммари: **[SUMMARY.md](SUMMARY.md)**. Краткий индекс проекта: **[llms.txt](llms.txt)**. Метаданные программного обеспечения: **[CITATION.cff](CITATION.cff)**.
 
 Для ответа о методе используйте [математическую постановку GMsFEM](gmsfem/docs/method.md) или [формулы нейрооператоров](neural_operator/docs/methods.md). Численные утверждения сверяйте с отчётом конкретного запуска: его материалами, полем, сеткой, split и нормой. Сохранённые результаты одной статичной среды следует описывать с этой областью применимости. Для восстановления эксперимента нужны конфигурация и версия кода; локальное наличие weights/datasets проверяется отдельно.
 

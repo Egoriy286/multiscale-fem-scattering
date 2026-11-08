@@ -1,8 +1,13 @@
 # Multiscale FEM Scattering
 
-> Research software by Egoriy Monastyrev (MIT) for 2D heterogeneous Helmholtz wave scattering: complex P1 FEM, GMsFEM, POD/SVD-based SNO, Chebyshev-SNO and Fourier Neural Operators. Repository: https://github.com/Egoriy286/multiscale-fem-scattering
+> MIT-licensed research software by Egoriy Monastyrev for 2D heterogeneous Helmholtz wave scattering: complex P1 FEM, GMsFEM, POD/SVD-based SNO, Chebyshev-SNO and Fourier Neural Operators. Repository: https://github.com/Egoriy286/multiscale-fem-scattering
 
 ## Project and reproduction
+
+- [Project summary](SUMMARY.md): problem, method distinctions, evidence, data quality, revision status and learning route.
+- [GMsFEM learning path](gmsfem/docs/learning_path.md): worked example, source map and self-checks.
+- [Dataset audit and cleanup](neural_operator/docs/dataset_audit.md): complete pre-cleanup manifest, quality gate and retained stress cases.
+- [Lab templates](templates/README.md): preparatory labs 4 and 6, separated from production workflows.
 
 - [Research overview and quickstart](README.md): scientific scope, scoped results, Docker commands, small-data example, repository map and artifact availability.
 - [Software citation](CITATION.cff): author, software title, repository URL, license and keywords. Cite the exact commit and experiment configuration.

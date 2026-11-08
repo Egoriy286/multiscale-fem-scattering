@@ -133,3 +133,84 @@ def chebyshev_reconstruction(dataset, indices, resolution=32, modes=8):
     coefficients = np.einsum("ih,bhw,jw->bij", analysis[:modes], grid, analysis[:modes])
     returned = np.einsum("hi,bij,wj->bhw", synthesis[:, :modes], coefficients, synthesis[:, :modes])
     return mean + transfer.to_nodes(returned)
+
+
+def chebyshev_projection_diagnostics(dataset, *, resolution=32, modes=(8, 12, 16)):
+    """Validation-only consistent FEM floors for the actual Chebyshev decoder.
+
+    Unlike DCT truncation, this projects onto the polynomial synthesis followed
+    by the model's bilinear grid-to-node transfer. Its span includes the frozen
+    train mean and arbitrary real/imag coefficients. The output scales do not
+    change that span. It measures representation, without fitting network weights
+    or selecting modes from test labels.
+    """
+    import torch
+    from scipy.linalg import cho_factor, cho_solve
+    from .chebyshev.model import chebyshev_matrices
+    from .training import summarize
+
+    train, val, _ = dataset.split_indices()
+    if not len(train) or not len(val):
+        raise ValueError("Chebyshev projection requires train and validation samples")
+    modes = tuple(modes)
+    if not modes or any(not isinstance(m, (int, np.integer)) or m < 1 or m > resolution
+                        for m in modes):
+        raise ValueError("modes must contain positive integers <= resolution")
+    mean = dataset.u_scat[train].mean(axis=0)
+    residual = dataset.u_scat[val] - mean
+    transfer = GridTransfer(dataset.coordinates, dataset.triangles, resolution, "chebyshev")
+    _, synthesis = chebyshev_matrices(resolution, dtype=torch.float64)
+    synthesis = synthesis.numpy()
+    rows = []
+    for count in modes:
+        tensor_basis = np.einsum("hi,wj->hwij", synthesis[:, :count], synthesis[:, :count])
+        phi = transfer.to_nodes_matrix @ tensor_basis.reshape(resolution ** 2, -1)
+        mphi = dataset.mass_matrix @ phi
+        gram = phi.T @ mphi
+        gram = (gram + gram.T) / 2
+        factor = cho_factor(gram)
+        coefficients = cho_solve(factor, (residual @ mphi).T).T
+        prediction = mean + coefficients @ phi.T
+        rows.append({"modes_per_axis": count, "coefficient_dofs_per_component": count ** 2,
+                     "resolution": resolution, "validation_samples": len(val),
+                     "metric": "consistent_complex_FEM_L2",
+                     "projection_floor": summarize(dataset.relative_l2(dataset.u_scat[val], prediction)),
+                     "gram_condition_number": float(np.linalg.cond(gram))})
+    return rows
+
+
+def main(argv=None):
+    """Reproduce validation-only Chebyshev decoder floors without training."""
+    import argparse
+    import hashlib
+    from .data import load_dataset
+    from .training import dataset_fingerprint
+
+    parser = argparse.ArgumentParser(description=main.__doc__)
+    parser.add_argument("--dataset", type=Path, required=True)
+    parser.add_argument("--resolution", type=int, default=32)
+    parser.add_argument("--modes", type=int, nargs="+", default=[8, 12, 16])
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args(argv)
+    dataset = load_dataset(args.dataset, mmap=True)
+    rows = chebyshev_projection_diagnostics(dataset, resolution=args.resolution, modes=args.modes)
+    report = {
+        "scope": "Validation-only approximation diagnostic; no neural fit and no test inspection",
+        "dataset": str(args.dataset), "dataset_fingerprint": dataset_fingerprint(dataset),
+        "resolution": args.resolution, "kind": "chebyshev", "mean": "train-only complex FEM field",
+        "validation_samples": rows[0]["validation_samples"],
+        "method": "Consistent mass least-squares projection into the actual affine decoder span",
+        "interpretation": "Lower bound for this fixed decoder; not deployable predictor error or FEM PDE accuracy",
+        "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "records": [{"modes_per_axis": row["modes_per_axis"],
+                     "coefficients": row["coefficient_dofs_per_component"],
+                     "validation_fem_l2": row["projection_floor"],
+                     "gram_condition_number": row["gram_condition_number"]} for row in rows],
+    }
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(report, indent=2) + "\n")
+    print(json.dumps(report, indent=2))
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,62 @@
+{
+  "method": "svd",
+  "field": "scattered",
+  "metric": "consistent_complex_FEM_L2",
+  "dataset_fingerprint": "643f882b18d6e82cb75552e8dacb245c72eab30da13a1eff40ee0f97d0ce9746",
+  "config": {
+    "method": "svd",
+    "epochs": 500,
+    "batch_size": 128,
+    "learning_rate": 0.002,
+    "width": 64,
+    "depth": 4,
+    "rank": 128,
+    "input_rank": 32,
+    "target_projection_error": 0.01,
+    "pod_method": "full",
+    "resolution": 128,
+    "modes": 8,
+    "padding": 8,
+    "patience": 50,
+    "min_epochs": 50,
+    "seed": 42,
+    "threads": 2,
+    "device": "cpu"
+  },
+  "train_samples": 128,
+  "val_samples": 32,
+  "test_samples": 32,
+  "completed_epochs": 66,
+  "best_epoch": 16,
+  "best_val_fem_l2": 0.9037298560142517,
+  "stop_reason": "validation_plateau",
+  "parameters": 328550,
+  "parameter_count_convention": "real scalar degrees of freedom; complex weight counts as two",
+  "preprocessing_seconds": 0.5258322080007929,
+  "training_seconds": 8.995481003999885,
+  "test_batch_seconds": 0.004641167000954738,
+  "test_seconds_per_sample": 0.00014503646877983556,
+  "test_fem_l2": {
+    "mean": 0.7401152711371259,
+    "median": 0.7077323955976993,
+    "p95": 1.00676834100757,
+    "max": 1.0446969164093771
+  },
+  "versions": {
+    "torch": "2.15.0+cpu",
+    "numpy": "2.4.6"
+  },
+  "projection_fem_l2": {
+    "mean": 0.009434909121269052,
+    "median": 0.008940917593138585,
+    "p95": 0.019298339329727864,
+    "max": 0.02070571974807305
+  },
+  "ranks": {
+    "A": 24,
+    "n": 24,
+    "real": 85,
+    "imag": 85
+  },
+  "rank_target_attained": true
+}
