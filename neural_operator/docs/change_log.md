@@ -1,48 +1,13 @@
-# История переработки
+# Изменения текущей реализации
 
-## Структура методов и общий workflow (2026-11-04)
+## SNO v2 и общий static-low workflow
 
-- SVD-SNO, Chebyshev-SNO и FNO разнесены по `sno/`, `chebyshev/`, `fno/`; модели используют общее обучение, оценку и inference. Старые Python-импорты сохранены как совместимые входы.
-- Конфигурации, планирование и единый цикл FEM-генерации собраны в `datasets/`; статичная постановка остаётся default, прежняя variable-medium постановка сохранена.
-- Единый CLI поддерживает план `data --dry-run`, read-only `inspect` и выбор `--pod-method full|randomized`. Генерация данных не запускает обучение.
-- 17 neural-operator notebooks сокращены до 10: общие Dataset, SVD-data-checks, Inference, Comparison и High-frequency перенесены в `notebooks/`; training notebooks — в папки методов. Оба варианта SVD-SNO сохранены, дубли Chebyshev/FNO и общих wrappers удалены.
-- Перед объединением сравнены исходные ячейки обоих наборов. Полезные randomized отличия (`METHODS=['svd']`, графики по фактическим методам) и все его записанные outputs перенесены в общие notebooks; добавлен явный выбор профиля. Dataset сохранён из основного набора. Cross-mesh исследование перенесено целиком с outputs. Существенные записанные результаты не очищались.
-- Существующие `data/`, `runs/`, `randomized/runs/`, checkpoints и RESULTS.md не перемещаются. Сохранённые модели не переобучались; проверки генерации и обучения выполнялись на временных малых наборах.
-- README сокращён до карты и последовательности data → train → compare → inference. Детали вынесены в [structure.md](structure.md) и [datasets.md](datasets.md); исторические научные отчёты сохранены.
-- Исправлен выбор каталогов CLI: `--pod-method randomized` выбирает существующий randomized-профиль, `--band high` — high-band данные и runs. Для custom dataset используются отдельные runs, `compare --runs` задаёт источник моделей независимо от каталога отчёта. Paired comparison читает `n_coarse` из сохранённой конфигурации сетки.
-- При усечении POD-базиса убрано преобразование массивов в списки и обратно и недостижимая ветка обработки `energy`.
-- Проверки: baseline — 76 тестов; после переработки — 133 теста и 14 subtests. Безопасные bootstrap/import/config ячейки всех 10 notebooks выполнены в отдельных чистых Python-процессах Docker из новых каталогов. Полные training/study ячейки notebooks повторно не выполнялись.
-- На реальных временных FEM-наборах variable 3×2 и static 6×2 массивы и fingerprints совпадают с baseline побитово. Прежние randomized модели обеих полос загружаются и на четырёх held-out запросах дают точно прежние predictions. CLI прошёл цепочку data → inspect → train all → compare all → high-frequency all на временном static наборе 6×2 (две эпохи для проверки исполнения, без оценки сходимости); временные файлы удалены.
+- Сохранены SVD-SNO, Chebyshev-SNO и FNO с общими данными, split, consistent complex FEM L2 loss и переносимым inference bundle.
+- SNO v2 использует coefficient tokens и параллельные локальную/модальную ветви. Входные POD-моды не обрезаются, если их больше выходных. Совместимость с форматом v1 сохранена в коде загрузчика.
+- Исправлены zero/zero loss, привязка отрицательных Fourier-весов при clipping, проверка размеров DCT-I и явный отказ от комплексного ввода в вещественный POD.
+- CLI предоставляет `--sno-architecture-version`, `--resolution`, `--modes`. Генерация FEM, диагностика, обучение и inference запускаются отдельно.
+- Актуальные результаты относятся к одной фиксированной среде и k∈[1,2]: mean test FEM L2 **0.9475% SNO v2**, **1.6599% FNO**, **7.9364% Chebyshev modes8**. Полные конфигурации и hashes находятся в [отчёте](operator_revision.md).
+- Для Chebyshev вычислены validation-only consistent decoder floors; они отделены от ошибок обученной сети. Все три метода сохраняют два независимых выхода Re/Im и вычисляют Abs после физического декодирования.
+- В notebooks нет сохранённых execution outputs. [Static-predictions](../notebooks/Static-predictions.ipynb) читает только текущие static-low checkpoints. Шаблоны новых исследований сеток и частот не содержат опубликованных результатов.
 
-## Исторический аудит исходного SVD-SNO.ipynb
-
-
-Проверены именно JSON `cells[].source` исходного `neural_operator/SVD-SNO.ipynb` (62 ячейки; номера ниже с нуля), а не только сохранённые outputs. Этот файл фиксирует обнаруженное исходное состояние, а не утверждает прохождение ещё не выполненного обучения.
-
-## Подтверждённые проблемы
-
-- **Зависимость от Colab/Drive.** Ячейки 1, 18, 20, 22, 54, 56–57 используют `google.colab`, `/content/drive/...`; ячейка 3 выполняет удалённый install script и apt/pip. Ячейка 54 повторно читает notebook по фиксированному Drive-пути и исполняет диапазон ячеек через `exec`. Это мешает последовательному локальному запуску и независимому inference.
-- **Норма SVD и loss.** Ячейки 25/28 вычисляют евклидову SVD и проекции; 26 выбирает R по nodal error; 33 обучает nodal physical-scale loss. Consistent FEM mass правильно собирается позднее, в 39. Поэтому итоговая FEM-метрика существует, но не совпадает с метрикой выбора базиса и ранга на неравномерной сетке.
-- **Граница применимости pure SVD.** В 40–41 евклидова проекция описывается как нижняя граница; это верно для Euclidean norm и выбранного affine output subspace. Такое утверждение нельзя автоматически переносить на вычисленную posthoc FEM L2.
-- **Общий R для разных полей.** Ячейка 27 обрезает все четыре базиса одним R и зануляет входные моды по numerical rank. Это уменьшает шум, но сохраняет неинформативные padded tokens. Раздельные input/output ranks яснее описывают модель; численно нулевые моды нельзя нормировать на малые std.
-- **Неполная идентичность артефактов.** В 23 `DATA_FINGERPRINT` включает train A,n,u и coords, но не triangles, split IDs, val или test. В 35 training fingerprint содержит базы/std и часть hyperparameters, но не все means, val membership и stopping/schedule настройки. Это не доказанная утечка, но риск несовместимого resume/cache при изменённом протоколе.
-- **Inference зависит от состояния notebook.** В 45–46 веса/конфигурация загружаются, но `apply_model` определяется раньше, в training-ячейке 32. Не проверяются mesh hash и соответствие входного порядка FEM-DOF. Saved bundle нужно исполнять из чистого процесса с самостоятельной моделью.
-- **Test curves до фиксации модели.** Ячейка 29 вычисляет test errors для разных r до обучения. Само вычисление не доказывает leakage, но просмотр кривой может влиять на ручной выбор; rank selection следует оставить на val.
-- **Ограниченный high-frequency scope.** Исходная `K_RANGE=(1,2)` и медианное число узлов на длину волны в 8 не исследуют высокочастотную сходимость. Однородная проверка и смена направления в 12 не проверяют dispersion/pollution либо mesh convergence.
-- **Ограничения portability/ресурсов.** В 57 CUDA вызывается без CPU guard; 58–60 используют глобальные переменные, оставшиеся от других ячеек. Точные SVD всех полей могут быть дороги по памяти; diagnostics должны явно отделяться от training.
-
-## Что уже было сделано корректно
-
-В исходных ячейках 14/23 присутствует split по средам и проверки всех трёх пар split. Ячейка 25 строит train-only POD, для A,n по одному снимку на среду. Ячейка 26 выбирает rank по val и использует полную centered train energy в знаменателе. Ячейка 30 вычисляет normalization stats по train с защитой малых std. Loss 33 возвращает std и учитывает projection floor в nodal norm. В 35 есть best-validation checkpoint, patience, epoch cap и восстановление optimizer/RNG. В 39 mass matrix собрана корректно, в 47 есть single/batch parity check. Эти свойства следует сохранить; неверно заявлять, что исходник вообще не имел split, early stopping или FEM L2.
-
-## Научное именование
-
-Исходная сеть в 32 смешивает моды через `W_mode`, каналы через `W_channel`, добавляет local term и residual, применяет GELU в пространстве коэффициентов. Это содержательная coefficient-space архитектура с POD representation, но её задача, базисы и слои не являются доказанным дословным воспроизведением SNO Fanaskov–Oseledets или PODNO. Новые сравнения должны сохранять эту оговорку и отделять документированные факты от измерений текущего запуска.
-
-Сохранённая в markdown история 7.061% на val/эпохе 492 не подтверждает качество нового локального обучения, test error, сходимость или high-frequency generalization. Эти выводы требуют реальных воспроизводимых запусков.
-
-## Итог локальной переработки
-
-Активный notebook заменён коротким последовательным экспериментом поверх Python-модулей; удалены Colab/Drive, remote installers, исполнение ячеек по номерам, повторные определения plotting/inference и старые outputs. Backend унифицирован на локальном PyTorch CPU. Сохранены корректные свойства исходника: split по средам, train-only preprocessing, validation selection и best-epoch selection. Автоматический resume убран; повторный запуск использует завершённый совместимый bundle либо начинает явное новое обучение.
-
-Добавлены отдельные notebooks данных, SVD diagnostics, Chebyshev, FNO, independent inference, paired FEM/GMsFEM comparison и high-frequency experiment. Проверены independent numerical identities и bundle round trips; все восемь notebooks выполнены, шесть моделей обучены локально. Фактические ошибки и ограничения изложены в [local_results.md](local_results.md); прежние сохранённые ошибки не выдаются за результаты новой реализации.
+Текущий протокол сохраняет train-only preprocessing, validation selection, итоговый test и проверку checkpoint из чистого процесса. Результаты и ограничения описаны в [методичке](svd_sno_guide.md), [математическом протоколе](methods.md) и [карте проекта](structure.md).

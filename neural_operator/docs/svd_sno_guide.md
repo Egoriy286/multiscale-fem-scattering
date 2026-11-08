@@ -1,6 +1,6 @@
 # Методичка: SVD, SNO и комплексное рассеянное поле
 
-Эта методичка объясняет путь от конечно-элементных данных до трёх результатов: **Re(u_scattering), Im(u_scattering), Abs(u_scattering)**. Формулы ниже описывают SVD-SNO v2 и отдельно сохранённую legacy v1. Новые измеренные результаты и команды приведены в [отчёте ревизии](operator_revision.md). В конце отдельно разобраны отличия от исторического JAX-эксперимента в [статье](../../paper/svd_sno_revision_2026-11-06/main.tex).
+Эта методичка объясняет путь от конечно-элементных данных до трёх результатов: **Re(u_scattering), Im(u_scattering), Abs(u_scattering)**. Формулы ниже описывают SVD-SNO v2 и техническую совместимость с форматом v1. Новые измеренные результаты и команды приведены в [отчёте ревизии](operator_revision.md). Текущий эксперимент описан в [статье](../../paper/svd_sno_revision_2026-11-06/main.tex).
 
 ## 1. Что должна предсказывать модель
 
@@ -253,9 +253,9 @@ B(ZW+\mathbf1b^T)=\begin{pmatrix}1&4\\2&6\\5&12\end{pmatrix}.
 
 Стандартный `TrainConfig` задаёт `width=24`, `depth=3`, верхние ранги `rank=48`, `input_rank=32`, `sno_architecture_version=2`. Сам конструктор `SVDSNO` по умолчанию использует ширину 64 и 4 блока; точные размеры готовой модели следует читать из `predictor.model_kwargs`. Все старые bundles без `architecture_version` загрузчик трактует как v1. Их lift, блоки и предсказания не меняются.
 
-![Схема сохранённой legacy v1 SVD-SNO и исторического JAX-блока](images/sno_architecture.png)
+Текущий v2 использует coefficient tokens, GELU после lift и две параллельные ветви. Схема вычислений и hashes актуальных static-low моделей приведены в [отчёте ревизии](operator_revision.md).
 
-Эта схема относится к **legacy v1**, а формулы текущего v2 приведены выше. V2 использует coefficient tokens, GELU после lift и две параллельные ветви. [Отчёт ревизии](operator_revision.md) проверяет обе сохранённые сети и их hashes.
+![Текущая static-low SNO v2: coefficient tokens, три параллельных остаточных блока, POD-декодеры Re/Im и производный Abs](images/sno_architecture.png)
 
 ### 3.4. Как выбирается выходной ранг
 
@@ -348,7 +348,7 @@ docker compose exec -T dolfinx-complex python3 -m neural_operator.run data --ban
 
 # Отдельно проверить POD и обучить нужные методы.
 docker compose exec -T dolfinx-complex python3 -m neural_operator.run svd --pod-method randomized
-docker compose exec -T dolfinx-complex python3 -m neural_operator.run train --method svd --pod-method randomized --epochs 200
+docker compose exec -T dolfinx-complex python3 -m neural_operator.run train --method svd --pod-method randomized --epochs 200 --sno-architecture-version 2 --output neural_operator/runs/revision_2026-11-08/static_low
 docker compose exec -T dolfinx-complex python3 -m neural_operator.run train --method fno --pod-method randomized --epochs 200
 ```
 
@@ -365,7 +365,7 @@ from neural_operator.training import load_predictor
 
 dataset = load_dataset("neural_operator/data/static_low_frequency_1000x8", mmap=True)
 predictor = load_predictor(
-    "neural_operator/randomized/runs/low_frequency_static_1000x8/svd/model.pt"
+    "neural_operator/runs/revision_2026-11-08/static_low/svd/model.pt"
 )
 i = int(np.flatnonzero(dataset.split == 2)[0])  # test sample
 
@@ -409,72 +409,33 @@ parts_batch = predictor.predict_dataset_components(dataset, indices=indices)
 
 Ошибка модуля \(\bigl||\widehat u|-|u|\bigr|\) и модуль комплексной ошибки \(|\widehat u-u|\) — разные величины. Первая не обнаруживает некоторые фазовые ошибки.
 
-#### Реальные предсказания SVD-SNO для фиксированной среды
+#### Текущие static-low результаты
 
-Следующие рисунки относятся к сохранённым **legacy v1 static-моделям SVD-SNO с рандомизированным POD**. Для каждой частотной полосы обучена своя модель. На каждой полосе датасет содержит одну фиксированную среду, 1000 частот и 8 направлений; разбиение выполнено по частотам, тестовая часть содержит 1280 полей.
+На одной фиксированной среде, k∈[1,2], test содержит 1280 полей с удержанными частотами. Метрика — complex consistent FEM L2. Полные configurations, версии, hashes и проверка checkpoint находятся в [отчёте](operator_revision.md) и [JSON provenance](operator_revision.json).
 
-Для иллюстрации типичного уровня ошибки каждой модели выбран test-пример, чья комплексная FEM L2 ошибка ближе всего к медиане по всем 1280 полям: `argmin(abs(error - median(error)))`, при равенстве выбирается первый индекс. Это заданное численное правило, без визуального отбора и без выбора наименьшей ошибки. Рисунок отдельного примера дополняет общие test-метрики.
+| Модель | Mean | Median | p95 |
+| --- | ---: | ---: | ---: |
+| SVD-SNO v2 | 0.9475% | 0.8671% | 1.6534% |
+| FNO | 1.6599% | 1.6329% | 1.9505% |
+| Chebyshev-SNO modes8 | 7.9364% | 7.6838% | 9.8811% |
 
-| Модель | Частотная полоса | Средняя ошибка | Медиана | 95-й процентиль |
-| --- | --- | --- | --- | --- |
-| Static low SVD-SNO | \(k\in[1,2]\) | 0.9614% | 0.8824% | 1.6792% |
-| Static high SVD-SNO | \(k\in[4,8]\) | 5.5375% | 5.0683% | 9.0357% |
+[Static-predictions notebook](../notebooks/Static-predictions.ipynb) читает именно эти три checkpoints, выводит статистики полного test и строит Re/Im/Abs для одного заранее фиксированного test-примера. Сохранённых execution outputs в notebook нет. Оценка одного поля дополняет общую таблицу, а не заменяет её.
 
-В таблице приведены статистики complex consistent FEM L2 ошибки готовых моделей по всем 1280 test-полям из `metrics.json`. Они отличаются от ошибки единственного поля на рисунке. Модель high обучена на своей полосе; её результат не является переносом замороженной low-модели на высокие частоты. Оценка относится к одной фиксированной среде и удержанным частотам, а не к новым материалам.
+FNO обучена на MPS и повторно проверена на CPU; SNO/Chebyshev обучены на CPU. Различаются число параметров, завершённые эпохи и выходные пространства; время обучения не используется как доказательство превосходства. Для Chebyshev modes8 validation decoder floor уже равен 7.6143%, поэтому ограничение представления требуется измерять до увеличения epochs.
 
-![Static low SVD-SNO: Re, Im и Abs рассеянного поля, FEM, предсказание и абсолютная ошибка test-примера с ошибкой около медианы](../../paper/svd_sno_revision_2026-11-06/images/prediction_static_low_components.png)
+`test_predictions.npz` содержит комплексный `prediction` и может дополнительно содержать `prediction_real`, `prediction_imag`, `prediction_abs`. Три компоненты всегда можно получить через `scattering_components`; добавление такого вывода не меняет число обучаемых выходных каналов.
 
-Low-пример: индекс образца 2211, \(k\approx1.276276\), \(\theta\approx2.782013\) рад. Комплексная FEM L2 ошибка показанного поля — **0.8825%**.
+## 7. Совместимость версий сети
 
-![Static high SVD-SNO: Re, Im и Abs рассеянного поля, FEM, предсказание и абсолютная ошибка test-примера с ошибкой около медианы](../../paper/svd_sno_revision_2026-11-06/images/prediction_static_high_components.png)
+Загрузчик различает архитектуры по `model_kwargs['architecture_version']`. Для текущего SNO используется v2. Поддержка unversioned v1 сохранена для программной совместимости и проверена unit tests: веса другой структуры не подставляются в v2 автоматически.
 
-High-пример: индекс образца 6077, \(k\approx7.039039\), \(\theta\approx4.245365\) рад. Комплексная FEM L2 ошибка показанного поля — **5.0670%**.
-
-На обоих рисунках строки показывают Re, Im и Abs, столбцы — FEM, SVD-SNO и абсолютную ошибку соответствующей величины. В каждой строке FEM и предсказание используют общую шкалу. Сравнивайте положение максимумов, знак Re/Im, пространственную структуру и амплитуду; на карте ошибки видны расхождения, которые трудно заметить на двух похожих полях.
-
-Источники checkpoint и данных, проверка всех test-ошибок, хеши и команда воспроизведения рисунков записаны в [описании static-иллюстраций](../../paper/svd_sno_revision_2026-11-06/images/prediction_static_manifest.md) и [машиночитаемом provenance](../../paper/svd_sno_revision_2026-11-06/images/prediction_static_provenance.json). Рисунки подготовлены по сохранённым предсказаниям без нового обучения.
-
-Static-low FNO уже обучена на MPS и повторно проверена на CPU по всем 1280 test-полям: mean 1.6599%, p95 1.9505%. [Provenance](fno_static_low_verification_2026-11-08.json) фиксирует исходный run, конфигурацию и checkpoint hash. Это отдельный запуск с иным числом параметров и остановкой; [отчёт ревизии](operator_revision.md) сопоставляет доступные результаты без заявления равного tuning budget. Старый пилот с переменными средами относится к другому эксперименту и не используется здесь для иллюстрации качества static-моделей.
-
-Новые обучающие runs сохраняют в `test_predictions.npz` комплексный `prediction` и массивы `prediction_real`, `prediction_imag`, `prediction_abs`. В старом архиве может быть только комплексный `prediction`; три массива можно получить через `scattering_components` без переобучения. Добавление такого вывода не меняет число обучаемых выходных каналов.
-
-## 7. Почему архитектура статьи отличается
-
-Статья описывает конкретный ранее выполненный JAX-запуск, проверенный по сохранённым notebook outputs. Модули репозитория используют PyTorch. Сохранённые static-результаты v1 и новый run v2 перечислены отдельно; их параметры и метрики нельзя смешивать с JAX. Таблица ниже сравнивает JAX с legacy v1. V2 использует общий lift coefficient tokens и параллельные ветви, описанные в §3.3; это самостоятельный запуск.
-
-| Особенность | Исторический запуск статьи | Сохранённый Python v1 |
+| Элемент | V1 | V2 |
 | --- | --- | --- |
-| Данные | 1000 разных сред × 8 направлений | Стандартный static-набор: 1 среда × 1000 частот × 8 направлений |
-| Разбиение | По средам, 80/10/10 | В static-рецепте по частотам, 67/17/16 |
-| POD | Евклидов SVD | Lumped-weighted SVD |
-| Выбор ранга | Средняя val-ошибка в узловой норме | Средняя val-ошибка в consistent FEM L2 |
-| Вход в сеть | Матрица \(R\times5\) с zero-padding входных мод | Один вектор длины \(r_A+r_n+3\), общий `Linear` и reshape |
-| Начальное преобразование | Linear + GELU | Linear + reshape |
-| Остаточный блок | Сумма локальной ветви и ветви модального смешивания | Последовательное смешивание каналов и мод |
-| Размеры описанного запуска | \(R=71,H=64\), 4 блока | Определяются `TrainConfig` и checkpoint |
-| Training loss | Относительная комплексная узловая ошибка | Относительная комплексная consistent FEM L2 |
+| Lift | Dense d→rH и reshape | R×5 coefficient tokens, shared Linear и GELU |
+| Блок | (Z+operatorname{GELU}(B(ZW+b))) | (Z+operatorname{GELU}(ZW_{loc}+b+BZW_{ch})) |
+| Длины последовательностей | Выходной r | R=max(r_A,r_n,r_out), readout первых r_out строк |
 
-Различие остаточных блоков удобно увидеть в формулах. В обоих случаях \(Z\) — текущая скрытая таблица, а не набор обучаемых весов:
-
-\[
-\begin{aligned}
-\text{PyTorch v1:}\quad
-Z^{(\ell+1)}
-&=Z^{(\ell)}+
-\operatorname{GELU}\!\left[B_\ell\left(Z^{(\ell)}W_\ell+\mathbf1b_\ell^T\right)\right],\\
-\text{JAX статьи:}\quad
-Z^{(\ell+1)}
-&=Z^{(\ell)}+
-\operatorname{GELU}\!\left[
-\underbrace{Z^{(\ell)}W_{\mathrm{loc},\ell}+\mathbf1b_{\mathrm{loc},\ell}^T}_{\text{локальная ветвь: строки не смешиваются}}
-+\underbrace{B_\ell Z^{(\ell)}W_{\mathrm{ch},\ell}+\mathbf1b_{\mathrm{ch},\ell}^T}_{\text{ветвь со смешиванием мод и каналов}}
-\right].
-\end{aligned}
-\]
-
-«Локальная» здесь означает независимую обработку каждой модальной строки, а не локальность в физических координатах \(x,y\). В JAX обе ветви получают одну и ту же входную \(Z^{(\ell)}\), их результаты складываются перед GELU. Поэтому наличие одинаковых букв \(Z,B,W\) не делает два блока тождественными.
-
-Числа точности статьи принадлежат её JAX-запуску; числа из static-runs — другому эксперименту. Добавление объяснений и отображения Re/Im/Abs не является новым обучением или новым измерением качества.
+Здесь «локальная» ветвь означает отдельную модальную строку. Она не задаёт физическую локальность в x,y. Базисы, нормировка и версия сохраняются вместе с весами; их следует брать из одного bundle.
 
 ## 8. Вопросы для самопроверки
 

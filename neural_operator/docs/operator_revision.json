@@ -116,107 +116,6 @@
       "test_predictions.npz": "234c24cde958b6558f2d97d60d12ee52b62103dc374bcf18f8f3b5b7192d785d"
     }
   },
-  "baseline": {
-    "directory": "neural_operator/randomized/runs/low_frequency_static_1000x8/svd",
-    "model_kwargs": {
-      "input_dim": 3,
-      "output_modes": 10,
-      "width": 24,
-      "depth": 3,
-      "architecture_version": 1
-    },
-    "saved_metrics": {
-      "method": "svd",
-      "field": "scattered",
-      "metric": "consistent_complex_FEM_L2",
-      "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
-      "config": {
-        "method": "svd",
-        "epochs": 200,
-        "batch_size": 32,
-        "learning_rate": 0.002,
-        "width": 24,
-        "depth": 3,
-        "rank": 48,
-        "input_rank": 32,
-        "target_projection_error": 0.01,
-        "pod_method": "randomized",
-        "resolution": 32,
-        "modes": 8,
-        "padding": 8,
-        "patience": 50,
-        "min_epochs": 50,
-        "seed": 42,
-        "threads": 2,
-        "device": "cpu"
-      },
-      "train_samples": 5360,
-      "val_samples": 1360,
-      "test_samples": 1280,
-      "split_strategy": "frequency",
-      "physical_media": 1,
-      "split_groups": {
-        "train": 670,
-        "validation": 170,
-        "test": 160
-      },
-      "completed_epochs": 200,
-      "best_epoch": 170,
-      "best_val_fem_l2": 0.009953503335940405,
-      "stop_reason": "epoch_limit",
-      "parameters": 3110,
-      "parameter_count_convention": "real scalar degrees of freedom; complex weight counts as two",
-      "preprocessing_seconds": 25.502520095000364,
-      "training_seconds": 74.21566182600145,
-      "test_batch_seconds": 0.1985785839970049,
-      "test_seconds_per_sample": 0.00015513951874766008,
-      "test_fem_l2": {
-        "mean": 0.009613946273391481,
-        "median": 0.008823853075454188,
-        "p95": 0.01679190349275576,
-        "max": 0.029480048710368762
-      },
-      "training_loss_evaluation": "consistent_FEM_POD_quadratic",
-      "versions": {
-        "torch": "2.15.0+cpu",
-        "numpy": "2.4.6"
-      },
-      "projection_fem_l2": {
-        "mean": 0.009188586001252514,
-        "median": 0.008426885458693472,
-        "p95": 0.01600181293529646,
-        "max": 0.0283736236266671
-      },
-      "ranks": {
-        "A": 0,
-        "n": 0,
-        "real": 10,
-        "imag": 10
-      },
-      "rank_target_attained": true,
-      "consistent_projection_floor_fem_l2": {
-        "mean": 0.009187575772276288,
-        "median": 0.00842573459740539,
-        "p95": 0.015999655333231173,
-        "max": 0.028369915865750835
-      }
-    },
-    "recomputed_test_fem_l2": {
-      "mean": 0.009613946273391481,
-      "median": 0.008823853075454188,
-      "p95": 0.01679190349275576,
-      "max": 0.029480048710368762
-    },
-    "verified_test_samples": 1280,
-    "max_abs_prediction_difference_from_archive": 0.0,
-    "sha256": {
-      "model.pt": "69df4534f4922306c4f20026a14d95752a8dcedd09a5f42bc7db75bbf303253f",
-      "config.json": "25ee5b7faf15dc8504f78e764f9087bcceb41ec5e6ebc9d324cb3b465ea3f4bd",
-      "metrics.json": "bd0e25de492fdfcb8be9a9f94c52a71bf283a8865eade2ed90ec34de62d0a0bf",
-      "history.json": "95e49d2223ca4852979d00df1dde8f8941eb7734667d7569909428bc2028b2cc",
-      "test_predictions.npz": "33e839d8797ac94ca829ba2775d786aa8b503f670b5882bd5125e13399379b6f"
-    }
-  },
   "additional_runs": [
     {
       "directory": "neural_operator/runs/revision_2026-11-08/static_low/chebyshev",
@@ -301,7 +200,6 @@
       }
     }
   ],
-  "mean_error_difference": -0.00013939228815790412,
   "source_sha256": {
     "neural_operator/_layers.py": "03670c4b09969fde605e29cc61b89d1e65a5bb6d482bd5fdda883c528e7fd219",
     "neural_operator/sno/model.py": "e25cbf5c1db3fc3fbbba683062760ffec92a7641563f03c9df20b67263990fcf",
@@ -310,7 +208,7 @@
     "neural_operator/fno/model.py": "4d7342156ccf9f698c8c6f1617b8f0df547a18b6bb58f7a995be76b2af6f361d",
     "neural_operator/training.py": "3cfa92f1be317650c3014e7794d7651c34fc6ab744102c7da6eaf9a6028a736d",
     "neural_operator/losses.py": "1fd45b01ed8a1e3bf153f573f9fc2faf71671f048fb1a774e2525ae32e18ea2a",
-    "neural_operator/revision_audit.py": "f8465425077534ee085d90b6ce7226cc1ca5a3674d91ef195c8f98f9f3297657"
+    "neural_operator/revision_audit.py": "c2a6a995855f0c37f06868a1038595e6281f1d7ef4e6ca20f529c58eded7f32f"
   },
   "limitations": [
     "No claim of statistical superiority from one seed",

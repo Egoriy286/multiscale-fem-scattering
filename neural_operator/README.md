@@ -2,9 +2,9 @@
 
 Три метода решают одну FEM-задачу: **SVD-SNO**, **Chebyshev-SNO** и **FNO**. Каждый метод имеет свою папку; данные, обучение и оценка общие. Full и randomized — два алгоритма POD для SVD-SNO. [Карта проекта](docs/structure.md) · [Датасеты](docs/datasets.md) · [Формулы](docs/methods.md) · [Методичка по SVD, SNO и FNO](docs/svd_sno_guide.md).
 
-Новая **SVD-SNO v2** обучена на static-low: средняя test FEM L2 ошибка **0.9475%** по 1280 полям; прежняя v1 на тех же данных даёт **0.9614%**. Это один seed и удержанные частоты **одной фиксированной среды**; небольшая разница не доказывает превосходство архитектуры. [Формулы, проверка всех test-предсказаний и provenance](docs/operator_revision.md). Старый high-band результат v1 **5.54%** относится к стрессовому набору: [аудит датасетов](docs/dataset_audit.md) отдельно указывает ограничение FEM-разрешения. [Legacy-результаты](randomized/RESULTS.md), [проверка других сеток](docs/cross_mesh_inference.md).
+Текущие результаты относятся к **static-low**, k∈[1,2], одной фиксированной среде и 1280 test-полям. Средняя complex consistent FEM L2 ошибка: **SVD-SNO v2 — 0.9475%**, **FNO — 1.6599%**, **Chebyshev-SNO modes8 — 7.9364%**. [Формулы, полные конфигурации и SHA-256](docs/operator_revision.md). Для Chebyshev validation decoder floor при modes8 равен 7.6143%; выбор выходного пространства оценивается отдельно от обучения.
 
-На том же static-low test сохранённая **FNO** даёт **1.6599%** (MPS training, новая CPU-проверка), новый **Chebyshev-SNO modes8** — **7.9364%** после 200 эпох. Для Chebyshev точная validation-граница выбранного выходного пространства уже равна **7.6143%**: метод требует обоснованного выбора числа мод, а не обещания 1% от одного увеличения epochs. Полные конфигурации и ограничения сравнения приведены в [отчёте ревизии](docs/operator_revision.md).
+Это один seed и удержанные частоты той же среды; результаты не подтверждают перенос на другие материалы или точность относительно непрерывной PDE.
 
 ## Быстрый запуск
 
@@ -38,7 +38,7 @@ python3 -m neural_operator.run compare --method svd --pod-method randomized --ru
 
 `--method chebyshev|fno|all` выбирает другие методы; `all` в сравнении требует готовности всех выбранных моделей. `--band high` выбирает k∈[4,8]; генерация high-band не запускает обучение. `high-frequency` отдельно обучает high-band модели и проверяет перенос frozen low-band. `--help` показывает параметры каждого действия. Старый `python3 -m neural_operator.randomized.run` сохранён как совместимый вход.
 
-`--sno-architecture-version 2` — новый coefficient-token lift и параллельные локальная/модальная ветви; `1` явно выбирает legacy. Старые checkpoint без версии загружаются как v1. Новый v2 run требует собственного `--output`; старые веса не переиспользуются для другой архитектуры. Два SVD training notebooks уже выбирают отдельные v2-каталоги. High-frequency notebook сохраняет явно заданную v1 для воспроизведения старого сравнения.
+`--sno-architecture-version 2` — новый coefficient-token lift и параллельные локальная/модальная ветви; `1` явно выбирает legacy. Старые checkpoint без версии загружаются как v1. Новый v2 run требует собственного `--output`; старые веса не переиспользуются для другой архитектуры. Два SVD training notebooks уже выбирают отдельные v2-каталоги. High-frequency notebook — шаблон нового исследования с явным выбором сетки и отдельными каталогами; сохранённых результатов в нём нет.
 
 Обучение принимает `--device` (по умолчанию `cpu`). На совместимом Mac в локальном Python-окружении с зависимостями проекта FNO можно обучать через `python3 -m neural_operator.run train --method fno --pod-method randomized --band low --epochs 200 --device mps`; для второй полосы замените `low` на `high`. Устройство обучения сохраняется в конфигурации. Готовые веса загружаются на CPU через `load_predictor(path, device="cpu")`; FNO notebook проверяет настройки и fingerprint, затем использует доступное устройство для inference.
 
@@ -54,12 +54,12 @@ python3 -m neural_operator.run compare --method svd --pod-method randomized --ru
 | Chebyshev-SNO | [Train](chebyshev/Train.ipynb) |
 | FNO | [Train](fno/Train.ipynb) |
 | Самостоятельный inference | [Inference](notebooks/Inference.ipynb) |
-| Готовые static SNO/FNO: метрики и Re/Im/Abs без обучения | [Static-predictions](notebooks/Static-predictions.ipynb) |
+| Текущие static-low SNO v2/FNO/Chebyshev: метрики и Re/Im/Abs | [Static-predictions](notebooks/Static-predictions.ipynb) |
 | FEM/GMsFEM/neural comparison | [Comparison](notebooks/Comparison.ipynb) |
 | Частотный перенос и уточнение FEM | [High-frequency](notebooks/High-frequency.ipynb) |
 | Frozen inference на других сетках | [Cross-mesh-inference](notebooks/Cross-mesh-inference.ipynb) |
 
-В общих notebooks выберите `POD_METHOD="full"` или `"randomized"` в первой ячейке. Сохранённые результаты относятся к randomized; данные остаются общими. Comparison и High-frequency начинают с `METHODS=['svd']`; расширяйте список после обучения других методов. Training notebooks и High-frequency обучают модели при запуске соответствующих ячеек.
+В общих notebooks выберите `POD_METHOD="full"` или `"randomized"` в первой ячейке. Данные остаются общими. Execution outputs очищены. Inference и Static-predictions читают текущие static-low checkpoints; training notebooks запускают обучение при отсутствии совместимого run. Шаблон High-frequency требует явного включения нового исследования.
 
 ## Inference и проверка
 
@@ -81,9 +81,9 @@ abs_u = result["abs"]  # Abs(u_scattering) = sqrt(re_u**2 + im_u**2)
 
 Общий `plot_prediction` показывает три строки **Re / Im / Abs** и три столбца **FEM / prediction / абсолютная ошибка соответствующей компоненты**. Для FEM и prediction используются одинаковые цветовые шкалы внутри каждой строки. Ошибка модуля — `abs(abs(u_pred) - abs(u_FEM))`; комплексная FEM L2 метрика дополнительно учитывает фазу. Новые `test_predictions.npz` сохраняют `prediction_real`, `prediction_imag`, `prediction_abs` вместе с комплексным `prediction`.
 
-Поля A,n передаются в сохранённом порядке FEM-узлов; `predict_dataset` дополнительно проверяет сетку. У текущих static SVD-SNO моделей входные POD-ранги равны нулю: они используют k,θ и не реагируют на новую среду. FNO получает A,n на регулярной сетке, но обучение на одной среде само по себе не проверяет перенос на другие материалы. У SVD-SNO на другой сетке переносятся прежние P1 mean/modes. [Протокол изменения включений](docs/changed_inclusions.md) описывает это ограничение.
+Поля A,n передаются в сохранённом порядке FEM-узлов; `predict_dataset` дополнительно проверяет сетку. У текущих static SVD-SNO моделей входные POD-ранги равны нулю: они используют k,θ и не реагируют на новую среду. FNO получает A,n на регулярной сетке, но обучение на одной среде само по себе не проверяет перенос на другие материалы. У SVD-SNO на другой сетке переносятся прежние P1 mean/modes. Новая геометрия и материалы требуют отдельной физической проверки.
 
-Основная метрика — consistent комплексная FEM L2. POD reconstruction и transfer error измеряются отдельно; они не доказывают точность сети или сходимость FEM. [Исторический pilot](docs/local_results.md), [спецификация среды](docs/static_medium.md), [история переработки](docs/change_log.md), [источники](docs/references.md).
+Основная метрика — consistent комплексная FEM L2. POD reconstruction и transfer error измеряются отдельно; они не доказывают точность сети или сходимость FEM. [спецификация среды](docs/static_medium.md), [история переработки](docs/change_log.md), [источники](docs/references.md).
 
 ```bash
 docker compose exec -T dolfinx-complex python3 -m pytest neural_operator/tests -q

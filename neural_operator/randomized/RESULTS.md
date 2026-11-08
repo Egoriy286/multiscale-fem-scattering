@@ -1,64 +1,15 @@
-# Randomized SVD-SNO на фиксированной среде: локальные результаты
+# Актуальные результаты static-low
 
-Сопоставление сохранённых SVD-SNO и FNO на одном static-low test-наборе приведено в [отчёте ревизии](../docs/operator_revision.md), [FNO JSON](../docs/fno_static_low_verification_2026-11-08.json) и [Static-predictions notebook](../notebooks/Static-predictions.ipynb). Ниже сохранены исходные SVD-SNO результаты и отдельные исследования переноса/уточнения.
+Одна фиксированная среда, k∈[1,2], 8000 полей; split по частотам: 5360 train / 1360 validation / 1280 test. Метрика — complex consistent P1 FEM L2 рассеянного поля.
 
-Обучены и сохранены две модели SVD-SNO: для k∈[1,2] и k∈[4,8]. Каждая использует 8000 FEM-полей одной неизменной среды 0, 1000 уникальных частот и восемь направлений на частоту. Train/val/test — 670/170/160 частотных групп, 5360/1360/1280 полей. Test характеризует удержанные параметры волны той же среды; эти числа не являются проверкой новых материалов и не сопоставляются напрямую с прежним variable-medium pilot.
+| Метод | Mean test | Median | p95 | Max |
+| --- | ---: | ---: | ---: | ---: |
+| SVD-SNO v2 | 0.9475% | 0.8671% | 1.6534% | 2.8962% |
+| FNO | 1.6599% | 1.6329% | 1.9505% | 2.2305% |
+| Chebyshev-SNO modes8 | 7.9364% | 7.6838% | 9.8811% | 11.1065% |
 
-Randomized POD и нормировка построены только по train. Rank выбирался по validation reconstruction, лучшая эпоха — по validation network error. Максимум 200 эпох, width=24, depth=3, batch=32, seed=42, CPU threads=2. Input POD-ранги A,n=0, модель получает три изменяемых признака.
+Randomized train-only POD используется только SNO. Входные ранги A,n равны нулю, выходные Re/Im — 10; модель получает три изменяемых признака волны. FNO обучена на MPS и проверена на CPU; SNO/Chebyshev обучены на CPU. Это разные архитектуры с разным числом параметров и завершённых эпох.
 
-## Ошибка относительно дискретного FEM reference
+[Полный отчёт, ограничения и команды](../docs/operator_revision.md) · [Конфигурации и SHA-256](../docs/operator_revision.json) · [FNO provenance](../docs/fno_static_low_verification_2026-11-08.json) · [Validation floors Chebyshev](../docs/chebyshev_decoder_validation_2026-11-08.json) · [Inference notebook](../notebooks/Static-predictions.ipynb).
 
-| Полоса | Mean test | Median | p95 | Max | Re/Im rank | Лучшая / всего эпох | Параметры |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| k∈[1,2] | 0.96% | 0.88% | 1.68% | 2.95% | 10/10 | 170 / 200 | 3110 |
-| k∈[4,8] | 5.54% | 5.07% | 9.04% | 17.86% | 48/48 | 198 / 200 | 13370 |
-
-Метрика — комплексная consistent P1 FEM L2 норма рассеянного поля. Лучший low-band checkpoint получен на эпохе 170, high-band — на 198. Оба запуска достигли заданного лимита; это не подтверждение сходимости по patience.
-
-| Полоса | Lumped-POD reconstruction в FEM L2 | Optimum на том же span в consistent M | Preprocessing, с | Обучение, с |
-|---|---:|---:|---:|---:|
-| k∈[1,2] | 0.92% | 0.92% | 25.50 | 74.22 |
-| k∈[4,8] | 1.27% | 1.27% | 26.52 | 161.44 |
-
-Для low band rank=10 достиг validation-цели 1% на POD reconstruction. Для high band выбран cap=48, и цель 1% не достигнута; сохранённый флаг rank_target_attained=False это явно отражает. Ошибка high-band сети остаётся выше ошибки проекции. Train-only lumped POD и consistent projection являются разными операторами; только вторая колонка про optimum задаёт минимальную ошибку на том же affine span для consistent метрики и округлённых training targets.
-
-![История low-band обучения](runs/low_frequency_static_1000x8/svd/history.png)
-
-![Предсказание low band](runs/low_frequency_static_1000x8/svd/prediction.png)
-
-## Частотный перенос
-
-| Модель на high-band test | Mean | p95 | POD reconstruction mean |
-|---|---:|---:|---:|
-| Замороженная low-band | 144.18% | 154.96% | 96.77% |
-| Переобученная high-band | 5.54% | 9.04% | 1.27% |
-
-При прямом переносе меняется частота за пределы обученной полосы, а low-band POD-базис и нормировка заморожены. Его небольшое пространство плохо представляет high-band поля. Переобучение меняет train-only output basis и отображение коэффициентов. Результат относится к этому фиксированному материалу и выбранному budget.
-
-![Частотный перенос](runs/static_evaluation/frequency_errors.png)
-
-## Уточнение FEM-сетки
-
-На трёх наибольших test-частотах исходный h=0.1 сравнен с h=0.05: 3221 → 8958 DOF. Исходное P1-поле интерполировано в узлы более мелкой сетки; разность измерена consistent mass этой сетки.
-
-| k | Изменение h→h/2 |
-|---:|---:|
-| 7.9560 | 13.66% |
-| 7.9479 | 13.59% |
-| 7.8959 | 13.32% |
-
-Изменение около 13–14% существенно больше среднего surrogate error 5.54%. Это не апостериорная оценка точной PDE-ошибки, но оно не позволяет считать coarse FEM reference достаточно уточнённым для вывода о высокой физической точности. Ошибки моделей выше относятся к указанным дискретным меткам. Для непрерывной задачи нужна дальнейшая h-серия.
-
-## Воспроизводимость и память
-
-Полноразмерный запуск первоначально был принудительно завершён системой до сохранения весов при дефиците свободной памяти VM. Завершённые запуски используют read-only mmap кэш, блочную validation/хеширование, одну рабочую матрицу POD и порционное чтение комплексных целей. Loss в POD-координатах вычисляет ту же consistent FEM-метрику через Gram-матрицу и непосредственно интегрированный остаток. Изменение значений и градиентов сопоставлено с прямой интеграцией.
-
-Пройдено **56 numerical/integration tests** и два дополнительных subtests. Независимая загрузка обеих сохранённых моделей в новом процессе дала совпадение одиночного и batch inference. First cache extraction и чтение с диска не включены в preprocessing/training times таблицы; фоновая нагрузка VM влияет на времена, поэтому переносимый коэффициент ускорения не заявляется.
-
-Пути готовых bundles:
-
-- [Low-band модель](runs/low_frequency_static_1000x8/svd/model.pt), [метрики](runs/low_frequency_static_1000x8/svd/metrics.json).
-- [High-band модель](runs/high_frequency_static_1000x8/svd/model.pt), [метрики](runs/high_frequency_static_1000x8/svd/metrics.json).
-- [Машинный отчёт](static_results.json), [частотные per-sample результаты](runs/static_evaluation/frequency_samples.csv), [refinement](runs/static_evaluation/refinement.csv).
-
-В этом отчёте описаны две SVD-SNO модели randomized-профиля. Сохранённый FNO низкой полосы повторно оценён по всем 1280 test-полям в [отчёте ревизии](../docs/operator_revision.md). Завершённого сравнения FNO высокой полосы этот отчёт не содержит. Корневой full-SVD и Chebyshev notebooks остаются отдельными сценариями; данные общие, результаты профилей независимы. [Инструкция](README.md), [точная фиксация среды](../docs/static_medium.md), [формулы и источники](../docs/methods.md).
+Эти значения сохранены без изменения и относятся только к текущему static-low test. Они не подтверждают перенос на другие материалы или точность относительно непрерывной PDE.

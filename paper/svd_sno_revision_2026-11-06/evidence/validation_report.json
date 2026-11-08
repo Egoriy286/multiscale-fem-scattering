@@ -1,270 +1,19 @@
 {
-  "checked_at": "2026-11-08T04:36:42.047762+00:00",
-  "scope": "Manuscript and archived per-sample statistics; no retraining or FEM solve",
-  "source_snapshots": 20,
-  "verified_aggregate_rows": [
-    {
-      "source": "pilot_low_summary.csv",
-      "group": {
-        "method": "SVD-SNO"
-      },
-      "statistics": {
-        "mean": 0.6858065614377858,
-        "median": 0.6305585803685545,
-        "p95": 1.065878472103576,
-        "max": 1.183998567414417
-      }
-    },
-    {
-      "source": "pilot_low_summary.csv",
-      "group": {
-        "method": "Chebyshev-SNO"
-      },
-      "statistics": {
-        "mean": 0.7062405907189394,
-        "median": 0.7268096404187487,
-        "p95": 0.8270323740207101,
-        "max": 0.8522842660033487
-      }
-    },
-    {
-      "source": "pilot_low_summary.csv",
-      "group": {
-        "method": "FNO"
-      },
-      "statistics": {
-        "mean": 0.38838678314279534,
-        "median": 0.37202371045839117,
-        "p95": 0.5964930485835055,
-        "max": 0.6738086827979459
-      }
-    },
-    {
-      "source": "pilot_high_summary.csv",
-      "group": {
-        "method": "SVD-SNO",
-        "regime": "frozen_low_band"
-      },
-      "statistics": {
-        "mean": 1.1256024807439338,
-        "median": 1.0842254866535472,
-        "p95": 1.3385224564285225,
-        "max": 1.3976109694163577
-      }
-    },
-    {
-      "source": "pilot_high_summary.csv",
-      "group": {
-        "method": "Chebyshev-SNO",
-        "regime": "frozen_low_band"
-      },
-      "statistics": {
-        "mean": 1.166924648368475,
-        "median": 1.0727965924914038,
-        "p95": 1.4961633992962404,
-        "max": 1.57877088561444
-      }
-    },
-    {
-      "source": "pilot_high_summary.csv",
-      "group": {
-        "method": "FNO",
-        "regime": "frozen_low_band"
-      },
-      "statistics": {
-        "mean": 1.635729447674368,
-        "median": 1.3849555190629752,
-        "p95": 2.715710870360201,
-        "max": 2.8226285998247547
-      }
-    },
-    {
-      "source": "pilot_high_summary.csv",
-      "group": {
-        "method": "SVD-SNO",
-        "regime": "retrained_high_band"
-      },
-      "statistics": {
-        "mean": 1.156862121226911,
-        "median": 1.1483489139613696,
-        "p95": 1.3458124724714822,
-        "max": 1.4278862244619293
-      }
-    },
-    {
-      "source": "pilot_high_summary.csv",
-      "group": {
-        "method": "Chebyshev-SNO",
-        "regime": "retrained_high_band"
-      },
-      "statistics": {
-        "mean": 1.0088674284925243,
-        "median": 1.0025754179243065,
-        "p95": 1.0621588226625198,
-        "max": 1.1190816959450778
-      }
-    },
-    {
-      "source": "pilot_high_summary.csv",
-      "group": {
-        "method": "FNO",
-        "regime": "retrained_high_band"
-      },
-      "statistics": {
-        "mean": 0.935304020301287,
-        "median": 0.954828484205436,
-        "p95": 1.061454557412734,
-        "max": 1.0807788607408255
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "Fine FEM reference"
-      },
-      "statistics": {
-        "mean": 0.0,
-        "median": 0.0,
-        "p95": 0.0,
-        "max": 0.0
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "Coarse Q1 traces in fine P1"
-      },
-      "statistics": {
-        "mean": 0.3527847117575525,
-        "median": 0.3874977212024316,
-        "p95": 0.40662268231356086,
-        "max": 0.4087476779925752
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "GMsFEM Type 1, M=1"
-      },
-      "statistics": {
-        "mean": 0.3481616467919825,
-        "median": 0.3846143544520817,
-        "p95": 0.40494050947406185,
-        "max": 0.4071989711431708
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "GMsFEM Type 1, M=2"
-      },
-      "statistics": {
-        "mean": 0.29696736303406374,
-        "median": 0.32329303013942207,
-        "p95": 0.3651197239594107,
-        "max": 0.3697671343838539
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "GMsFEM Type 1, M=4"
-      },
-      "statistics": {
-        "mean": 0.09456360467190501,
-        "median": 0.09982646139295843,
-        "p95": 0.10340060385802198,
-        "max": 0.10379773079858459
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "GMsFEM Type 2, M=1"
-      },
-      "statistics": {
-        "mean": 0.5844954131265843,
-        "median": 0.4927052203456601,
-        "p95": 0.9403822820129669,
-        "max": 0.9901241777537788
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "GMsFEM Type 2, M=2"
-      },
-      "statistics": {
-        "mean": 0.5386315183975537,
-        "median": 0.43945482925045337,
-        "p95": 0.9162760165980599,
-        "max": 0.9692561485255718
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "GMsFEM Type 2, M=4"
-      },
-      "statistics": {
-        "mean": 0.08527096281685852,
-        "median": 0.08261629422395984,
-        "p95": 0.09791801967830259,
-        "max": 0.09961821139545178
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "SVD-SNO"
-      },
-      "statistics": {
-        "mean": 0.6184271720246496,
-        "median": 0.61844453071563,
-        "p95": 0.6241444470194877,
-        "max": 0.6247777710532496
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "Chebyshev-SNO"
-      },
-      "statistics": {
-        "mean": 0.6748829981326545,
-        "median": 0.6431476685740702,
-        "p95": 0.8050279082015726,
-        "max": 0.8230146014935172
-      }
-    },
-    {
-      "source": "pilot_paired_summary.csv",
-      "group": {
-        "method": "FNO"
-      },
-      "statistics": {
-        "mean": 0.39525619098583403,
-        "median": 0.3788519345218557,
-        "p95": 0.5212319075769135,
-        "max": 0.5370519045830311
-      }
-    }
-  ],
-  "labels": 46,
-  "bibliography_entries": 5,
+  "checked_at": "2026-11-08T05:10:28.963057+00:00",
+  "scope": "Current static-low dataset and three selected completed runs",
+  "source_snapshots": 13,
+  "metric_table_values_checked": 12,
+  "labels": 30,
+  "bibliography_entries": 4,
   "figures": [
-    "images/candidate_geometry.pdf",
-    "images/sno_hidden_mixing.pdf",
-    "images/sno_architecture.pdf",
+    "images/static_medium_geometry.pdf",
+    "images/sno_v2_architecture.pdf",
     "images/fno_architecture.pdf",
-    "images/training_history.pdf",
-    "images/prediction_static_low_comparison_sno_components.pdf",
-    "images/prediction_static_low_comparison_fno_components.pdf",
-    "images/prediction_static_high_components.pdf"
+    "images/static_low_sno_components.pdf",
+    "images/static_low_fno_components.pdf",
+    "images/static_low_chebyshev_components.pdf"
   ],
-  "pdf_pages": 23,
-  "historical_jax_metric_values_checked": 16,
-  "markdown_links_checked": 17,
+  "markdown_links_checked": 14,
   "dct_inverse_checks": [
     {
       "size": 3,
@@ -279,16 +28,15 @@
       "inverse_max_error": 2.2412627309620348e-15
     }
   ],
-  "originals_unchanged": true,
-  "historical_jax_training_rerun": false,
-  "historical_low_pilot_svd_checkpoint_recovered": false,
-  "visual_pages_reviewed": 23,
+  "original_unchanged": true,
+  "pdf_pages": 13,
+  "visual_pages_reviewed": 13,
   "latex": {
     "latex_errors": false,
     "overfull_boxes": false,
     "undefined_references": false,
     "missing_glyphs": false
   },
-  "tex_sha256": "9758bf7c62b66e03ad27c95a7f44db948266e3fe971e14d8613441c99a214b8a",
-  "pdf_sha256": "666b0cedc4b9577b8e512e9bcae4cb03769b816e3a7463e6abd659c63b0f512b"
+  "tex_sha256": "b96aaedc8b8c245fc0f4ad223955cf7281683e4c40a10c42dafa6bd4544aa47c",
+  "pdf_sha256": "1a26ecea8becf646291bdca77204ad23410a2c997857039406e59e9867b06ed9"
 }

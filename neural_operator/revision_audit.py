@@ -55,7 +55,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", type=Path, required=True)
     parser.add_argument("--current-run", type=Path, required=True)
-    parser.add_argument("--baseline-run", type=Path, required=True)
+    parser.add_argument("--baseline-run", type=Path,
+                        help="Optional baseline to compare with the current run")
     parser.add_argument("--comparison-run", type=Path, action="append", default=[],
                         help="Optional additional completed run; verify on the same frozen test split")
     parser.add_argument("--output", type=Path, required=True)
@@ -63,7 +64,8 @@ def main(argv=None):
     dataset = load_dataset(args.dataset, mmap=True)
     fingerprint = dataset_fingerprint(dataset)
     current = audit_run(dataset, args.current_run, fingerprint)
-    baseline = audit_run(dataset, args.baseline_run, fingerprint)
+    baseline = (audit_run(dataset, args.baseline_run, fingerprint)
+                if args.baseline_run is not None else None)
     source = Path(__file__).resolve().parent
     root = source.parent
     source_paths = ("_layers.py", "sno/model.py", "sno/basis.py", "chebyshev/model.py",
@@ -75,10 +77,8 @@ def main(argv=None):
         "split_strategy": dataset.split_strategy,
         "optimizer": {"name": "AdamW", "learning_rate": current["saved_metrics"]["config"]["learning_rate"],
                       "weight_decay": 1e-5, "gradient_clip_norm": 1.},
-        "current": current, "baseline": baseline,
+        "current": current,
         "additional_runs": [audit_run(dataset, path, fingerprint) for path in args.comparison_run],
-        "mean_error_difference": (current["recomputed_test_fem_l2"]["mean"] -
-                                  baseline["recomputed_test_fem_l2"]["mean"]),
         "source_sha256": {str((source / name).relative_to(root)): sha256(source / name)
                           for name in source_paths},
         "limitations": ["No claim of statistical superiority from one seed",
@@ -86,10 +86,13 @@ def main(argv=None):
                         "Zero input material POD ranks prevent generalization to new materials",
                         "Surrogate errors do not certify continuum Helmholtz accuracy"],
     }
+    if baseline is not None:
+        report["baseline"] = baseline
+        report["mean_error_difference"] = (current["recomputed_test_fem_l2"]["mean"] -
+                                            baseline["recomputed_test_fem_l2"]["mean"])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    print(json.dumps({"report": str(args.output), "test_fem_l2": current["recomputed_test_fem_l2"],
-                      "baseline_test_fem_l2": baseline["recomputed_test_fem_l2"]}, indent=2))
+    print(json.dumps({"report": str(args.output), "test_fem_l2": current["recomputed_test_fem_l2"]}, indent=2))
 
 
 if __name__ == "__main__":

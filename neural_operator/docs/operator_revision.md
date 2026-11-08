@@ -1,13 +1,13 @@
 # Ревизия операторов, 8 ноября 2026
 
-SVD-SNO v2 обучена заново и проверена по всем 1280 static-low test-полям. Её средняя complex consistent FEM L2 ошибка — **0.9475%**, у сохранённой v1 — **0.9614%**. Изменение невелико; один seed не доказывает превосходство архитектуры. FNO и Chebyshev-SNO сохранены как самостоятельные методы. Их представления, обучение и ограничения описаны раздельно.
+SVD-SNO v2, FNO и Chebyshev-SNO проверены на текущем static-low наборе по всем 1280 test-полям. Средние complex consistent FEM L2 ошибки — **0.9475%**, **1.6599%** и **7.9364%** соответственно. Это разные архитектуры и вычислительные бюджеты; один seed не задаёт универсальный рейтинг методов.
 
 ## Что исправлено
 
 | Область | Изменение и проверяемый смысл |
 | --- | --- |
 | SNO | V2 получает явные coefficient tokens и имеет независимую локальную ветвь. Входные моды сохраняются, даже когда их больше выходных. |
-| Checkpoint | `architecture_version` записывается в `model_kwargs`. Все старые unversioned SNO bundles загружаются как v1; полный test-inference даёт те же сохранённые predictions. |
+| Checkpoint | `architecture_version` записывается в `model_kwargs`. Все старые unversioned SNO bundles загружаются как v1; совместимость проверяется unit tests. |
 | Физический loss | Нулевая ошибка даёт 0 с конечным градиентом, включая нулевое рассеяние. Прежний floor числителя возвращал 1 для двух нулевых полей. Direct FEM и compressed POD loss остаются согласованы. |
 | FNO | При clipping FFT-мод на меньшей сетке сохраняется соответствие отрицательного веса физической частоте. Веса массива `[-m,…,-1]` выбираются с конца; новый regression test проверяет одну и ту же волну на трёх разрешениях. Сохранённый static-low FNO на своей сетке не меняется. |
 | Chebyshev | DCT-I и endpoint normalization сохранены; размеры меньше двух и некорректные modes отвергаются до появления NaN. Добавлен consistent FEM projection floor именно для используемого выходного декодера. |
@@ -49,7 +49,7 @@ flowchart LR
 
 Это локальная POD-адаптация coefficient-space SNO. [Fanaskov–Oseledets](https://arxiv.org/abs/2205.10573) используют фиксированные ряды Чебышёва/Фурье; наши POD-базисы и данный эксперимент не объявляются репликацией их результатов. [Методичка](svd_sno_guide.md) подробно разбирает SVD, Z/W/B, Re/Im/Abs и legacy-архитектуру.
 
-V1 сохраняет dense lift d→r×width без GELU и блок `Z + GELU(B(ZW+b))`. V2 обучается с нуля; смена версии не является преобразованием старых весов. В конкретном static-low run v2 имеет 4022 вещественных параметра, v1 — 3110.
+V1 сохраняет dense lift d→r×width без GELU и блок `Z + GELU(B(ZW+b))`. V2 обучается с нуля; смена версии не является преобразованием старых весов. В текущем static-low run v2 имеет 4022 вещественных параметра.
 
 ## Измеренные результаты static-low
 
@@ -58,15 +58,14 @@ V1 сохраняет dense lift d→r×width без GELU и блок `Z + GELU(
 | Модель | Mean | Median | p95 | Max | Completed / best epoch | Параметры |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | SVD-SNO v2, новый CPU run | 0.9475 | 0.8671 | 1.6534 | 2.8962 | 165 / 115 | 4022 |
-| SVD-SNO v1, прежний CPU run | 0.9614 | 0.8824 | 1.6792 | 2.9480 | 200 / 170 | 3110 |
 | FNO, прежний MPS run, новая CPU проверка | 1.6599 | 1.6329 | 1.9505 | 2.2305 | 142 / 92 | 445010 |
 | Chebyshev-SNO, новый CPU run, modes8 | 7.9364 | 7.6838 | 9.8811 | 11.1065 | 200 / 199 | 2426 |
 
 Все SNO и Chebyshev test-предсказания повторно вычислены по checkpoint; максимальное отличие от архивов равно нулю. [Компактный JSON](operator_revision.json) содержит полные конфигурации, исходные и повторные метрики, версии библиотек и SHA-256 checkpoint/config/history/predictions; Chebyshev находится в `additional_runs`. [FNO provenance](fno_static_low_verification_2026-11-08.json) содержит исходный MPS run и проверку всех 1280 полей на текущем CPU-коде; максимальная разница test-ошибок — около 4.3×10⁻⁹. Это проверка сохранённой модели, без повторного обучения.
 
-Оба SNO используют randomized train-only POD с выходными рангами Re=Im=10; consistent projection floor mean=0.9188%. Обучение v2 остановлено по validation plateau при patience=50; общий лимит был 200 эпох. Основные настройки всех методов: width=24, depth=3, batch=32, AdamW lr=0.002, weight_decay=10⁻⁵, gradient clipping=1, seed=42. FNO имеет grid32, modes8, padding8. Числа параметров, устройства, завершённые эпохи и режимы представления различаются; это не сравнение при равном вычислительном бюджете. Времена из отдельных runs не используются как доказательство ускорения.
+SNO v2 использует randomized train-only POD с выходными рангами Re=Im=10; consistent projection floor mean=0.9188%. Обучение v2 остановлено по validation plateau при patience=50; общий лимит был 200 эпох. Основные настройки всех методов: width=24, depth=3, batch=32, AdamW lr=0.002, weight_decay=10⁻⁵, gradient clipping=1, seed=42. FNO имеет grid32, modes8, padding8. Числа параметров, устройства, завершённые эпохи и режимы представления различаются; это не сравнение при равном вычислительном бюджете. Времена из отдельных runs не используются как доказательство ускорения.
 
-Разница v1/v2 составляет около 0.014 процентного пункта, а стоимость POD-усечения уже близка к итоговой ошибке. Для вывода об архитектурном выигрыше нужны несколько seed и заранее заданный протокол, без выбора лучшего test-результата.
+Стоимость POD-усечения близка к итоговой ошибке SNO. Для вывода об архитектурном выигрыше нужны несколько seed и заранее заданный протокол, без выбора лучшего test-результата.
 
 ## Chebyshev: измерить представление до обучения
 
@@ -100,8 +99,8 @@ Padding уменьшает взаимодействие через период�
 # Новый v2 run; существующий завершённый результат только проверяется и загружается.
 docker compose exec -T dolfinx-complex python3 -m neural_operator.run train --method svd --pod-method randomized --band low --epochs 200 --sno-architecture-version 2 --output neural_operator/runs/revision_2026-11-08/static_low
 
-# Чистая проверка двух SNO checkpoints по всем test-полям; без обучения.
-docker compose exec -T dolfinx-complex python3 -m neural_operator.revision_audit --dataset neural_operator/data/static_low_frequency_1000x8 --current-run neural_operator/runs/revision_2026-11-08/static_low/svd --baseline-run neural_operator/randomized/runs/low_frequency_static_1000x8/svd --comparison-run neural_operator/runs/revision_2026-11-08/static_low/chebyshev --output neural_operator/docs/operator_revision.json
+# Чистая проверка текущих SNO и Chebyshev по всем test-полям; без обучения.
+docker compose exec -T dolfinx-complex python3 -m neural_operator.revision_audit --dataset neural_operator/data/static_low_frequency_1000x8 --current-run neural_operator/runs/revision_2026-11-08/static_low/svd --comparison-run neural_operator/runs/revision_2026-11-08/static_low/chebyshev --output neural_operator/docs/operator_revision.json
 
 # Только validation: подобрать допустимое выходное пространство Chebyshev.
 docker compose exec -T dolfinx-complex python3 -m neural_operator.diagnostics --dataset neural_operator/data/static_low_frequency_1000x8 --resolution 32 --modes 8 12 16 --output neural_operator/docs/chebyshev_decoder_validation_2026-11-08.json
@@ -123,4 +122,4 @@ docker compose exec -T dolfinx-complex python3 -m pytest neural_operator/tests -
 
 ## Границы результата
 
-Test содержит удержанные частоты одной среды; это не перенос на другие материалы. Средняя ошибка относительно FEM-label не является ошибкой относительно непрерывной PDE. High-band k∈[4,8] сохранён как stress-only из-за проверки FEM-разрешения, см. [аудит датасетов](dataset_audit.md). Ошибка интерфейсного переноса, выходного представления и нейросети имеют разный смысл и учитываются раздельно. В частности, сохранённые SNO/FNO умеют выдавать Re/Im/Abs, но это не добавляет третьего независимого физического выхода и не исправляет ограниченность обучающего распределения.
+Test содержит удержанные частоты одной среды; это не перенос на другие материалы. Средняя ошибка относительно FEM-label не является ошибкой относительно непрерывной PDE. Ошибка интерфейсного переноса, выходного представления и нейросети имеют разный смысл и учитываются раздельно. В частности, сохранённые SNO/FNO умеют выдавать Re/Im/Abs, но это не добавляет третьего независимого физического выхода и не исправляет ограниченность обучающего распределения.

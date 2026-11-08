@@ -1,0 +1,126 @@
+{
+  "scope": "One fixed medium, k in [1,2], three current completed runs",
+  "dataset": "neural_operator/data/static_low_frequency_1000x8",
+  "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+  "selection": "First saved test position, chosen before inspecting model errors",
+  "sample": {
+    "index": 8,
+    "position_in_test": 0,
+    "k": 1.001001001001001,
+    "theta": 0.033123693432586185
+  },
+  "models": {
+    "sno": {
+      "label": "SVD-SNO v2",
+      "run": "neural_operator/runs/revision_2026-11-08/static_low/svd",
+      "checked_test_samples": 1280,
+      "test_fem_l2": {
+        "mean": 0.009474553985233577,
+        "median": 0.008671413765938916,
+        "p95": 0.016534331131842342,
+        "max": 0.028961538800576368
+      },
+      "sample_fem_l2": 0.016985372861499457,
+      "checkpoint_sample_max_abs_difference": 0.0,
+      "files": {
+        "model.pt": {
+          "path": "neural_operator/runs/revision_2026-11-08/static_low/svd/model.pt",
+          "sha256": "7b6c564a61e1f226133dff668e59b851525f9e035b4ee923b46ed292625e6ce1"
+        },
+        "metrics.json": {
+          "path": "neural_operator/runs/revision_2026-11-08/static_low/svd/metrics.json",
+          "sha256": "ea9c3c3574639c702dd668c3387c9f6dd9018ed6298ec7f9c33266f52a789bdd"
+        },
+        "test_predictions.npz": {
+          "path": "neural_operator/runs/revision_2026-11-08/static_low/svd/test_predictions.npz",
+          "sha256": "234c24cde958b6558f2d97d60d12ee52b62103dc374bcf18f8f3b5b7192d785d"
+        }
+      }
+    },
+    "fno": {
+      "label": "FNO",
+      "run": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno",
+      "checked_test_samples": 1280,
+      "test_fem_l2": {
+        "mean": 0.016598919414494616,
+        "median": 0.01632905463702357,
+        "p95": 0.019505487729113848,
+        "max": 0.02230463038700699
+      },
+      "sample_fem_l2": 0.021096831263768934,
+      "checkpoint_sample_max_abs_difference": 4.165001232792065e-09,
+      "files": {
+        "model.pt": {
+          "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno/model.pt",
+          "sha256": "2e30e513e405582a492358e2e760e0301fdc676055402196b049f8d693734d51"
+        },
+        "metrics.json": {
+          "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno/metrics.json",
+          "sha256": "516e769f96eadd54d0d82e93ec64b5c1bd27f22e76e275dd6eeff94f8056793f"
+        },
+        "test_predictions.npz": {
+          "path": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno/test_predictions.npz",
+          "sha256": "b1e3d561ba887bdb13fcb0add4794df6197f84d33473e75f41fcb03f1cc7782c"
+        }
+      }
+    },
+    "chebyshev": {
+      "label": "Chebyshev-SNO",
+      "run": "neural_operator/runs/revision_2026-11-08/static_low/chebyshev",
+      "checked_test_samples": 1280,
+      "test_fem_l2": {
+        "mean": 0.07936406284402778,
+        "median": 0.07683830466128,
+        "p95": 0.0988107474482859,
+        "max": 0.11106546409123123
+      },
+      "sample_fem_l2": 0.10914122651121229,
+      "checkpoint_sample_max_abs_difference": 0.0,
+      "files": {
+        "model.pt": {
+          "path": "neural_operator/runs/revision_2026-11-08/static_low/chebyshev/model.pt",
+          "sha256": "d03fd36eb3ab8e258e00718003052bc3f81616a34a79eff47feab24083d5ca2a"
+        },
+        "metrics.json": {
+          "path": "neural_operator/runs/revision_2026-11-08/static_low/chebyshev/metrics.json",
+          "sha256": "6c44af83739518e4fd3dfc22ec4682d6dece2f5d86783f418daf4f43817829c4"
+        },
+        "test_predictions.npz": {
+          "path": "neural_operator/runs/revision_2026-11-08/static_low/chebyshev/test_predictions.npz",
+          "sha256": "9502fc0d9ccd510974b21de285b1dc5c7f2e35b23e738075dcc44a9faa3b45e0"
+        }
+      }
+    }
+  },
+  "field_ranges": [
+    [
+      -0.006744353100657463,
+      0.01872737891972065
+    ],
+    [
+      -0.003946557641029358,
+      0.01903718426163319
+    ],
+    [
+      0.002137447940185666,
+      0.02207035943865776
+    ]
+  ],
+  "error_ranges": [
+    [
+      0.0,
+      0.007423086132069996
+    ],
+    [
+      0.0,
+      0.007868477241398494
+    ],
+    [
+      0.0,
+      0.006732072154225959
+    ]
+  ],
+  "training_epochs_performed": 0,
+  "fem_solves_performed": 0,
+  "generator_sha256": "89157305ce4e3f151c4fdcad98846303e506b584a212e7117fb4800c4c45b3ef"
+}

@@ -1,0 +1,47 @@
+{
+  "scope": "Validation-only approximation diagnostic; no neural fit and no test inspection",
+  "dataset": "neural_operator/data/static_low_frequency_1000x8",
+  "dataset_fingerprint": "786ee3849e909083d98213653affa47907312d0f626e8a60da76e88c70de0ca5",
+  "resolution": 32,
+  "kind": "chebyshev",
+  "mean": "train-only complex FEM field",
+  "validation_samples": 1360,
+  "method": "Consistent mass least-squares projection into the actual affine decoder span",
+  "interpretation": "Lower bound for this fixed decoder; not deployable predictor error or FEM PDE accuracy",
+  "source_sha256": "22600386df0aa298dabbbda63b16433fdae34c5f280f8f33ceee98f10d918129",
+  "records": [
+    {
+      "modes_per_axis": 8,
+      "coefficients": 64,
+      "validation_fem_l2": {
+        "mean": 0.0761426303197666,
+        "median": 0.07398916024334301,
+        "p95": 0.09526629015363788,
+        "max": 0.1051612455589215
+      },
+      "gram_condition_number": 102.01927976832374
+    },
+    {
+      "modes_per_axis": 12,
+      "coefficients": 144,
+      "validation_fem_l2": {
+        "mean": 0.05890452098989538,
+        "median": 0.057722975959284856,
+        "p95": 0.06956164584761217,
+        "max": 0.07882174941941278
+      },
+      "gram_condition_number": 130.64289584720487
+    },
+    {
+      "modes_per_axis": 16,
+      "coefficients": 256,
+      "validation_fem_l2": {
+        "mean": 0.04701618739093899,
+        "median": 0.04601234884870868,
+        "p95": 0.05457521627571522,
+        "max": 0.06214789431233552
+      },
+      "gram_condition_number": 227.81923619847538
+    }
+  ]
+}
