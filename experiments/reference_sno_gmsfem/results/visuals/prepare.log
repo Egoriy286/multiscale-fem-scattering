@@ -1,0 +1,10 @@
+Info    : Reading '/workspace/multiscale-fem-scattering/gmsfem/meshes/fine_n20_h0p04.msh'...
+Info    : 1873 entities
+Info    : 17549 nodes
+Info    : 35096 elements
+Info    : Done reading '/workspace/multiscale-fem-scattering/gmsfem/meshes/fine_n20_h0p04.msh'
+Prepared low_k1: index=608, actual k=1, theta=0; metric checks passed
+Prepared low_k2: index=1280, actual k=2, theta=0.682988906201; metric checks passed
+Prepared high_k3: index=640, actual k=3.00628930818, theta=0.690970666416; metric checks passed
+Prepared high_k4: index=1272, actual k=4, theta=0.0367041044169; metric checks passed
+Saved fields.npz, inputs.npz, cases.json in /workspace/multiscale-fem-scattering/experiments/reference_sno_gmsfem/results/visuals; all immutable hashes unchanged

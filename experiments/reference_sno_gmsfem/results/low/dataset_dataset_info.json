@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "samples": 1288,
+  "nodes": 53246,
+  "triangles": 105690,
+  "media": 1,
+  "split_strategy": "frequency",
+  "frequency_groups": 161,
+  "raw_label_bytes": 1097293568,
+  "current_generation_session_seconds": 241.58247752600005,
+  "resumed_frequency_groups": 0,
+  "splits": [
+    {
+      "name": "train",
+      "samples": 856,
+      "groups": 107
+    },
+    {
+      "name": "validation",
+      "samples": 216,
+      "groups": 27
+    },
+    {
+      "name": "test",
+      "samples": 216,
+      "groups": 27
+    }
+  ],
+  "sha256": {
+    "etal.msh": "9273efc7c0b500209ff847de4ee36d3790b93d64b09e67f62348318ed6b6cb47",
+    "reference_problem.npz": "b202bd558a794a11ac0c303e9aca8ec242de9d4d9ec83c54e5509569610b00b6",
+    "samples.npz": "3d8da41af8db30d90a91cb516c6e866dd3d9eb34dce473a87679fdc0b13f5231",
+    "u_scat.npy": "3af99f07c9ca5e6d4c83b49137cbee9fb6936331e7a311db88f432f1f47b9983"
+  }
+}

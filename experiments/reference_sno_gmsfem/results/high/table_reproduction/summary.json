@@ -1,0 +1,23 @@
+{
+  "case": "notebook",
+  "k": 1.0,
+  "theta": 0.0,
+  "fine_diagnostics": {
+    "solve_seconds": 0.18605395899999166,
+    "relative_residual": 2.3675169118829944e-13
+  },
+  "reference_diagnostics": {
+    "solve_seconds": 1.177110626000058,
+    "relative_residual": 4.1808038666928064e-13
+  },
+  "compared_values": 732,
+  "max_absolute_difference": 0.0,
+  "max_error_percentage_point_difference": 0.0,
+  "max_absolute_l2_difference": 0.0,
+  "percentage_point_tolerance": 1e-06,
+  "tolerance_percentage_points": 1e-06,
+  "absolute_l2_tolerance": 1e-08,
+  "all_finite": true,
+  "passed": true,
+  "protocol": "Original table mesh, UFL assembly, quadrature and denominator conventions; differences are measured, never replaced by saved values"
+}

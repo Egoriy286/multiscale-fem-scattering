@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "bands": {
+    "low": {
+      "test_samples": 216,
+      "method_samples": {
+        "SNO low": 216,
+        "FEM h=0.04": 216,
+        "GMsFEM 10x10 Type 1 M=16": 216,
+        "GMsFEM 10x10 Type 2 M=16": 216,
+        "GMsFEM 20x20 Type 1 M=16": 216,
+        "GMsFEM 20x20 Type 2 M=16": 216
+      },
+      "reproduction_max_difference_percentage_points": 0.0
+    },
+    "high": {
+      "test_samples": 208,
+      "method_samples": {
+        "SNO high": 208,
+        "FEM h=0.04": 208,
+        "GMsFEM 10x10 Type 1 M=16": 208,
+        "GMsFEM 10x10 Type 2 M=16": 208,
+        "GMsFEM 20x20 Type 1 M=16": 208,
+        "GMsFEM 20x20 Type 2 M=16": 208,
+        "SNO low extrapolation": 200
+      },
+      "reproduction_max_difference_percentage_points": 0.0
+    }
+  }
+}

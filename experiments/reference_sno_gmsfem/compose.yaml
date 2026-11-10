@@ -1,0 +1,12 @@
+services:
+  dolfinx-complex:
+    build:
+      context: ./experiments/reference_sno_gmsfem
+      dockerfile: Dockerfile
+    image: multiscale-fem-scattering/reference-sno-gmsfem:2026-11-09
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import dolfinx, torch; from petsc4py import PETSc; import numpy as np; assert np.dtype(PETSc.ScalarType).kind == 'c'"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+      start_period: 30s
