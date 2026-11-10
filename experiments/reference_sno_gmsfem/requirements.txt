@@ -1,0 +1,10 @@
+# Install into a local Python 3.11/3.12 environment or the existing Docker service.
+# Gmsh and complex DOLFINx for mesh generation are supplied by dolfinx-complex.
+numpy>=1.26,<3
+scipy>=1.12,<2
+matplotlib>=3.8,<4
+torch==2.9.1+cpu
+nbformat>=5.10,<6
+nbclient>=0.10,<1
+ipykernel>=6,<8
+pytest>=8,<10

@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import matplotlib.tri as mtri
 import numpy as np
 
+from .fields import scattering_components
+
 
 def display_table(rows, columns=None):
     from IPython.display import HTML, display
@@ -33,19 +35,26 @@ def plot_history(history):
 
 
 def plot_prediction(dataset, index, prediction, title=""):
+    """Compare Re, Im and Abs of u_scattering with their FEM references."""
     triangulation = mtri.Triangulation(*dataset.coordinates.T, dataset.triangles)
-    true = dataset.u_scat[index]
-    fig, axes = plt.subplots(1, 4, figsize=(15, 3.5), constrained_layout=True)
-    real_limit = max(float(np.abs(true.real).max()), float(np.abs(prediction.real).max()), 1e-12)
-    amplitude_limit = max(float(np.abs(true).max()), float(np.abs(prediction).max()), 1e-12)
-    items = [(true.real, "Re $u^s$: FEM", "RdBu_r", -real_limit, real_limit),
-             (prediction.real, "Re $u^s$: prediction", "RdBu_r", -real_limit, real_limit),
-             (np.abs(prediction), "$|u^s|$: prediction", "viridis", 0, amplitude_limit),
-             (np.abs(prediction-true), "$|u^s_{pred}-u^s_{FEM}|$", "magma", 0, None)]
-    for ax, (values, label, cmap, vmin, vmax) in zip(axes, items):
-        artist = ax.tripcolor(triangulation, values, shading="gouraud", cmap=cmap, vmin=vmin, vmax=vmax)
-        ax.set(title=label, aspect="equal", xlabel="x", ylabel="y")
-        fig.colorbar(artist, ax=ax, shrink=.78)
+    true = scattering_components(dataset.u_scat[index])
+    predicted = scattering_components(prediction)
+    fig, axes = plt.subplots(3, 3, figsize=(13, 11), constrained_layout=True)
+    for row, (name, label) in enumerate((("real", r"Re($u_{\mathrm{scattering}}$)"),
+                                        ("imag", r"Im($u_{\mathrm{scattering}}$)"),
+                                        ("abs", r"Abs($u_{\mathrm{scattering}}$)"))):
+        reference, estimate = true[name], predicted[name]
+        limit = max(float(np.abs(reference).max()), float(np.abs(estimate).max()), 1e-12)
+        cmap = "viridis" if name == "abs" else "RdBu_r"
+        vmin = 0 if name == "abs" else -limit
+        items = ((reference, f"{label}: FEM", cmap, vmin, limit),
+                 (estimate, f"{label}: prediction", cmap, vmin, limit),
+                 (np.abs(estimate-reference), f"{label}: absolute error", "magma", 0, None))
+        for ax, (values, heading, colors, lower, upper) in zip(axes[row], items):
+            artist = ax.tripcolor(triangulation, values, shading="gouraud", cmap=colors,
+                                  vmin=lower, vmax=upper)
+            ax.set(title=heading, aspect="equal", xlabel="x", ylabel="y")
+            fig.colorbar(artist, ax=ax, shrink=.78)
     fig.suptitle(title or f"k={dataset.k0[index]:.3f}; medium={dataset.medium_id[index]}")
     return fig
 

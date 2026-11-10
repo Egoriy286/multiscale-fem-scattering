@@ -1,25 +1,26 @@
 # Multiscale FEM Scattering
 
-> Research software by Egoriy Monastyrev (MIT) for 2D heterogeneous Helmholtz wave scattering: complex P1 FEM, GMsFEM, POD/SVD-based SNO, Chebyshev-SNO and Fourier Neural Operators. Repository: https://github.com/Egoriy286/multiscale-fem-scattering
+> MIT-licensed research software by Egoriy Monastyrev for 2D heterogeneous Helmholtz scattering. Repository: https://github.com/Egoriy286/multiscale-fem-scattering
 
-## Project and reproduction
+## Start here
 
-- [Research overview and quickstart](README.md): scientific scope, scoped results, Docker commands, small-data example, repository map and artifact availability.
-- [Software citation](CITATION.cff): author, software title, repository URL, license and keywords. Cite the exact commit and experiment configuration.
-- [GMsFEM implementation](gmsfem/README.md): fine FEM, Type 1/2 multiscale bases, CLI and numerical checks.
-- [GMsFEM mathematical formulation](gmsfem/docs/method.md): material interfaces, scattered/total fields, first-order absorbing boundary, snapshot spaces and spectral reduction.
-- [Neural operator workflow](neural_operator/README.md): SVD-SNO, Chebyshev-SNO, FNO, training, comparison and inference.
-- [Dataset generation and splits](neural_operator/docs/datasets.md): static versus variable media, deterministic generation, storage and frequency-grouped splits.
-- [Neural methods and metric](neural_operator/docs/methods.md): train-only POD, DCT-I, Fourier layers, grid transfer and consistent complex P1 FEM L2.
+- [Project summary](SUMMARY.md): scope, methods, retained evidence, data and learning route.
+- [Overview and commands](README.md): Docker, current experiment and repository map.
+- [Citation](CITATION.cff): cite the exact commit and configuration.
+- [GMsFEM learning path](gmsfem/docs/learning_path.md): worked P1/snapshot/spectral/projection example and self-checks.
+- [GMsFEM formulation](gmsfem/docs/method.md) and [audit](gmsfem/docs/audit.md).
+- [Neural methods](neural_operator/docs/methods.md) and [current results](neural_operator/docs/operator_revision.md).
+- [Current provenance JSON](neural_operator/docs/operator_revision.json) and [FNO verification](neural_operator/docs/fno_static_low_verification_2026-11-08.json).
+- [Dataset audit](neural_operator/docs/dataset_audit.md): only the retained static-low dataset.
+- [Lab templates](templates/README.md): preparatory labs 4 and 6.
+- [Paper](paper/svd_sno_revision_2026-11-06/README.md): current three-method study and reproduction.
 
-## Committed research results
+- [New multi-medium deep SNO plan](experiments/deep_sno_multimedia/PLAN.md): judge-reviewed staged design, strict label ledger, planning-only status.
 
-- [GMsFEM notebook-material report](gmsfem/results/notebook/report.md): k=1, fine FEM with 17,549 DOF, coarse systems and independent reference refinement.
-- [GMsFEM paper-inspired-material report](gmsfem/results/paper_example1/report.md): a distinct material preset on the repository geometry.
-- [Randomized SVD-SNO report](neural_operator/randomized/RESULTS.md): mean test errors 0.96% for k in [1,2] and 5.54% for k in [4,8], each on 1,280 held-out fields of one fixed medium.
-- [Randomized SVD-SNO machine-readable results](neural_operator/randomized/static_results.json): experiment settings and recorded evaluation summaries.
-- [Fixed-medium specification](neural_operator/docs/static_medium.md): 1,000 frequencies and 8 directions per band, shared fixed material and split provenance.
-- [Cross-mesh inference study](neural_operator/docs/cross_mesh_inference.md): frozen source P1/POD transfer and its interpretation.
-- [Primary method references](neural_operator/docs/references.md): literature attribution and limits of comparison.
+## Evidence and interpretation
 
-Neural datasets and model.pt bundles are generated local artifacts under ignored data/runs directories; they are not included in a clone. Neural errors are measured against discrete FEM labels for one fixed medium. They do not establish new-material generalization or continuous-PDE accuracy; high-band mesh-refinement differences are about 13–14%. GMsFEM and standalone neural report presets differ. The software adapts the cited methods to its own geometry and experiments.
+The neural study uses one fixed medium, k in [1,2], 1000 frequency groups and eight directions per group. Train/validation/test contain 5360/1360/1280 fields. Mean consistent complex FEM L2 errors: SNO v2 0.9475%, FNO 1.6599%, Chebyshev-SNO 7.9364%. POD and normalization use train; checkpoint/rank selection uses validation. These are FEM-label errors for held-out wave parameters, not new-material or continuum-PDE accuracy. Model sizes and devices differ.
+
+GMsFEM has separate saved studies: [notebook material](gmsfem/results/notebook/report.md), [paper-inspired material](gmsfem/results/paper_example1/report.md). Do not merge these material presets with neural metrics.
+
+Datasets and model bundles are local ignored artifacts. Obsolete neural experiment results were removed entirely from the current project tree; do not reconstruct their claims from old references. Preserve true current metrics and distinguish representation, interpolation, prediction and FEM discretization errors.

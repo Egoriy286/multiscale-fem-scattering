@@ -14,9 +14,11 @@ class PODBasis:
 
     @classmethod
     def fit(cls, fields, rank, weights=None, method="full", seed=42):
+        if np.iscomplexobj(fields):
+            raise ValueError("PODBasis is real-valued; fit real and imaginary components separately")
         fields = np.asarray(fields, dtype=np.float64)
-        if fields.ndim != 2 or not fields.shape[0] or not np.isfinite(fields).all():
-            raise ValueError("fields must be finite [samples, dofs] with samples")
+        if fields.ndim != 2 or not all(fields.shape) or not np.isfinite(fields).all():
+            raise ValueError("fields must be finite [samples, dofs] with nonempty axes")
         if rank < 0 or int(rank) != rank:
             raise ValueError("rank must be a nonnegative integer")
         weights = np.ones(fields.shape[1]) if weights is None else np.asarray(weights, dtype=np.float64)

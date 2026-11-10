@@ -1,0 +1,324 @@
+{
+  "schema_version": 2,
+  "scope": "Only the retained static-low experiment is included; obsolete experiment artifacts were removed entirely",
+  "threshold": 0.02,
+  "policy": "whole-experiment curation; no per-sample test filtering",
+  "datasets": [
+    {
+      "dataset": "static_low_frequency_1000x8",
+      "quality_threshold": 0.02,
+      "refinement": [
+        {
+          "method": "Fine FEM vs refined FEM",
+          "error_fem_l2": 0.006576558407118588,
+          "dofs_original": 3221,
+          "dofs_refined": 8958,
+          "refined_h": 0.05,
+          "refined_solve_seconds": 0.5097185000013269,
+          "source": "docs/static_low_refinement.json"
+        }
+      ],
+      "obsolete": false,
+      "reason": "",
+      "files": {
+        "fem_dataset.npz": {
+          "bytes": 394564938,
+          "sha256": "1e79c7bded8dffb70223287ea5d5cb718e8d1a10a49a45b7aceb4cce16123e06",
+          "arrays": {
+            "A": {
+              "shape": [
+                1,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "4157e5b85d7ff9a5505efb20dabd2cdaf046fbd84f48961c37411af2bff51c70"
+            },
+            "n": {
+              "shape": [
+                1,
+                3221
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "defc7adc474695a682e1da81514d8ea976d3a99c0693e8c59c9ba1d8c94597e7"
+            },
+            "A_cells": {
+              "shape": [
+                1,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "1ed86cb2fa843e37e60d1a58551b54d58f1d1d3d0f0c504c2d91bce04c0f75a9"
+            },
+            "n_cells": {
+              "shape": [
+                1,
+                6280
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "71ee93e1e7711eea6f70d0409ef1f04c0c350f30a8ce59196890b76e0cd8f2df"
+            },
+            "u_scat": {
+              "shape": [
+                8000,
+                3221
+              ],
+              "dtype": "complex128",
+              "order": "C",
+              "payload_sha256": "f6c4f6417dd24fefa604e5ee953370cd54e3157f4d647c5cd2cf461e391f0a7a"
+            },
+            "theta": {
+              "shape": [
+                8000
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "c40c589e9f6c90f170c03e4b71600c361f94d2f8f8ac0993090cceff72b60b5e"
+            },
+            "k0": {
+              "shape": [
+                8000
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "e6c50f85c88890170f303df9c340d94752d080835e84a10959d9735879a32b9d"
+            },
+            "medium_id": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "0c92bddb4e96f3ea9ec9f0f64a668255a6c15527ac09f6f119cafde60c7c4a39"
+            },
+            "frequency_id": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "59d737ffca8affeb844d02fc508ffca1aaca1dc2d56072e3d574f09f2340fbb4"
+            },
+            "split": {
+              "shape": [
+                8000
+              ],
+              "dtype": "int8",
+              "order": "C",
+              "payload_sha256": "7bfc76a631131bf9cb9de363de6eb2681f5f6183e55136648213ea1edd20e92c"
+            },
+            "split_strategy": {
+              "shape": [],
+              "dtype": "<U9",
+              "order": "C",
+              "payload_sha256": "b87d38494469610644b12e46ff082421b04c3f2d0764a7e304d2f622b295c30e"
+            }
+          }
+        },
+        "geometry.npz": {
+          "bytes": 63647,
+          "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a",
+          "arrays": {
+            "dof_coords": {
+              "shape": [
+                3221,
+                2
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "299e51908030a1421f4d414f6a8f96140c6917f6f1ca891691024f9c9615732e"
+            },
+            "triangles": {
+              "shape": [
+                6280,
+                3
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "3ad617dd504e5ee34f3805ac107ec9b2ec2dec23ae45fe218c8e1929033f16d5"
+            },
+            "cell_tags": {
+              "shape": [
+                6280
+              ],
+              "dtype": "int32",
+              "order": "C",
+              "payload_sha256": "11364bf65a9b28ba261da035efba845211a52b8af618583c03b6aa5c06292284"
+            },
+            "etal_circles": {
+              "shape": [
+                24,
+                4
+              ],
+              "dtype": "float64",
+              "order": "C",
+              "payload_sha256": "64eb94ce2cc2aba3e77fcfad989ab062415772ef7247631f87c3c369d45528c0"
+            }
+          }
+        },
+        "config.json": {
+          "bytes": 352,
+          "sha256": "5a3b004cae75e7832647d71dd6501150b3f7c812d96bdbe4c37fbc076032ffe2"
+        },
+        "dataset_info.json": {
+          "bytes": 3432,
+          "sha256": "188d9acd0226a4df6dbbadba83e2d5349e26243ef4b968eb7633c3b47cf063d0"
+        },
+        "etal.msh": {
+          "bytes": 273657,
+          "sha256": "2172be2cb8c05272f72466715657c013a145653dfb2eea63e28b5bb6385e1720"
+        }
+      },
+      "integrity_errors": [],
+      "config": {
+        "n_frequencies": 1000,
+        "n_directions": 8,
+        "h": 0.1,
+        "n_coarse": 4,
+        "k_range": [
+          1.0,
+          2.0
+        ],
+        "seed": 2026,
+        "fixed_medium_id": 0,
+        "active_range": [
+          3,
+          10
+        ],
+        "a_range": [
+          0.6,
+          0.9
+        ],
+        "n_range": [
+          1.5,
+          3.0
+        ],
+        "split_fractions": [
+          0.67,
+          0.17,
+          0.16
+        ],
+        "medium_mode": "static"
+      },
+      "inspection": {
+        "directory": "/workspace/multiscale-fem-scattering/neural_operator/data/static_low_frequency_1000x8",
+        "samples": 8000,
+        "nodes": 3221,
+        "media": 1,
+        "split_strategy": "frequency",
+        "split_groups": 1000,
+        "k_range_observed": [
+          1.0,
+          2.0
+        ],
+        "splits": [
+          {
+            "name": "train",
+            "samples": 5360,
+            "groups": 670
+          },
+          {
+            "name": "validation",
+            "samples": 1360,
+            "groups": 170
+          },
+          {
+            "name": "test",
+            "samples": 1280,
+            "groups": 160
+          }
+        ],
+        "stored_arrays": {
+          "A": {
+            "shape": [
+              1,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "n": {
+            "shape": [
+              1,
+              3221
+            ],
+            "dtype": "float64"
+          },
+          "A_cells": {
+            "shape": [
+              1,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "n_cells": {
+            "shape": [
+              1,
+              6280
+            ],
+            "dtype": "float64"
+          },
+          "u_scat": {
+            "shape": [
+              8000,
+              3221
+            ],
+            "dtype": "complex128"
+          },
+          "theta": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64"
+          },
+          "k0": {
+            "shape": [
+              8000
+            ],
+            "dtype": "float64"
+          },
+          "medium_id": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int32"
+          },
+          "frequency_id": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int32"
+          },
+          "split": {
+            "shape": [
+              8000
+            ],
+            "dtype": "int8"
+          },
+          "split_strategy": {
+            "shape": [],
+            "dtype": "<U9"
+          }
+        },
+        "archive_bytes": 394564938
+      },
+      "verified_manifest_arrays": [
+        "u_scat",
+        "theta",
+        "k0",
+        "medium_id",
+        "split",
+        "frequency_id"
+      ],
+      "status": "sampled_refinement_pass"
+    }
+  ],
+  "cleanup": {
+    "date": "2026-11-08",
+    "removed_local_directories": 23,
+    "bytes_removed_this_revision": 497219538,
+    "removed_experiment_results_not_archived": true
+  }
+}

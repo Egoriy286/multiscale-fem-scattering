@@ -1,0 +1,67 @@
+{
+  "sno_metrics.json": {
+    "source": "neural_operator/runs/revision_2026-11-08/static_low/svd/metrics.json",
+    "sha256": "ea9c3c3574639c702dd668c3387c9f6dd9018ed6298ec7f9c33266f52a789bdd",
+    "size_bytes": 1998
+  },
+  "sno_config.json": {
+    "source": "neural_operator/runs/revision_2026-11-08/static_low/svd/config.json",
+    "sha256": "854700f754c1247db2f9da937b21686fa9e91e614e5446c767f55385fc856302",
+    "size_bytes": 383
+  },
+  "sno_history.json": {
+    "source": "neural_operator/runs/revision_2026-11-08/static_low/svd/history.json",
+    "sha256": "bddf1aae9f9e60f69d6be5b35facc6011f30685335fcaebad44d020b835737df",
+    "size_bytes": 10373
+  },
+  "fno_metrics.json": {
+    "source": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno/metrics.json",
+    "sha256": "516e769f96eadd54d0d82e93ec64b5c1bd27f22e76e275dd6eeff94f8056793f",
+    "size_bytes": 1516
+  },
+  "fno_config.json": {
+    "source": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno/config.json",
+    "sha256": "0e8dc1823650f77e2ff35c503a3638f123df748984ee3ef087436f5180f21ab9",
+    "size_bytes": 350
+  },
+  "fno_history.json": {
+    "source": "neural_operator/randomized/runs/low_frequency_static_1000x8/fno/history.json",
+    "sha256": "202dc14b7ecb8234d4f38b8ddd1dddd7fe0e31a9cdef3679ab309229d076fcf1",
+    "size_bytes": 8884
+  },
+  "chebyshev_metrics.json": {
+    "source": "neural_operator/runs/revision_2026-11-08/static_low/chebyshev/metrics.json",
+    "sha256": "6c44af83739518e4fd3dfc22ec4682d6dece2f5d86783f418daf4f43817829c4",
+    "size_bytes": 1552
+  },
+  "chebyshev_config.json": {
+    "source": "neural_operator/runs/revision_2026-11-08/static_low/chebyshev/config.json",
+    "sha256": "b109d424f4a11fd7509609f83390e5606c93db23daea480ce162d40c8e890c62",
+    "size_bytes": 389
+  },
+  "chebyshev_history.json": {
+    "source": "neural_operator/runs/revision_2026-11-08/static_low/chebyshev/history.json",
+    "sha256": "6b0aa0c7d0bbd2a3d1bbd46de113feb1edbc6ad49c3abfa1a76c91d2ac0ed14a",
+    "size_bytes": 12188
+  },
+  "dataset_config.json": {
+    "source": "neural_operator/data/static_low_frequency_1000x8/config.json",
+    "sha256": "5a3b004cae75e7832647d71dd6501150b3f7c812d96bdbe4c37fbc076032ffe2",
+    "size_bytes": 352
+  },
+  "geometry.npz": {
+    "source": "neural_operator/data/static_low_frequency_1000x8/geometry.npz",
+    "sha256": "95184664a3d5d8776a8ca3213b3f69687f6144270ec386f0eee0e1c12cfdef1a",
+    "size_bytes": 63647
+  },
+  "chebyshev_decoder_validation.json": {
+    "source": "neural_operator/docs/chebyshev_decoder_validation_2026-11-08.json",
+    "sha256": "d73a58b6a6640c876ca9f8df6a0f5bfcf442f1c5121151ce17793cf9dedf1dcb",
+    "size_bytes": 1583
+  },
+  "fno_verification.json": {
+    "source": "neural_operator/docs/fno_static_low_verification_2026-11-08.json",
+    "sha256": "967a48c092c3d41c01ebf85a314f0c1c13f82207d9cc4820273d65c34191ba8e",
+    "size_bytes": 3117
+  }
+}

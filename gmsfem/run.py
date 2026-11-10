@@ -6,6 +6,18 @@ import argparse
 from pathlib import Path
 
 
+GENERATED_FIGURES = (
+    "meshes.png", "basis.png", "convergence.png", "fields_total.png",
+    "fields_scattered.png", "fields_dg_style.png", "reference_comparison.png",
+)
+
+
+def clear_generated_figures(output):
+    """Remove only this CLI's figures so a reused folder cannot mix studies."""
+    for filename in GENERATED_FIGURES:
+        (Path(output) / filename).unlink(missing_ok=True)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="GMsFEM: .geo → CG1 → snapshots → спектр → сравнение с МКЭ")
     parser.add_argument("--profile", choices=("quick", "demo", "paper"), default="demo",
@@ -22,7 +34,7 @@ def main(argv=None):
     parser.add_argument("--no-plots", action="store_true")
     args = parser.parse_args(argv)
 
-    from .experiment import ROOT, compare_refined, run_study, save_study
+    from .experiment import ROOT, compare_refined, run_study, save_study, write_report
 
     quick = args.profile == "quick"
     h = args.h if args.h is not None else (.1 if quick else .015 if args.profile == "paper" else .04)
@@ -32,6 +44,9 @@ def main(argv=None):
     study = run_study(case=args.case, k=args.k, h=h, coarse_grids=coarse,
                       modes=modes, basis_types=tuple(args.types), direction=tuple(args.direction))
     reference = None if args.no_reference else compare_refined(study)
+    # Persist the numerical result before rendering: a failed plot must not
+    # discard a completed solve. Refresh only report.md after the new PNGs.
+    clear_generated_figures(output)
     output = save_study(study, output, reference)
     if not args.no_plots:
         import matplotlib
@@ -57,6 +72,7 @@ def main(argv=None):
         for filename, figure in figures:
             save_figure(figure, output / filename)
             plt.close(figure)
+        write_report(study, reference, output)
     print(f"Готово: {output / 'report.md'}")
     return output
 

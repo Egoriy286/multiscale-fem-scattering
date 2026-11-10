@@ -1,0 +1,7 @@
+data/
+runs/
+logs/
+__pycache__/
+.pytest_cache/
+results/visuals/fields.npz
+results/visuals/inputs.npz

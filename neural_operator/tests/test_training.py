@@ -1,10 +1,12 @@
 """Integration checks for the physical loss and portable inference bundles."""
+from dataclasses import replace
+import json
 
 import numpy as np
 import pytest
 
 from neural_operator.data import Dataset
-from neural_operator.training import FEMLoss, TrainConfig, load_predictor, train_model
+from neural_operator.training import FEMLoss, TrainConfig, load_predictor, run_experiment, train_model
 import torch
 
 
@@ -30,6 +32,14 @@ def test_loss_matches_consistent_complex_mass(tiny_dataset):
     assert float(loss) == pytest.approx(ds.relative_l2(ds.u_scat, pred).mean(), rel=2e-6)
 
 
+def test_perfect_zero_field_has_zero_loss_and_finite_gradient(tiny_dataset):
+    values = torch.zeros((2, len(tiny_dataset.coordinates), 2), requires_grad=True)
+    loss = FEMLoss(tiny_dataset.coordinates, tiny_dataset.triangles)(values, torch.zeros_like(values))
+    assert float(loss.detach()) == 0.
+    loss.backward()
+    torch.testing.assert_close(values.grad, torch.zeros_like(values))
+
+
 @pytest.mark.parametrize("method", ["svd", "chebyshev", "fno"])
 def test_training_bundle_roundtrip_and_batch_parity(tiny_dataset, tmp_path, method):
     config = TrainConfig(method=method, epochs=2, width=4, depth=1, rank=4,
@@ -43,8 +53,51 @@ def test_training_bundle_roundtrip_and_batch_parity(tiny_dataset, tmp_path, meth
     single = saved.predict(tiny_dataset.A[indices[0]], tiny_dataset.n[indices[0]],
                            tiny_dataset.theta[indices[0]], tiny_dataset.k0[indices[0]])
     np.testing.assert_allclose(single, actual[0], atol=2e-6)
+    components = saved.predict_components(tiny_dataset.A[indices[0]], tiny_dataset.n[indices[0]],
+                                          tiny_dataset.theta[indices[0]], tiny_dataset.k0[indices[0]])
+    batch_components = saved.predict_dataset_components(tiny_dataset, indices)
+    for name, expected_component in (("real", actual.real), ("imag", actual.imag),
+                                     ("abs", np.abs(actual))):
+        assert components[name].shape == (len(tiny_dataset.coordinates),)
+        np.testing.assert_allclose(components[name], expected_component[0], atol=2e-6)
+        np.testing.assert_allclose(batch_components[name], expected_component, atol=1e-7)
+    with np.load(tmp_path/method/"test_predictions.npz") as archive:
+        for name in ("real", "imag", "abs"):
+            np.testing.assert_allclose(archive[f"prediction_{name}"], batch_components[name], atol=1e-7)
+        np.testing.assert_allclose(archive["prediction"], actual, atol=1e-7)
     assert metrics["best_epoch"] in (1, 2)
     assert np.isfinite(metrics["test_fem_l2"]["mean"])
+    if method == "svd":
+        assert saved.model_kwargs["architecture_version"] == 2
+        assert saved.model_kwargs["input_ranks"] == [saved.bases["A"].rank, saved.bases["n"].rank]
+    else:
+        # This setting only selects a SNO network and must not invalidate an
+        # otherwise identical completed FNO/Chebyshev run.
+        reused, _, _ = run_experiment(tiny_dataset, tmp_path/method,
+                                      replace(config, sno_architecture_version=1), verbose=False)
+        np.testing.assert_array_equal(reused.predict_dataset(tiny_dataset, indices), actual)
+
+
+def test_unversioned_sno_checkpoint_keeps_legacy_predictions(tiny_dataset, tmp_path):
+    config = TrainConfig(epochs=1, width=4, depth=1, rank=3, input_rank=2,
+                         sno_architecture_version=1)
+    predictor, _, _ = train_model(tiny_dataset, tmp_path, config, verbose=False)
+    path = tmp_path / "model.pt"
+    payload = torch.load(path, weights_only=True)
+    del payload["model_kwargs"]["architecture_version"]
+    del payload["metadata"]["config"]["sno_architecture_version"]
+    torch.save(payload, path)
+    old_metrics = json.loads((tmp_path / "metrics.json").read_text())
+    del old_metrics["config"]["sno_architecture_version"]
+    (tmp_path / "metrics.json").write_text(json.dumps(old_metrics))
+    restored = load_predictor(path)
+    assert restored.model.architecture_version == 1
+    np.testing.assert_array_equal(restored.predict_dataset(tiny_dataset, [10, 11]),
+                                  predictor.predict_dataset(tiny_dataset, [10, 11]))
+    reused, _, _ = run_experiment(tiny_dataset, tmp_path, config, verbose=False)
+    assert reused.model.architecture_version == 1
+    with pytest.raises(ValueError, match="different data/settings"):
+        run_experiment(tiny_dataset, tmp_path, replace(config, sno_architecture_version=2), verbose=False)
 
 
 def test_svd_preserves_constant_imaginary_component(tiny_dataset, tmp_path):

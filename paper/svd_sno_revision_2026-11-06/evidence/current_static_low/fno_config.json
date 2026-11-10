@@ -1,0 +1,20 @@
+{
+  "method": "fno",
+  "epochs": 200,
+  "batch_size": 32,
+  "learning_rate": 0.002,
+  "width": 24,
+  "depth": 3,
+  "rank": 48,
+  "input_rank": 32,
+  "target_projection_error": 0.01,
+  "pod_method": "randomized",
+  "resolution": 32,
+  "modes": 8,
+  "padding": 8,
+  "patience": 50,
+  "min_epochs": 50,
+  "seed": 42,
+  "threads": 2,
+  "device": "mps"
+}

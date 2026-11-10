@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "storage": "native_npy_complex128",
+  "band": "high",
+  "k_range": [
+    2.0,
+    4.0
+  ],
+  "n_frequencies": 160,
+  "actual_frequency_groups": 160,
+  "n_directions": 8,
+  "seed": 2026,
+  "medium_mode": "static",
+  "case": "notebook",
+  "split_fractions": [
+    0.67,
+    0.17,
+    0.16
+  ],
+  "heldout_policy": "all endpoint groups; low k=1 group including theta=0",
+  "reference_mesh_sha256": "9273efc7c0b500209ff847de4ee36d3790b93d64b09e67f62348318ed6b6cb47",
+  "h": 0.02,
+  "n_coarse": 20
+}

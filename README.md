@@ -1,161 +1,96 @@
 # Multiscale FEM Scattering
 
-**GMsFEM и нейрооператоры для двумерного рассеяния волн в неоднородных средах.**
+**GMsFEM и спектральные нейрооператоры для двумерного рассеяния волн.**
 
-Исследовательский Python-репозиторий магистерской работы: от комплексного решения уравнения Гельмгольца методом конечных элементов до локальных многомасштабных базисов и обучаемых суррогатных моделей. Основной вопрос — как уменьшить размер и стоимость вычислений, сохранив пространственную структуру рассеянного поля и контролируя ошибку относительно FEM reference.
+Проект объединяет комплексный P1 FEM, локальную многомасштабную редукцию GMsFEM и три обучаемые модели: **SVD-SNO v2, Chebyshev-SNO и FNO**. Основной neural-эксперимент использует одну фиксированную среду и проверяет предсказание для удержанных частот и направлений падающей волны.
 
-**English overview.** Research code for **2D heterogeneous Helmholtz wave scattering**, combining the finite element method (**FEM**), the generalized multiscale finite element method (**GMsFEM**), and spectral neural operator surrogates. Implementations include **POD/SVD-based SNO**, **Chebyshev spectral neural operators**, and **Fourier Neural Operators (FNO)**. Python, FEniCSx/DOLFINx, Gmsh, SciPy and PyTorch support complex-valued simulations, dataset generation, reduced-order modeling, training, inference and FEM L2 evaluation.
+[Саммари проекта](SUMMARY.md) · [Учебный маршрут GMsFEM](gmsfem/docs/learning_path.md) · [Методы и результаты](neural_operator/docs/operator_revision.md) · [Статья](paper/svd_sno_revision_2026-11-06/main.pdf)
 
-[Методы](#что-можно-исследовать) · [Результаты](#опубликованные-результаты) · [Запуск](#быстрый-запуск) · [Документация](#карта-репозитория) · [Цитирование](#источники-и-цитирование)
+**English overview.** Research code for 2D heterogeneous Helmholtz scattering: complex-valued finite elements, generalized multiscale finite elements, POD/SVD coefficient-space SNO, Chebyshev spectral operators, and Fourier Neural Operators. The retained neural study evaluates held-out wave parameters in one fixed physical medium.
 
-![Полное волновое поле вокруг 24 проницаемых круговых включений: действительная часть, мнимая часть и модуль; комплексный P1 FEM](gmsfem/results/notebook/fine_total.png)
+## Задача и метрика
 
-*Пример полного поля $u^{\mathrm{tot}}=u^i+u^s$: $k=1$, материалы `notebook`, 17 549 FEM-степеней свободы. Источник: [сохранённый GMsFEM-эксперимент](gmsfem/results/notebook/report.md).*
+Область Ω=[−2,2]² содержит 24 допустимых круговых включения. Материалы описываются положительными скалярами α и n; A=αI. Для падающей волны uⁱ=exp(ik d·x) полное поле uᵗᵒᵗ=uⁱ+uˢ удовлетворяет
 
-## Что можно исследовать
+$$\nabla\cdot(\alpha\nabla u^{tot})+k^2nu^{tot}=0.$$
 
-Репозиторий объединяет два направления: **редукцию физического оператора через GMsFEM** и **обучение отображения параметров задачи в поле через neural operators**. Для парного сравнения в `neural_operator` используются одинаковые FEM-данные и интегральная метрика ошибки.
+Решается рассеянное поле uˢ с поглощающим условием первого порядка на внешней границе. Контрастная слабая правая часть учитывает материальные интерфейсы. [Вывод постановки](gmsfem/docs/method.md).
 
-| Подход | Что реализовано | Откуда начать |
-| --- | --- | --- |
-| Комплексный FEM / МКЭ | Непрерывные P1-элементы, поэлементные материалы, контрастная слабая правая часть с учётом интерфейсов | [Постановка и дискретизация](gmsfem/docs/method.md) |
-| GMsFEM | Эллиптические и Helmholtz snapshot-пространства Type 1/2, локальные спектральные задачи, глобальная Galerkin-проекция | [GMsFEM README](gmsfem/README.md), [notebook](gmsfem/GMsFEM_scattering.ipynb) |
-| SVD-SNO | Train-only POD, full/randomized SVD, сеть над коэффициентами и восстановление комплексного поля | [Full SVD](neural_operator/sno/Full-SVD.ipynb), [randomized SVD](neural_operator/sno/Randomized-SVD.ipynb) |
-| Chebyshev-SNO | DCT-I, усечение и нелинейное смешивание коэффициентов Чебышёва | [Модель и обучение](neural_operator/chebyshev/Train.ipynb) |
-| FNO | Fourier-слои с нелинейностью на регулярной сетке и явным переносом FEM ↔ grid | [Модель и обучение](neural_operator/fno/Train.ipynb) |
+Основная neural-метрика — относительная комплексная P1 FEM L2-норма с согласованной матрицей масс M:
 
-Общие эксперименты позволяют изучать влияние числа локальных мод, ранга POD, частоты, размера сетки и алгоритма SVD. Ошибки сжатия, переноса между сетками и предсказания сети учитываются отдельно; построение базисов, обучение и inference имеют отдельные измерения времени.
+$$e_M=\sqrt{(\hat u^s-u^s)^*M(\hat u^s-u^s)}\,/\,\sqrt{(u^s)^*Mu^s}.$$
 
-## Физическая задача и метрика
+Re и Im восстанавливаются моделью; Abs вычисляется из комплексного результата. Ошибка модуля и комплексная ошибка различаются. [Формулы методов](neural_operator/docs/methods.md).
 
-Рассматривается квадрат $\Omega=[-2,2]^2$ с **24 проницаемыми круговыми включениями**. Включения заполнены материалом с другими коэффициентами. Используются положительные скалярные $\alpha(x),n(x)$ и изотропный тензор $A=\alpha I$; фон — $\alpha=n=1$.
+## Новый план: глубокая SNO на нескольких средах
 
-Падающая плоская волна $u^i(x)=e^{ikd\cdot x}$, $|d|=1$, задаёт полное поле:
+[Согласованный протокол](experiments/deep_sno_multimedia/PLAN.md): независимые исследователь и архитектор, агент-судья, бюджет до 10000 FEM-решений, nested scout и depth 3/6/12 с контролем числа параметров. [Planning CLI](experiments/deep_sno_multimedia/plan.py) проверяет metadata и бюджет; генерация и обучение нового опыта ещё не выполнены.
 
-$$
-\nabla\cdot(\alpha\nabla u^{\mathrm{tot}})+k^2n u^{\mathrm{tot}}=0,
-\qquad u^{\mathrm{tot}}=u^i+u^s.
-$$
+## Сохранённый neural-эксперимент
 
-Вычисляется рассеянное поле $u^s$ с поглощающим условием первого порядка $\partial_\nu u^s-iku^s=0$ на внешней границе. Это приближение открытой задачи на ограниченной области. Слабая форма, знаки и материальные интерфейсы разобраны в [методическом описании](gmsfem/docs/method.md).
+Одна среда, k∈[1,2], 1000 частот × 8 направлений = **8000 FEM-полей** на 3221 узле. Split по частотным группам: **5360/1360/1280** полей train/validation/test. Базисы и нормировки строятся по train; ранги и checkpoints выбираются по validation.
 
-Основная метрика нейрооператоров — **относительная комплексная P1 FEM L2 ошибка рассеянного поля**, вычисляемая через согласованную матрицу масс $M$:
+| Модель | Mean test FEM L2 | p95 | Параметры | Выполнено / лучшая эпоха |
+| --- | ---: | ---: | ---: | ---: |
+| SVD-SNO v2 | **0,9475%** | 1,6534% | 4022 | 165 / 115 |
+| FNO | **1,6599%** | 1,9505% | 445010 | 142 / 92 |
+| Chebyshev-SNO | **7,9364%** | 9,8811% | 2426 | 200 / 199 |
 
-$$
-e_M=\frac{\sqrt{(\widehat u^s-u^s)^*M(\widehat u^s-u^s)}}{\sqrt{(u^s)^*Mu^s}}.
-$$
+Все три метода сохранены. SNO v2 и Chebyshev обучены заново; существующий FNO повторно проверен текущим CPU-кодом. Ошибки проверены по всем 1280 test-полям. Конфигурации, SHA256, повторная загрузка и ограничения: [отчёт](neural_operator/docs/operator_revision.md), [JSON](neural_operator/docs/operator_revision.json), [FNO provenance](neural_operator/docs/fno_static_low_verification_2026-11-08.json).
 
-В GMsFEM-отчётах дополнительно разделены ошибки полного и рассеянного полей, компонентов и модуля; знаменатель нормы указан в каждой таблице. [Протокол нейрооператоров](neural_operator/docs/methods.md).
+У SNO постоянные материалы дают нулевые входные POD-ранги: сеть учит зависимость поля от k и направления. Эта оценка не проверяет новые материалы. У Chebyshev с 8×8 модами измеренный mean validation decoder floor равен 7,6143%; увеличение числа эпох само по себе не устраняет ограничение пространства. Разные размеры моделей и устройства не задают равный вычислительный бюджет. Ошибки относятся к FEM-меткам, а не к аналитическому решению PDE.
 
-## Опубликованные результаты
+Старые экспериментальные серии удалены целиком из текущего дерева репозитория: их отчёты, снимки результатов, рисунки и сохранённые notebook outputs не входят в публикационный комплект. [Состав оставшихся данных](neural_operator/docs/dataset_audit.md).
 
-### GMsFEM: сокращение числа неизвестных
+## GMsFEM: проверяемая редукция
 
-Для preset `notebook`, $k=1$, тонкая P1 FEM-система содержит **17 549 неизвестных**. Сохранённый эксперимент даёт:
+Для сохранённой серии `notebook`, k=1, fine FEM содержит **17549 неизвестных**. Type 2 с 16 модами на крупную вершину даёт:
 
-| Редуцированная система | Неизвестных | Комплексная L2 ошибка полного поля относительно fine FEM |
+| Крупная сетка | Неизвестных | Комплексная L2 полного поля к fine FEM |
 | --- | ---: | ---: |
-| GMsFEM 10×10, Type 2, 16 мод на вершину | 1 936 | 0.5092% |
-| GMsFEM 20×20, Type 2, 16 мод на вершину | 7 056 | 0.1696% |
+| 10×10 | 1936 | 0,5092% |
+| 20×20 | 7056 | 0,1696% |
 
-Это ошибки редукции на той же тонкой сетке. Отдельное сравнение с независимо построенной более мелкой FEM-сеткой приведено в [полном отчёте](gmsfem/results/notebook/report.md). Для другого набора материалов сохранён [эксперимент `paper_example1`](gmsfem/results/paper_example1/report.md).
+Это отдельная материальная постановка и ошибка редукции к той же тонкой сетке. [Сохранённый отчёт](gmsfem/results/notebook/report.md), [учебный маршрут с самопроверкой](gmsfem/docs/learning_path.md), [численная ревизия](gmsfem/docs/audit.md).
 
-### SVD-SNO: предсказание поля по частоте и направлению
+## Запуск и быстрая проверка
 
-В текущем static-эксперименте **геометрия и одна физическая среда фиксированы**, меняются $k$ и направление волны. Каждая полоса содержит 1000 частот × 8 направлений = **8000 FEM-полей**. Split по частотам: 670/170/160 групп, или 5360/1360/1280 полей train/validation/test. POD и нормировки строятся по train; ранг и checkpoint выбираются по validation.
-
-| Randomized SVD-SNO | Mean test FEM L2 | p95 | Test-полей |
-| --- | ---: | ---: | ---: |
-| $k\in[1,2]$ | **0.96%** | 1.68% | 1 280 |
-| $k\in[4,8]$ | **5.54%** | 9.04% | 1 280 |
-
-Источники: [отчёт и ограничения](neural_operator/randomized/RESULTS.md), [машинный отчёт JSON](neural_operator/randomized/static_results.json), [спецификация среды](neural_operator/docs/static_medium.md).
-
-Эти числа оценивают удержанные волновые параметры **той же среды**; перенос на новые материалы ими не проверен. Ошибка измерена относительно дискретных FEM-меток: для high band изменение reference при $h\to h/2$ составляет около **13–14%**. В таблице приведены результаты SVD-SNO; Chebyshev/FNO имеют отдельные реализации и сценарии обучения. Материалы и поля GMsFEM- и neural-экспериментов различаются, поэтому две таблицы выше описывают самостоятельные исследования.
-
-**Что входит в Git.** GMsFEM-отчёты, численные архивы и рисунки; neural-отчёты Markdown/JSON и сохранённые outputs notebooks. Полноразмерные neural-датасеты и `model.pt` находятся в локальных `data/` и `runs/`, исключённых из Git. После клонирования их нужно сгенерировать и обучить по инструкциям ниже.
-
-## Быстрый запуск
-
-Нужны Git и Docker с Docker Compose. Все команды выполняются из корня репозитория; FEM workflow работает в одном MPI-процессе.
+Все команды выполняются из корня репозитория, в одном MPI-процессе.
 
 ```bash
-git clone https://github.com/Egoriy286/multiscale-fem-scattering.git
-cd multiscale-fem-scattering
 docker compose up -d --build dolfinx-complex
-```
-
-Контейнер содержит complex DOLFINx/PETSc, Gmsh и JupyterLab. Для нейрооператоров дополнительно установите зависимости:
-
-```bash
 docker compose exec -T dolfinx-complex python3 -m pip install -r neural_operator/requirements.txt
-```
 
-### Первый GMsFEM-расчёт
-
-Небольшой профиль строит базисы Type 1/2 и сравнивает редукции с тонким FEM. Отдельное уточнение reference здесь пропущено, результаты пишутся в новый каталог:
-
-```bash
-docker compose exec -T dolfinx-complex python3 -m gmsfem.run --profile quick --no-reference --output gmsfem/results/quickstart
-```
-
-Результат: `report.md`, CSV с ошибками, JSON с конфигурацией, архивы полей и рисунки. [Полная серия и параметры](gmsfem/README.md#командная-строка).
-
-### Первый neural-эксперимент
-
-Пример **6 частот × 2 направления** проверяет путь «данные → обучение → сравнение». Две эпохи служат проверкой исполнения; для воспроизведения опубликованной точности нужен полноразмерный эксперимент из [neural_operator/README.md](neural_operator/README.md).
-
-```bash
-# Посмотреть план стандартного датасета без FEM-расчётов.
-docker compose exec -T dolfinx-complex python3 -m neural_operator.run data --dry-run
-
-# Создать отдельный малый набор: 12 полей, split 8/2/2.
-docker compose exec -T dolfinx-complex python3 -m neural_operator.run data --n-frequencies 6 --n-directions 2 --h 0.3 --n-coarse 2 --dataset neural_operator/data/quickstart_6x2
-
-# Обучить только SVD-SNO и сохранить bundle в quickstart_6x2/svd/model.pt.
-docker compose exec -T dolfinx-complex python3 -m neural_operator.run train --dataset neural_operator/data/quickstart_6x2 --method svd --pod-method full --epochs 2 --output neural_operator/runs/quickstart_6x2
-
-# Сравнить эту модель с FEM/GMsFEM на тех же held-out данных.
-docker compose exec -T dolfinx-complex python3 -m neural_operator.run compare --dataset neural_operator/data/quickstart_6x2 --method svd --runs neural_operator/runs/quickstart_6x2 --output neural_operator/runs/quickstart_comparison_6x2
-```
-
-`data` генерирует или повторно использует совместимый набор; обучение запускается отдельной командой. `inspect --dataset PATH` показывает состав готового набора. Full и randomized — алгоритмы SVD с отдельными путями результатов. [Устройство данных](neural_operator/docs/datasets.md), [карта neural-кода](neural_operator/docs/structure.md).
-
-### Jupyter и проверки
-
-```bash
-docker compose exec -T dolfinx-complex jupyter server list
+docker compose exec -T dolfinx-complex python3 -m gmsfem.learning verify
+docker compose exec -T dolfinx-complex python3 -m neural_operator.run data --band low --dry-run
 
 docker compose exec -T dolfinx-complex python3 -m unittest discover -s gmsfem/tests -v
 docker compose exec -T dolfinx-complex python3 -m pytest neural_operator/tests -q
 ```
 
-Откройте ссылку Jupyter с токеном и выберите ядро **Python (DOLFINx Complex)**. Проверки включают независимую сборку матриц и RHS, нулевое рассеяние в однородной среде, спектральные преобразования, split без утечек и сохранение/загрузку inference bundle. [Подробности GMsFEM](gmsfem/README.md#проверки).
+Для воспроизведения neural-эксперимента после клонирования:
 
-## Карта репозитория
+```bash
+docker compose exec -T dolfinx-complex python3 -m neural_operator.run data --band low --dataset neural_operator/data/static_low_frequency_1000x8
+
+docker compose exec -T dolfinx-complex python3 -m neural_operator.run train --band low --method svd --pod-method randomized --epochs 200 --sno-architecture-version 2 --output neural_operator/runs/revision_2026-11-08/static_low
+
+docker compose exec -T dolfinx-complex python3 -m neural_operator.run train --band low --method chebyshev --pod-method randomized --epochs 200 --resolution 32 --modes 8 --output neural_operator/runs/revision_2026-11-08/static_low
+```
+
+FNO и все подробные настройки: [neural README](neural_operator/README.md). Данные и веса — локальные генерируемые артефакты в игнорируемых `data/` и `runs/`; Git хранит исходники, компактные результаты и доказательства проверки. Для другой конфигурации используйте новый каталог результатов.
+
+## Карта проекта
 
 | Путь | Назначение |
 | --- | --- |
-| [`gmsfem/`](gmsfem/README.md) | FEM, локальные snapshots, спектральные базисы, coarse solve и сохранённые исследования |
-| [`neural_operator/`](neural_operator/README.md) | Общие данные, обучение, оценка и самостоятельный inference |
-| [`sno/`](neural_operator/sno/), [`chebyshev/`](neural_operator/chebyshev/), [`fno/`](neural_operator/fno/) | Модели и training notebooks каждого neural-метода |
-| [`datasets/`](neural_operator/datasets/), [`notebooks/`](neural_operator/notebooks/) | Генерация данных и общие исследования спектров, частот и сеток |
-| [`laba4/`](laba4/README.md), [`laba6/`](laba6/README.md) | Подготовительные работы: сетки, крупные блоки и перекрывающиеся окрестности |
-| [`FEniCSx_(dolfinx).ipynb`](FEniCSx_%28dolfinx%29.ipynb), [`FEniCSx_(dolfinx)_DG.ipynb`](FEniCSx_%28dolfinx%29_DG.ipynb) | Исходные CG/DG notebooks для контекста и истории постановки |
-| [`references/`](references/) | Локальные материалы по методу |
+| [SUMMARY.md](SUMMARY.md) | Научное и практическое саммари |
+| [gmsfem/](gmsfem/README.md) | FEM, snapshots, локальный спектр, глобальная проекция, учебные примеры |
+| [neural_operator/](neural_operator/README.md) | Общие данные, три метода, обучение и inference |
+| [templates/](templates/README.md) | Лабораторные 4 и 6: блоки, подсетки и окрестности |
+| [paper/](paper/svd_sno_revision_2026-11-06/README.md) | Статья, рисунки, проверка и воспроизведение |
+| [llms.txt](llms.txt) | Краткий индекс для исследовательских агентов |
 
-`laba4/lr4.py` и Legacy-вариант лабораторной 6 используют DOLFIN 2019 и требуют отдельного окружения; современные FEM/neural workflow используют DOLFINx.
+Шаблон лабораторной 4 и Legacy-вариант лабораторной 6 требуют DOLFIN 2019; основной workflow работает в complex DOLFINx/PETSc. Локальные реализации адаптируют методы к геометрии проекта. Методологические источники: [GMsFEM](https://doi.org/10.1016/j.cam.2022.114977), [SNO](https://arxiv.org/abs/2205.10573), [FNO](https://arxiv.org/abs/2010.08895). [Список первичных источников](neural_operator/docs/references.md).
 
-## Для ChatGPT и исследовательских агентов
-
-Краткий индекс проекта: **[llms.txt](llms.txt)**. Метаданные программного обеспечения: **[CITATION.cff](CITATION.cff)**.
-
-Для ответа о методе используйте [математическую постановку GMsFEM](gmsfem/docs/method.md) или [формулы нейрооператоров](neural_operator/docs/methods.md). Численные утверждения сверяйте с отчётом конкретного запуска: его материалами, полем, сеткой, split и нормой. Сохранённые результаты одной статичной среды следует описывать с этой областью применимости. Для восстановления эксперимента нужны конфигурация и версия кода; локальное наличие weights/datasets проверяется отдельно.
-
-## Источники и цитирование
-
-GMsFEM адаптирован к геометрии проекта по работе Kalachikova, Vasilyeva, Harris, Chung, *Generalized Multiscale Finite Element Method for scattering problem in heterogeneous media*, JCAM 424 (2023), 114977 — [DOI](https://doi.org/10.1016/j.cam.2022.114977). Методологические связи neural-реализаций: [Spectral Neural Operators](https://arxiv.org/abs/2205.10573) и [Fourier Neural Operator](https://arxiv.org/abs/2010.08895). [Аннотированный список первичных источников](neural_operator/docs/references.md) поясняет, какие части использованы.
-
-Реализации являются локальными адаптациями; репозиторий не заявляет дословное воспроизведение таблиц GMsFEM-статьи или архитектуры PODNO. При использовании кода цитируйте программное обеспечение по [CITATION.cff](CITATION.cff), укажите commit и конфигурацию эксперимента, а методологические источники приведите отдельно.
-
-**Автор:** Egoriy Monastyrev. **Лицензия кода:** [MIT](LICENSE).
+**Автор:** Egoriy Monastyrev. **Лицензия:** [MIT](LICENSE). При цитировании указывайте commit, конфигурацию и отчёт запуска: [CITATION.cff](CITATION.cff).

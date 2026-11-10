@@ -1,0 +1,93 @@
+{
+  "method": "svd",
+  "field": "scattered",
+  "metric": "consistent_complex_FEM_L2",
+  "dataset_fingerprint": "0eda8529f879a930cf35534e86a90700299afdbc03f472c09a18976682003439",
+  "config": {
+    "method": "svd",
+    "epochs": 500,
+    "batch_size": 32,
+    "learning_rate": 0.002,
+    "width": 48,
+    "depth": 6,
+    "rank": 96,
+    "input_rank": 32,
+    "sno_architecture_version": 2,
+    "target_projection_error": 0.001,
+    "pod_method": "randomized",
+    "resolution": 32,
+    "modes": 8,
+    "padding": 8,
+    "patience": 100,
+    "min_epochs": 150,
+    "seed": 42,
+    "threads": 2,
+    "device": "cpu",
+    "lr_scheduler_factor": 0.5,
+    "lr_scheduler_patience": 20,
+    "lr_scheduler_min_lr": 1e-05
+  },
+  "train_samples": 856,
+  "val_samples": 216,
+  "test_samples": 208,
+  "split_strategy": "frequency",
+  "physical_media": 1,
+  "split_groups": {
+    "train": 107,
+    "validation": 27,
+    "test": 26
+  },
+  "completed_epochs": 500,
+  "best_epoch": 498,
+  "best_val_fem_l2": 0.04005664407448479,
+  "stop_reason": "epoch_limit",
+  "parameters": 47138,
+  "parameter_count_convention": "real scalar degrees of freedom; complex weight counts as two",
+  "preprocessing_seconds": 124.6013591809999,
+  "training_seconds": 351.45547324400013,
+  "test_batch_seconds": 0.29064512500008277,
+  "test_seconds_per_sample": 0.001397332331731167,
+  "test_fem_l2": {
+    "mean": 0.03318047539154149,
+    "median": 0.023274565001377687,
+    "p95": 0.0966395864934679,
+    "max": 0.20295095225663914
+  },
+  "training_loss_evaluation": "consistent_FEM_POD_quadratic",
+  "versions": {
+    "torch": "2.9.1+cpu",
+    "numpy": "2.4.6"
+  },
+  "lr_scheduler": {
+    "name": "ReduceLROnPlateau",
+    "mode": "min",
+    "metric": "validation_consistent_complex_FEM_L2",
+    "factor": 0.5,
+    "patience": 20,
+    "threshold": 0.001,
+    "threshold_mode": "rel",
+    "min_lr": 1e-05,
+    "final_optimizer_lr": 0.000125,
+    "history_lr_convention": "rate used during the recorded epoch; scheduler steps afterwards",
+    "reductions_used_by_later_epochs": 4
+  },
+  "projection_fem_l2": {
+    "mean": 0.0009119422687987224,
+    "median": 0.0006571380301340252,
+    "p95": 0.0018442615584272437,
+    "max": 0.005272816887923412
+  },
+  "ranks": {
+    "A": 0,
+    "n": 0,
+    "real": 56,
+    "imag": 56
+  },
+  "rank_target_attained": true,
+  "consistent_projection_floor_fem_l2": {
+    "mean": 0.0009119312064737848,
+    "median": 0.0006571312179920522,
+    "p95": 0.0018442422739993242,
+    "max": 0.005272760790526266
+  }
+}

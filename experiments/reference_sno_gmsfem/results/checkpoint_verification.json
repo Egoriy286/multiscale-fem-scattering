@@ -1,0 +1,105 @@
+{
+  "protocol": "Core load_predictor CPU roundtrip; first three saved test fields only; no model selection or tuning.",
+  "bands": {
+    "low": {
+      "passed": true,
+      "verified_at_utc": "2026-11-09T14:48:27.177845+00:00",
+      "checkpoint_sha256": "0b7b04d63759a20d69d6bd773ed70161a506a1153f03f78c5c4261bf6af172b7",
+      "core_loader": "neural_operator.training.load_predictor",
+      "device": "cpu",
+      "torch_threads": 2,
+      "samples": 3,
+      "indices": [
+        0,
+        1,
+        2
+      ],
+      "k": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "theta": [
+        0.06825789866186655,
+        0.8536560620593148,
+        1.639054225456763
+      ],
+      "prediction_dtype": "complex64",
+      "saved_prediction_dtype": "complex64",
+      "max_abs_prediction_difference": 0.0,
+      "prediction_vs_saved_relative_fem_l2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "loaded_prediction_reference_relative_fem_l2": [
+        0.027996974434464063,
+        0.025878844918791496,
+        0.027661384628532147
+      ],
+      "saved_reference_relative_fem_l2": [
+        0.02799697443446429,
+        0.025878844918791454,
+        0.027661384628532192
+      ],
+      "max_error_metric_absolute_difference": 2.255140518769849e-16,
+      "acceptance": {
+        "prediction_atol": 1e-05,
+        "prediction_rtol": 1e-05,
+        "relative_fem_l2_limit": 1e-05,
+        "metric_absolute_difference_limit": 1e-05
+      },
+      "batch_note": "Three-row verification vs original 32-row prediction batches; float32 matrix arithmetic can differ with batch size."
+    },
+    "high": {
+      "passed": true,
+      "verified_at_utc": "2026-11-09T14:53:23.199465+00:00",
+      "checkpoint_sha256": "8ac8e8c5b643f9575e595658093b108bb79f3fe7edc153bbc0a4e3f95a7be088",
+      "core_loader": "neural_operator.training.load_predictor",
+      "device": "cpu",
+      "torch_threads": 2,
+      "samples": 3,
+      "indices": [
+        0,
+        1,
+        2
+      ],
+      "k": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "theta": [
+        0.06825789866186655,
+        0.8536560620593148,
+        1.639054225456763
+      ],
+      "prediction_dtype": "complex64",
+      "saved_prediction_dtype": "complex64",
+      "max_abs_prediction_difference": 0.0,
+      "prediction_vs_saved_relative_fem_l2": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "loaded_prediction_reference_relative_fem_l2": [
+        0.048369595151160856,
+        0.053029191203016496,
+        0.05102158233070502
+      ],
+      "saved_reference_relative_fem_l2": [
+        0.04836959515116083,
+        0.053029191203016614,
+        0.051021582330705084
+      ],
+      "max_error_metric_absolute_difference": 1.1796119636642288e-16,
+      "acceptance": {
+        "prediction_atol": 1e-05,
+        "prediction_rtol": 1e-05,
+        "relative_fem_l2_limit": 1e-05,
+        "metric_absolute_difference_limit": 1e-05
+      },
+      "batch_note": "Three-row verification vs original 32-row prediction batches; float32 matrix arithmetic can differ with batch size."
+    }
+  }
+}

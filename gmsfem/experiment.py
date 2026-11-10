@@ -183,6 +183,11 @@ def save_study(study: Study, output_dir: str | Path, reference: ReferenceCompari
             writer = csv.DictWriter(stream, fieldnames=list(reference.rows[0]))
             writer.writeheader()
             writer.writerows(reference.rows)
+    else:
+        # These files belong to the optional reference stage. Retaining them
+        # would attribute an older reference calculation to this new study.
+        (output / "reference_errors.csv").unlink(missing_ok=True)
+        (output / "reference_comparison.png").unlink(missing_ok=True)
     np.savez_compressed(output / "fields.npz", **arrays)
     np.savez_compressed(output / "spectra.npz", **{f"n{nc}_type{t}": s.eigenvalues for (nc, t), s in study.spaces.items()})
     sources = list(ROOT.glob("*.py")) + list((ROOT / "geo").glob("*.geo"))
@@ -198,16 +203,17 @@ def save_study(study: Study, output_dir: str | Path, reference: ReferenceCompari
                                     scalar_type=str(np.dtype(PETSc.ScalarType))),
                    source_sha256={str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources})
     (output / "summary.json").write_text(json.dumps(_finite_json(summary), ensure_ascii=False, indent=2, allow_nan=False)+"\n")
-    _write_report(study, reference, output)
+    write_report(study, reference, output)
     return output
 
 
-def _write_report(study: Study, reference: ReferenceComparison | None, output: Path):
+def write_report(study: Study, reference: ReferenceComparison | None, output: Path):
+    """Refresh only the Markdown report, including figures already rendered."""
     cfg = study.config
     lines = ["# Численный эксперимент GMsFEM", "",
              f"Preset `{cfg['case']}`, k={cfg['k']:g}, d={tuple(cfg['direction'])}, A=αI. Геометрия: 24 включения исходных notebooks.", "",
              f"Тонкая CG1-сетка: **{study.problem.ndofs} DOF**, {len(study.problem.triangles)} треугольников; целевой h={cfg['h']:g}.",
-             "Обе крупные сетки и оба типа базиса используют один fine-оператор и одинаковую контрастную RHS.", "",
+             "Все варианты этой серии используют один fine-оператор и одинаковую контрастную RHS.", "",
              "Сравнивается **полное поле** u=u_i+u_s. Таблица: интегральные L²-ошибки в процентах, знаменатель — multiscale, как на стр. 9 статьи.",
              "В errors.csv дополнительно сохранены reference-нормированные ошибки, комплексная ошибка и ошибки рассеянного поля.", "",
              "| Крупная сетка | Type | M | DOF | Re, % | Im, % | Модуль, % | Complex/ref, % |", "|---|---:|---:|---:|---:|---:|---:|---:|"]

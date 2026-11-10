@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>МКЭ · SNO · GMsFEM — решения и разности</title>
+<style>
+:root{color-scheme:light;--bg:#f5f6f8;--paper:#fff;--ink:#182230;--muted:#536174;--border:#dbe1e8;--selected:#233b59}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:1280px;margin:auto;padding:30px 24px 60px}h1{font-size:30px;line-height:1.2;margin:0 0 10px;font-weight:650}h2{font-size:22px;line-height:1.3;margin:0 0 12px}p{margin:8px 0 16px;color:var(--muted)}a{color:#245a91;text-underline-offset:3px}section,details{margin:20px 0;background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:20px}summary{font-weight:600;font-size:19px;cursor:pointer}details[open]>summary{margin-bottom:16px}.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.casebar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 20px}button,select{font:inherit;background:var(--paper);border:1px solid var(--border);border-radius:7px;padding:9px 13px;color:var(--ink)}button{cursor:pointer}button[aria-pressed=true]{background:var(--selected);color:#fff;border-color:var(--selected)}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #6fa6d9;outline-offset:3px}label{display:flex;gap:8px;align-items:center}.parameter{padding:6px 12px;background:var(--bg);border-radius:6px;font-variant-numeric:tabular-nums}.note{font-size:14px;color:var(--muted)}.values{display:flex;gap:24px;flex-wrap:wrap;margin:18px 0 12px}.value{font-size:24px;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:650}.value span{font-size:14px;font-weight:400;color:var(--muted);display:block}figure{margin:12px 0 0}img{display:block;width:100%;height:auto;background:white;border-radius:4px}figcaption{margin-top:10px;font-size:14px;color:var(--muted)}code{font:14px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--bg);padding:3px 6px;border-radius:4px}.token{display:block;overflow:auto;margin:8px 0;padding:12px;font-size:16px}.foot{font-size:14px;color:var(--muted)}[hidden]{display:none!important}@media(max-width:650px){main{padding:20px 10px 40px}h1{font-size:25px}section,details{padding:14px}.row{gap:8px}label{width:100%;justify-content:space-between}.values{gap:18px}.value{font-size:21px}}@media print{body{background:white}main{max-width:none;padding:0}button,select{border:0}.casebar{display:none}section,details{break-inside:avoid}}
+</style>
+</head>
+<body>
+<main>
+<h1>Решения МКЭ, SNO и GMsFEM</h1>
+<p>Одна и та же среда и падающая волна. Сравниваются пространственные поля, а не только одно число ошибки.</p>
+
+<details open>
+<summary>1. Что подаётся на вход</summary>
+<p>Вне включений <strong>α = 1, n = 1</strong>. Внутри всех 24 включений <strong>α = 0.2, n = 10</strong>. Эти коэффициенты и геометрия одинаковы во всех примерах.</p>
+<a href="inputs.png" target="_blank" rel="noopener"><img src="inputs.png" alt="Точные ячеечные карты коэффициентов α и n с 24 включениями"></a>
+<p class="note">α — коэффициент градиентного члена; n — коэффициент при k²u. На картах показаны точные значения по треугольникам, без сглаживания интерфейсов.</p>
+<div class="row" id="physical"></div>
+<p id="direction"></p>
+<p class="note">Внизу слева на основном рисунке показана падающая волна uᶦ = exp(ik d·x) и стрелка её направления.</p>
+<details>
+<summary>Эталонная сетка и фактические признаки SNO</summary>
+<p>МКЭ-эталон и выход SNO: 53 246 узлов, 105 690 треугольников. GMsFEM использует исходную fine-сетку 17 549 узлов и крупную сетку 20×20.</p>
+<a href="mesh.png" target="_blank" rel="noopener"><img loading="lazy" src="mesh.png" alt="Эталонная сетка МКЭ и увеличение около включения"></a>
+<p>У этой фиксированной среды входные POD-ранги α и n равны нулю. Фактические глобальные признаки сети:</p>
+<code class="token" id="features"></code>
+<p class="note" id="normalization"></p>
+</details>
+</details>
+
+<section>
+<h2>2. Выберите тестовый пример</h2>
+<div class="casebar" id="cases" role="group" aria-label="Четыре удержанных тестовых примера"></div>
+<p class="note">У примеров различаются и k, и угол θ. Это не серия изменения только частоты. Для точки около 3 используется фактическое тестовое k = 3.006289308.</p>
+<div class="row">
+<label>Какое поле <select id="field"><option value="total">Полное: uᶦ + uˢ</option><option value="scattered">Рассеянное: uˢ</option></select></label>
+<label>Что показать <select id="component"><option value="real">Re — действительная часть</option><option value="imag">Im — мнимая часть</option><option value="abs">|u| — амплитуда</option></select></label>
+</div>
+<div class="values" aria-live="polite">
+<div class="value" id="sno-error"></div><div class="value" id="gms-error"></div>
+</div>
+<p class="note" id="case-note"></p>
+<p class="note">Проценты относятся к одному выбранному примеру. Это не средние ошибки по всему диапазону k.</p>
+<figure>
+<a id="overview-link" target="_blank" rel="noopener"><img id="overview" alt="Сверху решения МКЭ, SNO и GMsFEM на общей цветовой шкале. Снизу входная волна и две карты абсолютной комплексной ошибки."></a>
+<figcaption><strong>Сверху:</strong> эталон МКЭ → SNO → GMsFEM. У трёх решений одна цветовая шкала.<br><strong>Снизу:</strong> входная волна → |u<sub>SNO</sub> − u<sub>МКЭ</sub>| → |u<sub>GMsFEM</sub> − u<sub>МКЭ</sub>|. У двух ошибок одна шкала: цвет около нуля означает лучшее совпадение. Проценты выше — интегральная относительная L²-ошибка выбранного поля, а не значение отдельного пикселя.</figcaption>
+</figure>
+<p class="note">Нажмите рисунок для увеличения. Шкалы между разными тестами могут отличаться; численные пределы всегда указаны рядом с картой.</p>
+</section>
+
+<details>
+<summary>3. Знаковые разности Re, Im и амплитуды</summary>
+<p>Здесь видны знак и расположение отклонения: синий — модель ниже эталона, красный — выше, белый — близко к нулю. У SNO и GMsFEM одна шкала в каждой строке.</p>
+<a id="difference-link" target="_blank" rel="noopener"><img id="differences" loading="lazy" alt="Знаковые разности SNO и GMsFEM с МКЭ: действительная часть, мнимая часть и амплитуда"></a>
+<p class="note">|u<sub>модель</sub>| − |u<sub>МКЭ</sub>| показывает только отличие амплитуд. |u<sub>модель</sub> − u<sub>МКЭ</sub>| на основном рисунке учитывает и амплитуду, и фазу. Это разные карты.</p>
+</details>
+
+<details id="ood-section">
+<summary>4. Что будет при переносе low-модели на k &gt; 2</summary>
+<p>Модель SNO high обучена внутри [2,4]. Замороженная SNO low обучена только внутри [0.1,2]. Эти прогнозы не следует смешивать.</p>
+<p id="ood-values"></p>
+<code class="token" id="ood-features"></code>
+<p class="note" id="ood-normalization"></p>
+<a id="ood-link" target="_blank" rel="noopener"><img id="ood-image" loading="lazy" alt="Отдельно обученная SNO high и неудачный перенос замороженной low-модели; у переноса отдельная шкала"></a>
+<p class="note">У low-модели намеренно отдельная цветовая шкала, чтобы её большая ошибка не скрыла структуру эталонного поля и high-модели.</p>
+</details>
+
+<p class="foot">Источник — сохранённые test-задачи. SNO: замороженные checkpoint; GMsFEM: 20×20, Type 2, 16 локальных мод. Все поля сначала вычислены из своих исходных P1-сеток на общей сетке отображения 401×401; модуль взят после комплексной интерполяции. Проценты взяты из исходной FEM-квадратуры и независимо воспроизведены. Цветные карты не задают новые входные данные и не запускают обучение.</p>
+<p class="foot"><a href="README.md">Описание рисунков</a> · <a href="../REPORT.md">Численный отчёт</a> · <a href="cases.json">Параметры и проверки происхождения</a></p>
+</main>
+<script type="application/json" id="case-data">__CASE_DATA__</script>
+<script>
+(() => {
+  'use strict';
+  const metadata=JSON.parse(document.getElementById('case-data').textContent);
+  const cases=metadata.cases;
+  let selected=cases.find(c=>c.id==='high_k4')||cases[0];
+  const el=id=>document.getElementById(id);
+  const number=(v,n=3)=>Number(v).toFixed(n);
+  const buttons=[];
+  cases.forEach(c=>{
+    const b=document.createElement('button');
+    b.type='button'; b.textContent=(c.id==='high_k3'?'k ≈ ':'k = ')+Number(c.k).toPrecision(c.id==='high_k3'?6:2)+' · '+c.band;
+    b.addEventListener('click',()=>{selected=c;update();});
+    el('cases').appendChild(b); buttons.push([c,b]);
+  });
+  function image(id,link,path){el(id).src=path;el(link).href=path;}
+  function errorValue(id,value,label){
+    const target=el(id); target.replaceChildren(document.createTextNode(number(value)+'%'));
+    const s=document.createElement('span');s.textContent=label;target.appendChild(s);
+  }
+  function update(){
+    const c=selected, field=el('field').value, component=el('component').value;
+    buttons.forEach(([candidate,b])=>b.setAttribute('aria-pressed',String(candidate.id===c.id)));
+    const physical=el('physical');physical.replaceChildren();
+    ['k = '+number(c.k,6),'θ = '+number(c.theta_deg,3)+'°','Модель: SNO '+c.band].forEach(t=>{
+      const p=document.createElement('span');p.className='parameter';p.textContent=t;physical.appendChild(p);
+    });
+    el('direction').textContent='Направление d = ('+number(c.direction[0],5)+', '+number(c.direction[1],5)+').';
+    const f=c.model_features;
+    el('features').textContent='[cos θ, sin θ, (k − μk)/σk] = ['+number(f.cos_theta,6)+', '+number(f.sin_theta,6)+', '+number(f.normalized_k,6)+']';
+    el('normalization').textContent='μk = '+number(f.k_mean,6)+', σk = '+number(f.k_std,6)+'; нормировка построена только по train этой модели. Токен каждой моды: [0, 0, cos θ, sin θ, нормированное k].';
+    errorValue('sno-error',c.sno_metrics[field+'_e_complex_ref'],'SNO '+c.band+' · комплексная L²');
+    errorValue('gms-error',c.gms_metrics[field+'_e_complex_ref'],'GMsFEM · комплексная L²');
+    el('case-note').textContent='Тест #'+c.index+'; k = '+number(c.k,9)+'; θ = '+number(c.theta_deg,6)+'°. '+(field==='total'?'Полное поле включает падающую волну.':'Рассеянное поле показывает отклик включений.');
+    image('overview','overview-link',c.id+'_'+field+'_'+component+'.png');
+    image('differences','difference-link',c.id+'_'+field+'_differences.png');
+    el('ood-section').hidden=c.band!=='high';
+    if(c.band==='high'){
+      image('ood-image','ood-link',c.id+'_extrapolation.png');
+      el('ood-values').textContent='В этом примере ошибка полного поля: SNO high '+number(c.sno_metrics.total_e_complex_ref)+'%; замороженная SNO low '+number(c.ood_metrics.total_e_complex_ref)+'%.';
+      const of=c.ood_model_features;
+      el('ood-features').textContent='Признаки замороженной low-модели: ['+number(of.cos_theta,6)+', '+number(of.sin_theta,6)+', '+number(of.normalized_k,6)+']';
+      el('ood-normalization').textContent='Для low-модели используется её собственная train-нормировка: μk = '+number(of.k_mean,6)+', σk = '+number(of.k_std,6)+'. Нормированное k здесь другое, чем у high-модели.';
+    }
+  }
+  el('field').addEventListener('change',update);
+  el('component').addEventListener('change',update);
+  update();
+})();
+</script>
+</body>
+</html>

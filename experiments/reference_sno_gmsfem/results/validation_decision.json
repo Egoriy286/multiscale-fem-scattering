@@ -1,0 +1,17 @@
+{
+  "reason": "The low-band validation loss oscillated under constant AdamW learning rate 0.002; choose a validation-driven ReduceLROnPlateau schedule for both final models.",
+  "selection_source": "validation loss only",
+  "last_logged_scout_epoch": 420,
+  "best_logged_scout_validation_relative_scattered_l2": 0.01808,
+  "scout_terminated_before_test_and_checkpoint": true,
+  "test_metrics_inspected_for_this_decision": false,
+  "final_policy": {
+    "initial_learning_rate": 0.002,
+    "factor": 0.5,
+    "patience_epochs": 20,
+    "relative_threshold": 0.001,
+    "minimum_learning_rate": 0.00001,
+    "same_policy_for_low_and_high": true
+  },
+  "scout_log": "logs/train_low_fixed_lr_validation_scout.log"
+}

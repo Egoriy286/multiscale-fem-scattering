@@ -1,0 +1,42 @@
+{
+  "checked_at": "2026-11-08T05:10:28.963057+00:00",
+  "scope": "Current static-low dataset and three selected completed runs",
+  "source_snapshots": 13,
+  "metric_table_values_checked": 12,
+  "labels": 30,
+  "bibliography_entries": 4,
+  "figures": [
+    "images/static_medium_geometry.pdf",
+    "images/sno_v2_architecture.pdf",
+    "images/fno_architecture.pdf",
+    "images/static_low_sno_components.pdf",
+    "images/static_low_fno_components.pdf",
+    "images/static_low_chebyshev_components.pdf"
+  ],
+  "markdown_links_checked": 14,
+  "dct_inverse_checks": [
+    {
+      "size": 3,
+      "inverse_max_error": 1.1102230246251565e-16
+    },
+    {
+      "size": 8,
+      "inverse_max_error": 4.440892098500626e-16
+    },
+    {
+      "size": 32,
+      "inverse_max_error": 2.2412627309620348e-15
+    }
+  ],
+  "original_unchanged": true,
+  "pdf_pages": 13,
+  "visual_pages_reviewed": 13,
+  "latex": {
+    "latex_errors": false,
+    "overfull_boxes": false,
+    "undefined_references": false,
+    "missing_glyphs": false
+  },
+  "tex_sha256": "b96aaedc8b8c245fc0f4ad223955cf7281683e4c40a10c42dafa6bd4544aa47c",
+  "pdf_sha256": "1a26ecea8becf646291bdca77204ad23410a2c997857039406e59e9867b06ed9"
+}

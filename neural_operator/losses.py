@@ -7,6 +7,18 @@ import torch
 from torch import nn
 
 
+def relative_root_mean(squared_error, squared_reference, epsilon=1e-24):
+    """Relative norms with a finite zero gradient and exact zero at zero error.
+
+    For errors >= epsilon this is the usual square root. Below that scale,
+    e / sqrt(epsilon) bounds its derivative. Flooring both numerator
+    and denominator instead makes a perfect zero field have loss one.
+    """
+    error = squared_error.clamp_min(0)
+    norms = error / torch.sqrt(error.clamp_min(epsilon))
+    return (norms / torch.sqrt(squared_reference.clamp_min(epsilon))).mean()
+
+
 class PODFEMLoss(nn.Module):
     """Exact consistent-mass relative L2 loss for a fixed POD decoder.
 
@@ -83,5 +95,4 @@ class PODFEMLoss(nn.Module):
         difference = coefficients.to(self.gram.dtype) - self.projected_coefficients[indices]
         error = torch.einsum("brc,rsc,bsc->b", difference, self.gram, difference)
         error = error + self.floor_squared[indices]
-        return torch.sqrt(error.clamp_min(1e-24) /
-                          self.norm_squared[indices].clamp_min(1e-24)).mean()
+        return relative_root_mean(error, self.norm_squared[indices])

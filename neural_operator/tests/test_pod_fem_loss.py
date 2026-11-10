@@ -142,6 +142,7 @@ class PODFEMLossTests(unittest.TestCase):
         actual = compressed(coefficients, indices)
         expected = FEMLoss(dataset.coordinates, dataset.triangles)(predictor.decode(coefficients), target[indices])
         torch.testing.assert_close(actual.float(), expected)
+        self.assertEqual(float(actual.detach()), 0.)
         actual.backward()
         self.assertTrue(torch.isfinite(coefficients.grad).all())
 

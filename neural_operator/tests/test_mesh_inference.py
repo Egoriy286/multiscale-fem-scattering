@@ -80,6 +80,9 @@ class MeshInferenceTests(unittest.TestCase):
             source.predict(A,n,theta,k,batch_size=2))
         actual = mapped.predict_static(theta,k,batch_size=2)
         np.testing.assert_allclose(actual, expected, atol=3e-7, rtol=2e-6)
+        components = mapped.predict_static_components(theta,k,batch_size=2)
+        np.testing.assert_allclose(components["real"]+1j*components["imag"], actual, atol=3e-7)
+        np.testing.assert_allclose(components["abs"], np.abs(expected), atol=3e-7, rtol=2e-6)
         single = mapped.predict_static(theta[0],k)
         self.assertEqual(single.shape, (len(target),))
         np.testing.assert_allclose(single, actual[0], atol=3e-7, rtol=2e-6)
@@ -129,6 +132,10 @@ class MeshInferenceTests(unittest.TestCase):
         expected = mapped.predict_dataset(dataset,indices,batch_size=1)
         actual = source.predict_dataset(dataset,indices,batch_size=1,allow_mesh_transfer=True)
         np.testing.assert_allclose(actual,expected,atol=1e-7,rtol=1e-7)
+        components = source.predict_dataset_components(dataset,indices,batch_size=1,allow_mesh_transfer=True)
+        mapped_components = mapped.predict_dataset_components(dataset,indices,batch_size=1)
+        for name, values in components.items():
+            np.testing.assert_allclose(values,mapped_components[name],atol=1e-7,rtol=1e-7)
         dataset.coordinates = target.copy()
         dataset.coordinates[-1,0] += .01
         with self.assertRaises(ValueError):
@@ -161,6 +168,8 @@ class MeshInferenceTests(unittest.TestCase):
                 expected = mapped.to_target.apply(source.predict(source_A,source_n,theta,k,batch_size=2))
                 actual = mapped.predict(A,n,theta,k,batch_size=2)
                 np.testing.assert_allclose(actual,expected,atol=5e-7,rtol=2e-6)
+                components = mapped.predict_components(A,n,theta,k,batch_size=2)
+                np.testing.assert_allclose(components["abs"],np.abs(expected),atol=5e-7,rtol=2e-6)
                 with self.assertRaises(ValueError):
                     mapped.predict_static(.2,1.9)
 

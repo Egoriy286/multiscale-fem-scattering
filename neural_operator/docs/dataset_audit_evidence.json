@@ -1,0 +1,15 @@
+{
+  "static_low_frequency_1000x8": {
+    "refinement": [
+      {
+        "method": "Fine FEM vs refined FEM",
+        "error_fem_l2": 0.006576558407118588,
+        "dofs_original": 3221,
+        "dofs_refined": 8958,
+        "refined_h": 0.05,
+        "refined_solve_seconds": 0.5097185000013269,
+        "source": "docs/static_low_refinement.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "config": {
+    "case": "notebook",
+    "k": 1.0,
+    "h": 0.1,
+    "coarse_grids": [
+      4
+    ],
+    "modes": [
+      1,
+      2,
+      4
+    ],
+    "basis_types": [
+      1,
+      2
+    ],
+    "direction": [
+      1.0,
+      0.0
+    ],
+    "geometry_subdivisions": 4,
+    "mesh_path": "/tmp/gmsfem-lesson-final/meshes/fine_n4_h0p1.msh",
+    "mesh_dir": "/tmp/gmsfem-lesson-final/meshes",
+    "method": "CG1 GMsFEM; A=alpha*I; all boundary-delta snapshots; S_alpha mass",
+    "error_field": "total",
+    "paper_denominator": "multiscale",
+    "ref_denominator": "fine",
+    "quadrature": "7-point Dunavant degree 5, analytic incident field"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "dolfinx": "0.11.0.post0",
+    "gmsh": "4.15.2",
+    "petsc": [
+      3,
+      25,
+      1
+    ],
+    "scalar_type": "complex128"
+  },
+  "source_sha256": {
+    "metrics.py": "820b38a982beb731986eaf578f40d1d17eca389576349aa91fcc34813ed7c1a2",
+    "run.py": "7778aeef314ea3d055b7ccec88792bd7b5018ae18d8f9606303c28ef45645d1f",
+    "plotting.py": "866fe0751a3a68b603e7696cedeb59fa179d1b8c84bc8d220f5d03212566604e",
+    "__init__.py": "f94d1e5edb68e909a9f6afc9878395c2c8242a98449b060ee03154b4bf21e68a",
+    "offline.py": "553062c8c53d908ebfcbeb743137129d8c0ac0e17ec29a22ba2f81af7e4ef1d9",
+    "experiment.py": "71c520bcb9294e96c232b63c5d7b2bfb393f9161a4033e4236bb6eb899d401fd",
+    "geometry.py": "61ff16130fbefa6d0c54e20928ecf0831ed4f55e04fd51b2acc4acb082c15a8c",
+    "learning.py": "f573c98668fee81aa9bd80072f9883a792892b7e7b582ff47a5e3bb3077851a6",
+    "fem.py": "1ed331453fdb99bdd2095cfbfb9ced47300d6647cdfa6cebc39deef75853e98c",
+    "geo/reference.geo": "e4559b1f7f8a0cec9d6c4f7c40106b8c93b05b6aea514c26ea8dafbec067fbb8",
+    "geo/scattering.geo": "6e0bc126ead98d6408dd0940bd8ce980410de9f4a0038ffb6a5748df71ebb081"
+  },
+  "fine_dofs": 14353,
+  "patches": {
+    "type1": {
+      "vertex": 12,
+      "fine_dofs": 12846,
+      "interior_dofs": 12766,
+      "boundary_dofs": 80,
+      "snapshot_shape": [
+        12846,
+        80
+      ],
+      "spectral_shape": [
+        80,
+        80
+      ],
+      "kept_modes": 4,
+      "eigenvalues": [
+        2.268733214607099e-14,
+        2.4774580434764966,
+        2.5372265521674624,
+        5.3811539338001975
+      ],
+      "first_mode_relative_range": 2.1886536690397514e-13,
+      "snapshot_sum_defect": 1.5987211554602254e-14,
+      "snapshot_dirichlet_defect": 0.0,
+      "snapshot_backward_error": 1.5719960319036387e-18,
+      "P_shape": [
+        14353,
+        100
+      ],
+      "diagnostics": {
+        "chi_dirichlet_residual": 1.4949754533136425e-17,
+        "chi_interface_defect": 3.1086244689504383e-15,
+        "partition_sum_defect": 1.0658141036401503e-14,
+        "max_snapshot_residual": 1.456396994137682e-17,
+        "max_eigen_residual": 3.479757037852372e-15,
+        "min_snapshots": 40,
+        "max_snapshots": 98,
+        "P_nnz": 228700
+      }
+    },
+    "type2": {
+      "vertex": 12,
+      "fine_dofs": 12846,
+      "interior_dofs": 12766,
+      "boundary_dofs": 80,
+      "snapshot_shape": [
+        12846,
+        80
+      ],
+      "spectral_shape": [
+        80,
+        80
+      ],
+      "kept_modes": 4,
+      "eigenvalues": [
+        1.222522855195043,
+        2.249048900253521,
+        2.303143236263494,
+        5.0381635613959945
+      ],
+      "first_mode_relative_range": 0.7436799386704573,
+      "snapshot_sum_defect": 1.9930529823910996,
+      "snapshot_dirichlet_defect": 0.0,
+      "snapshot_backward_error": 1.5331331107014386e-18,
+      "P_shape": [
+        14353,
+        100
+      ],
+      "diagnostics": {
+        "chi_dirichlet_residual": 1.3864147465261996e-17,
+        "chi_interface_defect": 3.1086244689504383e-15,
+        "partition_sum_defect": 0.3212854712461035,
+        "max_snapshot_residual": 1.3730698846207495e-17,
+        "max_eigen_residual": 3.650339152661804e-15,
+        "min_snapshots": 40,
+        "max_snapshots": 98,
+        "P_nnz": 228700
+      }
+    }
+  },
+  "rows": [
+    {
+      "basis_type": 1,
+      "modes": 1,
+      "dofs_coarse": 25,
+      "e_complex_ref": 12.476545052862525,
+      "scattered_e_complex_ref": 25.630197424527807,
+      "galerkin_residual": 1.3998708871618868e-14
+    },
+    {
+      "basis_type": 1,
+      "modes": 2,
+      "dofs_coarse": 50,
+      "e_complex_ref": 10.892615230846173,
+      "scattered_e_complex_ref": 22.3763772465161,
+      "galerkin_residual": 1.3069524074868433e-14
+    },
+    {
+      "basis_type": 1,
+      "modes": 4,
+      "dofs_coarse": 100,
+      "e_complex_ref": 5.157336870531789,
+      "scattered_e_complex_ref": 10.594564570277328,
+      "galerkin_residual": 2.1677076599882332e-14
+    },
+    {
+      "basis_type": 2,
+      "modes": 1,
+      "dofs_coarse": 25,
+      "e_complex_ref": 12.493185991546833,
+      "scattered_e_complex_ref": 25.664382412599522,
+      "galerkin_residual": 8.512011293423752e-15
+    },
+    {
+      "basis_type": 2,
+      "modes": 2,
+      "dofs_coarse": 50,
+      "e_complex_ref": 10.605460762506828,
+      "scattered_e_complex_ref": 21.786484316727485,
+      "galerkin_residual": 1.072962107791878e-14
+    },
+    {
+      "basis_type": 2,
+      "modes": 4,
+      "dofs_coarse": 100,
+      "e_complex_ref": 4.670785775804039,
+      "scattered_e_complex_ref": 9.59505704939267,
+      "galerkin_residual": 1.5075315255659017e-14
+    }
+  ],
+  "note": "No refined-mesh or exterior-boundary convergence study is performed by this lesson."
+}

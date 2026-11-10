@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "case": "notebook",
+  "reference_mesh": "gmsfem/meshes/reference_n20_h0p04.msh",
+  "reference_mesh_sha256": "9273efc7c0b500209ff847de4ee36d3790b93d64b09e67f62348318ed6b6cb47",
+  "anchor_fields": "gmsfem/results/notebook/fields.npz",
+  "anchor_fields_sha256": "c54bd4d30480623e8b4b30a96607529b39b54b513c1a711bdf37aa7114d48912",
+  "materials": {
+    "1": [
+      1.0,
+      1.0
+    ],
+    "2": [
+      0.2,
+      10.0
+    ],
+    "3": [
+      0.2,
+      10.0
+    ],
+    "4": [
+      0.2,
+      10.0
+    ]
+  },
+  "nodes": 53246,
+  "triangles": 105690,
+  "anchor": {
+    "k": 1.0,
+    "theta": 0.0,
+    "mesh_order_verified": true,
+    "consistent_relative_l2": 9.119820435770505e-14,
+    "normalized_linear_residual": 4.1773797670639705e-13,
+    "validation_seconds": 2.561453168000014
+  },
+  "rhs_optimization": {
+    "method": "exact zero-contrast background omission",
+    "active_cells": 4490,
+    "checks": [
+      {
+        "k": 1.0,
+        "theta": 0.0,
+        "relative_difference": 0.0
+      },
+      {
+        "k": 4.0,
+        "theta": 0.173,
+        "relative_difference": 0.0
+      }
+    ]
+  },
+  "generator_sha256": "8966664336b61b0288f8e66daf3a391135787703bf0423cfbd20751a15130e97",
+  "fem_backend_sha256": "9265689e757084f28443dca609a5c158ce9b608768836bf33fe9070ef1938197"
+}
