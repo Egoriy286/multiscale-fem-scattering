@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "anchor_k": 8.0,
+      "k": 8.05,
+      "anchor": {
+        "seconds": 17.734187440000824,
+        "residual": 9.483212871072983e-13,
+        "dofs": 299446,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "anchor_k": 8.0
+      },
+      "iterative": {
+        "seconds": 3.9697720439980912,
+        "residual": 1.4805803373873093e-12,
+        "dofs": 299446,
+        "reused_lu": true,
+        "gmres_iterations": 15,
+        "anchor_k": 8.0
+      },
+      "direct": {
+        "seconds": 11.489162420999492,
+        "residual": 9.617132134003459e-13,
+        "dofs": 299446,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "anchor_k": 8.05
+      },
+      "relative_coefficient_difference": 5.939495896494559e-13
+    },
+    {
+      "anchor_k": 19.95,
+      "k": 20.0,
+      "anchor": {
+        "seconds": 15.029201979999925,
+        "residual": 2.299156645341566e-13,
+        "dofs": 299446,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "anchor_k": 19.95
+      },
+      "iterative": {
+        "seconds": 4.432822168000712,
+        "residual": 6.292996267368712e-13,
+        "dofs": 299446,
+        "reused_lu": true,
+        "gmres_iterations": 12,
+        "anchor_k": 19.95
+      },
+      "direct": {
+        "seconds": 11.983541104000324,
+        "residual": 2.7469875979812214e-13,
+        "dofs": 299446,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "anchor_k": 20.0
+      },
+      "relative_coefficient_difference": 1.1817873135950882e-12
+    }
+  ],
+  "low_k_check": {
+    "seconds": 21.601532321001287,
+    "residual": 1.4836947347329526e-12,
+    "dofs": 299446,
+    "reused_lu": false,
+    "gmres_iterations": 0,
+    "anchor_k": 0.05
+  }
+}

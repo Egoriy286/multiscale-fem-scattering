@@ -1,0 +1,113 @@
+{
+  "meshes": [
+    "experiments/highk_svd_gmsfem/meshes/graded_geometry256.msh",
+    "experiments/highk_svd_gmsfem/meshes/gms_geometry256_h02.msh"
+  ],
+  "mesh_sha256": [
+    "1819a0c3d7e72eb2ee2872b2bfe95bfaf47ae069e61cac7d2d5364774b14bd6e",
+    "aaa7d0d426c502190c5d8e1a89affd737860cdda6ab4ed7f833b019da7ede174"
+  ],
+  "reference_mesh": "experiments/highk_svd_gmsfem/meshes/graded_geometry256.msh",
+  "reference_sha256": "1819a0c3d7e72eb2ee2872b2bfe95bfaf47ae069e61cac7d2d5364774b14bd6e",
+  "reference_degree": 3,
+  "truth_solves": [
+    {
+      "k": 10.0,
+      "seconds": 40.91557509600011,
+      "residual": 8.583465040908222e-13,
+      "dofs": 377530,
+      "reused_lu": false,
+      "gmres_iterations": 0,
+      "gmres_info": null,
+      "original_equation_residual": 8.583465040908222e-13,
+      "anchor_k": 10.0
+    },
+    {
+      "k": 20.0,
+      "seconds": 51.19221618100005,
+      "residual": 2.957636521996939e-13,
+      "dofs": 377530,
+      "reused_lu": false,
+      "gmres_iterations": 0,
+      "gmres_info": null,
+      "original_equation_residual": 2.957636521996939e-13,
+      "anchor_k": 20.0
+    }
+  ],
+  "n_coarse": 20,
+  "modes": [],
+  "frequencies": [
+    10.0,
+    20.0
+  ],
+  "quadrature_archive_sha256": "c5534d69d48fbca4e2a64e652ab387c3523f6015586ee74c591f3edbfe61b323",
+  "quadrature_points": 1704304,
+  "metric": "Direct native CG2 and CG3 evaluation at common degree-five quadrature; individual complex L2 ratio",
+  "rows": [
+    {
+      "level": 0,
+      "mesh": "experiments/highk_svd_gmsfem/meshes/graded_geometry256.msh",
+      "k": 10.0,
+      "method": "native_cg2",
+      "fine_dofs": 167925,
+      "reduced_dofs": 167925,
+      "error_percent": 0.0353278774731157,
+      "offline_seconds": 0.0,
+      "native_solve_evaluation_seconds": 17.58167782999999,
+      "diagnostics": {}
+    },
+    {
+      "level": 0,
+      "mesh": "experiments/highk_svd_gmsfem/meshes/graded_geometry256.msh",
+      "k": 20.0,
+      "method": "native_cg2",
+      "fine_dofs": 167925,
+      "reduced_dofs": 167925,
+      "error_percent": 0.5307483003223659,
+      "offline_seconds": 0.0,
+      "native_solve_evaluation_seconds": 18.826492628000096,
+      "diagnostics": {}
+    },
+    {
+      "level": 1,
+      "mesh": "experiments/highk_svd_gmsfem/meshes/gms_geometry256_h02.msh",
+      "k": 10.0,
+      "method": "native_cg2",
+      "fine_dofs": 323793,
+      "reduced_dofs": 323793,
+      "error_percent": 0.011808861717302645,
+      "offline_seconds": 0.0,
+      "native_solve_evaluation_seconds": 39.13076063299991,
+      "diagnostics": {}
+    },
+    {
+      "level": 1,
+      "mesh": "experiments/highk_svd_gmsfem/meshes/gms_geometry256_h02.msh",
+      "k": 20.0,
+      "method": "native_cg2",
+      "fine_dofs": 323793,
+      "reduced_dofs": 323793,
+      "error_percent": 0.3355919959265735,
+      "offline_seconds": 0.0,
+      "native_solve_evaluation_seconds": 34.40807481699994,
+      "diagnostics": {}
+    }
+  ],
+  "differences": [
+    {
+      "coarse_level": 0,
+      "fine_level": 1,
+      "k": 10.0,
+      "method": "native_cg2",
+      "difference_relative_l2": 0.0002698424557343431
+    },
+    {
+      "coarse_level": 0,
+      "fine_level": 1,
+      "k": 20.0,
+      "method": "native_cg2",
+      "difference_relative_l2": 0.0027548650049745243
+    }
+  ],
+  "complete": true
+}

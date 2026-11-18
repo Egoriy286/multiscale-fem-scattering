@@ -1,0 +1,9 @@
+data/
+data_solver_pilot_v1/
+cache/
+runs/
+meshes/
+results/*.log
+results/**/*fields.npz
+results/**/*.npz
+results/**/*.npy

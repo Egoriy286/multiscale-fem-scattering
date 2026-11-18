@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "experiment": "highk_svd_gmsfem",
+  "methods": [
+    "mscale_sno",
+    "GMsFEM Type2"
+  ],
+  "seeds": [
+    11,
+    29,
+    47
+  ],
+  "train_sizes": [
+    400,
+    600,
+    800,
+    1000,
+    2000
+  ],
+  "n_train": 2000,
+  "n_validation": 200,
+  "n_test": 200,
+  "k_range": [
+    0.05,
+    20.0
+  ],
+  "theta": 0.0,
+  "fixed_pretraining_train_samples": 1000,
+  "pretraining_k_range": [
+    0.1,
+    4.0
+  ],
+  "sample_size_interpretation": "N is additional new fine-tuning samples; total training observations include the fixed 1000-query historical pretraining set; this is not a from-scratch sample-efficiency study",
+  "epochs": 1000,
+  "batch_size": 100,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "validation_interval": 5,
+  "patience_checks": 40,
+  "device": "mps",
+  "threads": 2,
+  "scheduler": "cosine per optimizer update; epochs*ceil(Ntrain/batch_size); no warm restart",
+  "pod_max_rank": 128,
+  "pod_expansion_rank": 512,
+  "pod_rank_candidates": [
+    32,
+    64,
+    96,
+    128,
+    192,
+    256,
+    384,
+    512
+  ],
+  "pod_relative_tolerance": 0.01,
+  "pod_batch_size": 16,
+  "pod_rank_selection": "smallest declared candidate with train-only RMS individual relative FEM projection error <=1%; refuse if 512 cap insufficient",
+  "sno_width": 8,
+  "depth": 4,
+  "scales": [
+    1,
+    40,
+    80,
+    100,
+    120,
+    140,
+    180,
+    200
+  ],
+  "old_prior_gate": {
+    "enabled": true,
+    "start": 4.0,
+    "stop": 5.0
+  },
+  "transfer": "joint fine tuning of corresponding old seed model plus a zero-output-initialized full-rank multiscale residual; old decoder projected into new train-only mass POD",
+  "gmsfem": {
+    "basis_type": 2,
+    "n_coarse": 20,
+    "modes": [
+      16,
+      32
+    ],
+    "fine_degree": 2,
+    "fine_mesh": "meshes/graded_geometry256.msh",
+    "fine_mesh_sha256": "1819a0c3d7e72eb2ee2872b2bfe95bfaf47ae069e61cac7d2d5364774b14bd6e",
+    "rebuild_each_frequency": true,
+    "sparse_ordering": "COLAMD",
+    "workers": 2,
+    "worker_threads": 2
+  },
+  "gms_refinement_selection_sha256": "abdc3c22dafb0373900f4ab055ecd21e9b6b190eb646117e905ec23a526f951b",
+  "metric": "mean individual relative scattered complex consistent P1-support FEM mass L2; percent",
+  "validation_dtype": "float64 CPU",
+  "training_dtype": "float32",
+  "checkpoint_selection": "lowest evaluated validation mean; test evaluated only after selection",
+  "k_zero": "excluded: singular static Neumann operator and zero scattered-field denominator",
+  "dataset_sha256": {
+    "config.json": "f50a899c9352259b23869d439562a8f230b9602b8155136801b9fd0813c1907a",
+    "etal.msh": "458680360152d528104d286cb455c0a481cea6253dfe926f7c5f0235b0cac988",
+    "reference_problem.npz": "ea67c9cbd92cac52c0effda26fb1a454b2485397eb8454ac06c34663eabb0cbd",
+    "samples.npz": "1b7c9fb3516be955b2006e62449a52369b5cd849ca22e9ba5cffc9624577ed94",
+    "u_scat.npy": "a61fd08f1d0047d7e2e0733dfd1d89a0c76c763bffc058751e67c35eabbb10fe",
+    "completed.npy": "a996cee07a5eab2fc3b1cd9f2d5e3dac5cf074ab30ca7feb5fe1dbe6e3f33304",
+    "generation_times.npy": "2c4087af4a57ae402cfc8f5aec09e7803f1f8830a93871742149dc9bfd9b1b58",
+    "linear_residuals.npy": "cd2595ec7bbf79fc9f6f739f40066e91ff8a24fb1759208356fd9e1edf871e39",
+    "native_solve_stats.json": "35bd0583103d7ca09c95ab416e38a39e10474d0c690854fcc0882af1ae32c5be"
+  },
+  "source_sha256": {
+    "experiments/highk_svd_gmsfem/dataset.py": "2ba388da6341c31c2e5329c16fc4825ad107001782a69d9ad9d54d273d61e070",
+    "experiments/highk_svd_gmsfem/mesh.py": "9892c7bee51880c43f2b328f42737564ad3288cb4a072b63857660714ef4c9c3",
+    "experiments/highk_svd_gmsfem/highorder.py": "9c335c58d41332ca2895ec0a77b0a01dcfba37e25794e7e3fe28469e1c3f88cd",
+    "experiments/highk_svd_gmsfem/training.py": "50f3da9a7a75257794cf70aa164454a061ba600face72798e5b78f6420121b33",
+    "experiments/highk_svd_gmsfem/run.py": "c6c2b9387da3c39cd8c1e5da96f62ce8d53fcdbaeb2a0d545abcdcad93970ae0",
+    "experiments/gms_sno_100/model.py": "e582097768b93da6e59060d26c55ce56e2b2a60905e0a150ccf24dbbe157f62b",
+    "experiments/gms_sno_100/pod.py": "d324a8ed53bd6209e1e1a3af26533a54e8bed86719192c3494b202fb4ed983d5",
+    "experiments/multiscale_sample_study/sno.py": "58c86dca02926206dce236a368b948d0da61746acef7517b9b87bf85b878d823",
+    "neural_operator/data.py": "a7a8d616ea958e0f824d124a8e61bcb6359209fb6bf7764a72ac8e2bfa304a86",
+    "neural_operator/fem.py": "9265689e757084f28443dca609a5c158ce9b608768836bf33fe9070ef1938197",
+    "neural_operator/mesh_transfer.py": "7bacc5329a4ebaf94fcdb80916ecb07fbffded6f8a1b40dcd7dce19af2d8d903",
+    "experiments/highk_svd_gmsfem/gms_highorder.py": "48d68da400ef47af4edcd98904979511a3c9cb40719e1b2f687255d94e55a11d",
+    "experiments/highk_svd_gmsfem/reduced.py": "90024cd67345b09df7a3c9afdd605870f5719cea8a679745fc88c63af93c4738",
+    "experiments/highk_svd_gmsfem/baselines.py": "4aed425106b1493c7cd48a89f313ca52dafec838ddc43259b98319da3e48dd6c",
+    "experiments/highk_svd_gmsfem/baseline_parallel.py": "ac6114322e0278443db360bee8aeeb98720a144766626e5010fe0476b6b2c6bd",
+    "experiments/highk_svd_gmsfem/gms_refinement.py": "dec44b3fce48e8bc1fd08a6ed0cb9fad38ffaba183471dd56acab402111abd58"
+  },
+  "inherited_source_sha256": {
+    "experiments/multiscale_sample_study/runs/n1000/mscale_sno/seed_11/model.pt": "a9b6ad1262afdbbc5f19512ee74e2c80dbf11e3137be83ed302ac1f8fc87fda5",
+    "experiments/multiscale_sample_study/runs/n1000/mscale_sno/seed_29/model.pt": "1b4b5b4943a05d4fbb3558d0f59209dabddacc0a7ade607d97c850c9db7e027d",
+    "experiments/multiscale_sample_study/runs/n1000/mscale_sno/seed_47/model.pt": "aa3309ad0eb9ca02e47d82e7510882ad29c80417474fd660db5073eafb887d15",
+    "experiments/multiscale_sample_study/cache/n1000/sno/pod.npz": "86145dbbd84d96ea82ed4f489f76c621c15006ea9c4ad225739c100409a25aee",
+    "experiments/multiscale_sample_study/cache/n1000/sno/sno_preprocessing.npz": "a7b207b474a780a2467df0c0caf89eda2246edf56e1b7cf8956031377a42dd6a",
+    "experiments/multiscale_sample_study/cache/n1000/sno/sno_config.json": "e9974bc704abe7e34e4ff755fd3271d4176cd92a1d40ae38f591f73c7aac7d07",
+    "experiments/multiscale_sample_study/data/reference_problem.npz": "b202bd558a794a11ac0c303e9aca8ec242de9d4d9ec83c54e5509569610b00b6",
+    "experiments/multiscale_sample_study/data/samples.npz": "54de578d8d3fe10271b52f39d3de9fb668fa7101173b280b5013978b54d7836b"
+  },
+  "reference": {
+    "schema_version": 1,
+    "passed": true,
+    "native_mesh": "meshes/graded_geometry256.msh",
+    "native_degree": 3,
+    "native_dofs": 377530,
+    "support_mesh": "meshes/graded_1.msh",
+    "support_archive": "results/mesh_convergence/level_1_fields.npz",
+    "support_dofs": 122137,
+    "validation_frequencies": [
+      4.0,
+      8.0,
+      12.0,
+      16.0,
+      20.0
+    ],
+    "separate_relative_l2_tolerance": 0.02,
+    "observed_relative_l2_maxima": {
+      "native_degree": 0.005307483003223658,
+      "native_spatial": 0.006696124153972738,
+      "p1_representation": 0.009611991438631505
+    },
+    "reference_definition": "Native affine-geometry CG3 scattering solution sampled onto declared P1 support nodes",
+    "geometry": {
+      "native": {
+        "vertices": 42082,
+        "triangles": 83762,
+        "edge_min": 0.000328957398541657,
+        "edge_max": 0.05358243450164423,
+        "inclusion_edge_max": 0.00729706574200773,
+        "crossings_coarse_grid_10": 0,
+        "crossings_coarse_grid_20": 0
+      },
+      "support": {
+        "vertices": 122137,
+        "triangles": 243472,
+        "edge_min": 0.001730224900133562,
+        "edge_max": 0.026575476414885307,
+        "inclusion_edge_max": 0.003385174227195463,
+        "crossings_coarse_grid_10": 0,
+        "crossings_coarse_grid_20": 0
+      }
+    },
+    "native_linear_solver": "Finite original-equation residual <1e-10 determines acceptance independently of GMRES internal info; previous-solution warm-start, nearby-frequency LU preconditioning, max50iterations; direct LU fallback",
+    "interpretation": "Empirical degree/spatial/representation diagnostics at five anchors, not a rigorous uniform continuum error certificate. Polygonal material geometry and fixed first-order absorbing boundary are declared model approximations. P1 support is an observation representation, not P1 FEM truth.",
+    "verified_files": {
+      "meshes/graded_geometry256.msh": "1819a0c3d7e72eb2ee2872b2bfe95bfaf47ae069e61cac7d2d5364774b14bd6e",
+      "meshes/graded_1.msh": "458680360152d528104d286cb455c0a481cea6253dfe926f7c5f0235b0cac988",
+      "results/mesh_convergence/level_1_fields.npz": "c5534d69d48fbca4e2a64e652ab387c3523f6015586ee74c591f3edbfe61b323",
+      "results/highorder/geometry256_cg3.npz": "e29bb271d460587c199e6eeedd1ab7dac4a8e14c25457f6be22f97db4c8c3fc2",
+      "results/highorder/geometry256_cg2.npz": "419b2d59762360ea891de3b96d064ef73292ba37c0050529ffee58e09c0a2980",
+      "results/highorder/level1_cg2.npz": "55432e905211d50c7f789c37c0adbc5c9a745e0091ab9c45b879bac9583a656a",
+      "results/highorder/geometry256_degree_convergence.json": "e57801c6050aefdaf3748fb9d88614b3ec8af1e753e9e21d05b79f2c4576ae03",
+      "results/highorder/geometry256_spatial_convergence.json": "d811e21572b08ff796292b55b6e6766dee4df8104a7b4f9db7c67273ef71de5f",
+      "results/highorder/geometry256_representation.json": "bedda1d2ac108af95f0338c9b97fe6596be109550e18d560f4c051af193da138",
+      "results/highorder/selected_iterative_validation.json": "5f72589791efc88163d3aa54aac38b5b45261ac9d2b87dae00f2db4d0f53cd22",
+      "highorder.py": "9c335c58d41332ca2895ec0a77b0a01dcfba37e25794e7e3fe28469e1c3f88cd",
+      "mesh.py": "9892c7bee51880c43f2b328f42737564ad3288cb4a072b63857660714ef4c9c3"
+    }
+  },
+  "runtime": {
+    "python": "3.15.2",
+    "platform": "Darwin",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "torch": "2.15.0"
+  },
+  "interpretation": "new fixed-medium interpolation study; low-k success does not establish high-k superiority; all predeclared results retained"
+}

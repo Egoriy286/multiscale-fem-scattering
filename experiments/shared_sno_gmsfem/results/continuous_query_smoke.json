@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "k": 2.731,
+  "theta": 0.3,
+  "shape": [
+    53246
+  ],
+  "finite": true,
+  "checkpoint_count": 1,
+  "accuracy_measured": false
+}

@@ -1,0 +1,26 @@
+{
+  "docker": {
+    "passed": 183,
+    "skipped": 1,
+    "subtests_passed": 21,
+    "seconds": 8.72,
+    "skip_reason": "MPS unavailable in Linux Docker; native MPS backward and production training exercised separately"
+  },
+  "log": "docker_tests.log",
+  "preflight_replay": "preflight_replay.json",
+  "full48_replay_pending": false,
+  "full48_replay_passed": true,
+  "independent_metric_cases": 4800,
+  "fem_label_audit_passed": true,
+  "native_unit_tests": {
+    "passed": 54,
+    "seconds": 5.22
+  },
+  "frequency_plot_checks": {
+    "neural_series": 16,
+    "solver_series": 3,
+    "cases_per_series": 100,
+    "all_physical_queries_paired": true,
+    "profile_means_match_verified_summaries": true
+  }
+}

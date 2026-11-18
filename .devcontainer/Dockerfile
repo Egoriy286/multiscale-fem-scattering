@@ -14,3 +14,10 @@ RUN apt-get update \
 RUN python3 -m pip install --no-cache-dir meshio==5.3.5 h5py==3.16.0 'pyvista[jupyter]==0.46.5' \
     && python3 -m ipykernel install --sys-prefix --name=python3 \
        --display-name="Python (DOLFINx Complex)"
+
+# Keep FEM and neural packages in the same interpreter. This CPU version is
+# compatible with the BLAS libraries shipped by the pinned FEM image.
+COPY experiments/reference_sno_gmsfem/requirements.txt /tmp/neural-requirements.txt
+RUN python3 -m pip install --no-cache-dir 'torch==2.9.1+cpu' --index-url https://download.pytorch.org/whl/cpu \
+    && python3 -m pip install --no-cache-dir -r /tmp/neural-requirements.txt \
+    && python3 -c "import dolfinx, gmsh, torch; from petsc4py import PETSc; import numpy as np; assert np.dtype(PETSc.ScalarType).kind == 'c'; torch.fft.rfft2(torch.ones(4, 4))"

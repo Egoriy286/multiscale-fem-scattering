@@ -1,0 +1,14 @@
+{
+  "dataset_sha256": {
+    "config.json": "288e1d3614d3a955e40099a3256eb6b100261fe4fc5aafa555af7cce4b2ebfb3",
+    "etal.msh": "9273efc7c0b500209ff847de4ee36d3790b93d64b09e67f62348318ed6b6cb47",
+    "reference_problem.npz": "b202bd558a794a11ac0c303e9aca8ec242de9d4d9ec83c54e5509569610b00b6",
+    "samples.npz": "54de578d8d3fe10271b52f39d3de9fb668fa7101173b280b5013978b54d7836b",
+    "u_scat.npy": "a64977bbfc3cb2ea86a52c543206c6b2db3454e1a467355f0661a3781c545232",
+    "completed.npy": "46256fbe57e5954003dce48c2a64eea84a32c62faf08096ddac5219afab1824a",
+    "generation_times.npy": "199f00f609f3a1e2b1dd86ab6bfb7c8733ebecf964ba09c60dde09b9985d09be"
+  },
+  "baselines_sha256": "bbb2b7a1d3d8b20dead837d64ec4a449d4e055ccf4321be39f3eeb078a4aa027",
+  "source_runtime": "complex DOLFINx/PETSc CPU2 in pinned Linux ARM64 Docker",
+  "timing": "Fresh paired100case baseline; separate from native CPU/MPS neural training"
+}

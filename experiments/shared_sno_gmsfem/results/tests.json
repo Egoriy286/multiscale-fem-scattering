@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "tests": 79,
+  "subtests": 8,
+  "command": "docker compose exec -T dolfinx-complex python3 -m pytest experiments/shared_sno_gmsfem/tests experiments/reference_sno_gmsfem/tests neural_operator/tests/test_operators.py neural_operator/tests/test_pod_fem_loss.py gmsfem/tests -q",
+  "log_sha256": "34eca8f0d79b8527210bb4e82fe2cce6dfea09810f79c0c3f1f68b78093aa7f4"
+}

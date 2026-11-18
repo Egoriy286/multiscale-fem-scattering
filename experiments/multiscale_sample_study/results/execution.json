@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "finished_at": "2026-11-13T23:33:17.500636+09:00",
+  "completed_runs": 48,
+  "checkpoint_replay_passed": true,
+  "physical_metric_audit_passed": true,
+  "fem_label_residual_audit_passed": true,
+  "report_updated_at": "2026-11-13T23:38:11.490883+09:00"
+}

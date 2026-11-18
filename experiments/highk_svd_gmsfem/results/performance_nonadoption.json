@@ -1,0 +1,143 @@
+{
+  "adopted": false,
+  "production_unchanged": true,
+  "scope": "Three low-k targets with identical selected-CG3 LU anchor k=.05 and identical direct-anchor initial guess for both variants; optional high-k extension omitted after negative evidence",
+  "candidate": {
+    "internal_gmres_rtol": 3e-11,
+    "unchanged_explicit_original_equation_residual_threshold": 1e-10
+  },
+  "baseline": {
+    "internal_gmres_rtol": 2e-12,
+    "explicit_original_equation_residual_threshold": 1e-10
+  },
+  "conclusion": "No consistent iteration reduction. At k=.211269 the looser internal tolerance stopped one iteration earlier but failed the unchanged original-equation acceptance check and incurred direct LU fallback. Keep frozen production solver.",
+  "timing_limitation": "Production and ordering pilot ran concurrently; wall-clock times are raw observations, not controlled speed estimates. Iteration/fallback counts are the reliable paired diagnostic.",
+  "direct_agreement_threshold": 1e-07,
+  "all_direct_agreements_passed": true,
+  "selected_source_sha256": "9c335c58d41332ca2895ec0a77b0a01dcfba37e25794e7e3fe28469e1c3f88cd",
+  "rows": [
+    {
+      "anchor": 0.05,
+      "k": 0.1253,
+      "identical_initial_guess": "direct anchor solution",
+      "variants": [
+        {
+          "rtol": 2e-12,
+          "seconds": 2.5432630049999716,
+          "residual": 4.325875583380348e-12,
+          "dofs": 377530,
+          "reused_lu": true,
+          "gmres_iterations": 9,
+          "gmres_info": 1,
+          "original_equation_residual": 4.325875583380348e-12,
+          "anchor_k": 0.05,
+          "direct_coefficient_relative_l2": 7.258809670956293e-13
+        },
+        {
+          "rtol": 3e-11,
+          "seconds": 3.1348708409999517,
+          "residual": 8.831158533526696e-11,
+          "dofs": 377530,
+          "reused_lu": true,
+          "gmres_iterations": 8,
+          "gmres_info": 1,
+          "original_equation_residual": 8.831158533526696e-11,
+          "anchor_k": 0.05,
+          "direct_coefficient_relative_l2": 5.7729816949710986e-12
+        }
+      ],
+      "direct": {
+        "seconds": 23.984219594000024,
+        "residual": 3.007652046080988e-12,
+        "dofs": 377530,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "gmres_info": null,
+        "original_equation_residual": 3.007652046080988e-12,
+        "anchor_k": 0.1253
+      }
+    },
+    {
+      "anchor": 0.05,
+      "k": 0.211269,
+      "identical_initial_guess": "direct anchor solution",
+      "variants": [
+        {
+          "rtol": 2e-12,
+          "seconds": 3.667023090999919,
+          "residual": 6.65270853734347e-11,
+          "dofs": 377530,
+          "reused_lu": true,
+          "gmres_iterations": 10,
+          "gmres_info": 1,
+          "original_equation_residual": 6.65270853734347e-11,
+          "anchor_k": 0.05,
+          "direct_coefficient_relative_l2": 4.829386624422382e-12
+        },
+        {
+          "rtol": 3e-11,
+          "seconds": 28.70270807899999,
+          "residual": 3.3030273570572538e-12,
+          "dofs": 377530,
+          "reused_lu": false,
+          "gmres_iterations": 9,
+          "gmres_info": 1,
+          "original_equation_residual": 3.3030273570572538e-12,
+          "anchor_k": 0.211269,
+          "direct_coefficient_relative_l2": 0.0
+        }
+      ],
+      "direct": {
+        "seconds": 58.26698340600001,
+        "residual": 3.3030273570572538e-12,
+        "dofs": 377530,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "gmres_info": null,
+        "original_equation_residual": 3.3030273570572538e-12,
+        "anchor_k": 0.211269
+      }
+    },
+    {
+      "anchor": 0.05,
+      "k": 0.286611,
+      "identical_initial_guess": "direct anchor solution",
+      "variants": [
+        {
+          "rtol": 2e-12,
+          "seconds": 10.540664882000101,
+          "residual": 7.719560203200223e-11,
+          "dofs": 377530,
+          "reused_lu": true,
+          "gmres_iterations": 11,
+          "gmres_info": 1,
+          "original_equation_residual": 7.719560203200223e-11,
+          "anchor_k": 0.05,
+          "direct_coefficient_relative_l2": 6.127762483929665e-12
+        },
+        {
+          "rtol": 3e-11,
+          "seconds": 7.744519099999934,
+          "residual": 7.719560203200223e-11,
+          "dofs": 377530,
+          "reused_lu": true,
+          "gmres_iterations": 11,
+          "gmres_info": 1,
+          "original_equation_residual": 7.719560203200223e-11,
+          "anchor_k": 0.05,
+          "direct_coefficient_relative_l2": 6.127762483929665e-12
+        }
+      ],
+      "direct": {
+        "seconds": 60.60733618800009,
+        "residual": 3.690773682491943e-12,
+        "dofs": 377530,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "gmres_info": null,
+        "original_equation_residual": 3.690773682491943e-12,
+        "anchor_k": 0.286611
+      }
+    }
+  ]
+}

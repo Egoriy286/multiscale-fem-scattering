@@ -1,0 +1,10 @@
+{
+  "mesh_sha256": "1819a0c3d7e72eb2ee2872b2bfe95bfaf47ae069e61cac7d2d5364774b14bd6e",
+  "k": 18.12345,
+  "n_coarse": 20,
+  "modes": 32,
+  "matrix_projection_seconds": 22.46460640099997,
+  "offline_seconds": 26.10905996100007,
+  "matrix_nnz": 10009600,
+  "dofs": 14112
+}

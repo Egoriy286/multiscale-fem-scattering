@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "configuration": {
+    "basis_type": 2,
+    "n_coarse": 20,
+    "modes": [
+      16,
+      32
+    ],
+    "fine_degree": 2,
+    "fine_mesh": "meshes/graded_geometry256.msh",
+    "fine_mesh_sha256": "1819a0c3d7e72eb2ee2872b2bfe95bfaf47ae069e61cac7d2d5364774b14bd6e",
+    "rebuild_each_frequency": true,
+    "sparse_ordering": "COLAMD"
+  },
+  "criterion": {
+    "native_cg2_vs_cg3_max_percent": 1.0,
+    "native_successive_difference_max_percent": 1.0,
+    "scope": "Fine-discretization adequacy only; no reduced-accuracy selection threshold"
+  },
+  "measured": {
+    "base_native_max_error_percent": 0.5307483003223659,
+    "native_successive_max_difference_percent": 0.27548650049745244
+  },
+  "audit_refs": {
+    "results/gms_refinement.json": "1078d72001c741a3b7e1250ec38f4d247adde8c83792cc8c92d0952172d1e3cf",
+    "results/highorder/selected_reference.json": "82b79cdf6ab072e0dddf9f2ea33b904693813646f3c58d2fdaec3b45c440ce22",
+    "results/gms_native_refinement.json": "fe222e135bbb7d9f35d4d181afb7c9d1e807624169171c0dd36a83cf02d3d1db",
+    "results/gms_ordering_pilot.json": "4ab9e958cef0fad8cb33b192bfae9739831fb258e456429a8bfd2e2a6822e988",
+    "results/gms_projection_pilot.json": "6149590a93b16bca2cd694ceda8d7dcb570870386e3fb9d7fe1a02abc24632cd",
+    "results/gms_p2_pilot_n20_m64.json": "de53570664a6be5771092eaadb32c4d7ee7ff4c51f77ce7265e81f25ea8aaf50",
+    "results/baseline_timing_pilot.json": "7121c150629fb7054fdfbd5f91860d701853f7d520478a946009de4645645cb4"
+  },
+  "limitation": "Background-only CG2 refinement .04→.02, fixed inclusion size .005 and geometry256; independent native CG3 spatial, degree, geometry and representation checks remain separate. The declared mode counts are finite and can yield large reduction errors; this does not rank the entire GMsFEM family.",
+  "pilot_exposure": "The historical n10 P1 pilot exposed k20 before final protocol; CG2 cost/order pilots used k18.12345. Main M16/32 were retained; the M64 trial was stopped for resource limits before observing field accuracy."
+}

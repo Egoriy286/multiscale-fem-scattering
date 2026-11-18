@@ -1,0 +1,61 @@
+{
+  "complete": true,
+  "matrix_sha256": "1786abb192d6ed506104856197635d854c655ac41c6e0b74f452cea0b29db878",
+  "rhs_sha256": "8f3eaeb9459d6efa0ccbb9b75f0ba1bf78a297a99255342a5998e32b80ae4aa2",
+  "metadata": {
+    "mesh_sha256": "1819a0c3d7e72eb2ee2872b2bfe95bfaf47ae069e61cac7d2d5364774b14bd6e",
+    "k": 18.12345,
+    "n_coarse": 20,
+    "modes": 32,
+    "matrix_projection_seconds": 22.46460640099997,
+    "offline_seconds": 26.10905996100007,
+    "matrix_nnz": 10009600,
+    "dofs": 14112
+  },
+  "rows": [
+    {
+      "ordering": "COLAMD",
+      "factor_seconds": 78.89409488699994,
+      "factor_nnz": 49680480,
+      "residual": 1.8899328523451812e-13,
+      "relative_coefficient_solution_difference_vs_COLAMD": 0.0
+    },
+    {
+      "ordering": "ND",
+      "factor_seconds": 66.210561332,
+      "factor_nnz": 56334112,
+      "residual": 4.3307420762544293e-13,
+      "relative_coefficient_solution_difference_vs_COLAMD": 3.740770425324679e-09
+    },
+    {
+      "ordering": "ND2",
+      "factor_seconds": 103.34049554800004,
+      "factor_nnz": 64971392,
+      "residual": 2.713042073537963e-13,
+      "relative_coefficient_solution_difference_vs_COLAMD": 7.2851012039628366e-09
+    },
+    {
+      "ordering": "RCM",
+      "factor_seconds": 96.89113743500002,
+      "factor_nnz": 54629504,
+      "residual": 3.751890357236548e-13,
+      "relative_coefficient_solution_difference_vs_COLAMD": 4.522302872796464e-09
+    },
+    {
+      "ordering": "ND_NOPIVOT",
+      "factor_seconds": 103.45695277100003,
+      "factor_nnz": 48659232,
+      "residual": 1.1925745928063459e-11,
+      "relative_coefficient_solution_difference_vs_COLAMD": 2.091460152421948e-09
+    }
+  ],
+  "incomplete_trials": [
+    {
+      "ordering": "MMD_AT_PLUS_A",
+      "reason": "No completed factor before bounded cancellation; no invented residual or factor time"
+    }
+  ],
+  "recommendation": "COLAMD",
+  "timing_note": "Bounded pilots ran concurrently with native label preparation; elapsed times include contention. No alternate ordering showed a compelling runtime/fill advantage. Retain robust default COLAMD.",
+  "parity_scope": "Same exact reduced matrix/RHS and coefficient solutions. Alternative physical-field parity was not measured and alternatives are not selected."
+}

@@ -1,0 +1,26 @@
+{
+  "description": "Synthetic algebra checks; no physical training",
+  "real_pod_rank": 2,
+  "lumped_orthogonality_error": 3.7459822121013914e-16,
+  "max_real_reconstruction_error": 1.3322676295501878e-15,
+  "token_shape": [
+    12,
+    1,
+    5
+  ],
+  "quadratic_loss": 0.21434797751483145,
+  "direct_loss": 0.21434797717418355,
+  "gradient_max_difference": 9.313225746154785e-10,
+  "complex_pythagorean_error": 1.0408340855860843e-17,
+  "multiscale_parameter_count": 300,
+  "lumped_to_consistent_generalized_eigenvalues": [
+    1.0000000000000004,
+    2.000000000000001,
+    3.999999999999999,
+    4.000000000000001
+  ],
+  "versions": {
+    "numpy": "2.5.4",
+    "torch": "2.15.0"
+  }
+}

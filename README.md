@@ -6,6 +6,24 @@
 
 [Саммари проекта](SUMMARY.md) · [Учебный маршрут GMsFEM](gmsfem/docs/learning_path.md) · [Методы и результаты](neural_operator/docs/operator_revision.md) · [Статья](paper/svd_sno_revision_2026-11-06/main.pdf)
 
+## Новая статья и проверка SNO
+
+[Новый препринт в стиле ICML](paper/new_paper/main.pdf) ·
+[Правила научного стиля и работы](paper/new_paper/README.md) ·
+[Аудит реализации](paper/new_paper/AUDIT.md).
+
+Версия от 13 ноября 2026 года объединяет завершённый опыт с одной общей
+SVD-SNO на k∈[0.1,4], сравнение с четырьмя GMsFEM и отдельные диагностики
+представления и экстраполяции. На 424 общих test-запросах mean ошибки полного
+поля равны 2,3656% у SNO и 3,2439% у GMsFEM 20×20 Type 2; при этом GMsFEM
+имеет лучшую медиану и меньшую ошибку на 285 из 424 запросов.
+
+Для новой статьи заново загружены все 424 предсказания и проверены формула
+FEM-loss, физические частотные splits и SHA256. В коде представлены SVD-SNO,
+Chebyshev-SNO и FNO; отдельной реализации Convolutional Neural Operator (CNO)
+нет. Препринт использует официальный ICML-шаблон и не является публикацией
+или принятой статьёй ICML. Предыдущая статья сохранена.
+
 **English overview.** Research code for 2D heterogeneous Helmholtz scattering: complex-valued finite elements, generalized multiscale finite elements, POD/SVD coefficient-space SNO, Chebyshev spectral operators, and Fourier Neural Operators. The retained neural study evaluates held-out wave parameters in one fixed physical medium.
 
 ## Задача и метрика
@@ -57,9 +75,34 @@ Re и Im восстанавливаются моделью; Abs вычисляе
 
 Все команды выполняются из корня репозитория, в одном MPI-процессе.
 
+Docker-образ теперь включает complex FEM и PyTorch. Для полного цикла
+эксперимента на 100 FEM-примерах:
+
+```bash
+make docker-build
+make docker-up
+make pipeline
+```
+
+[Пайплайн, возобновление обучения и GitHub Actions](docs/PIPELINE.md).
+`make status` показывает текущую стадию; `EXPERIMENT=shared_sno_gmsfem`
+выбирает завершённый опыт с общей SNO вместо MscaleFNO.
+
+Отдельный [multiscale POD/SVD-SNO эксперимент](experiments/mscale_sno_100/README.md)
+сравнивает обычные SNO GELU/sine и масштабированные SNO-ветви с GMsFEM Type 1/2
+на общих 100 FEM-полях и splits 70/15/15 из `mscale_fno_100`. Базис строится
+только по train в согласованной FEM-метрике. Запуск:
+`make pipeline EXPERIMENT=mscale_sno_100`; готовые данные и baseline
+переиспользуются с проверкой SHA256, что явно фиксируется в новом каталоге.
+
+[Серия 400/600/800/1000 train-примеров](experiments/multiscale_sample_study/README.md)
+использует 1200 заново рассчитанных FEM-полей, общие 100 validation и 100 test,
+четыре обычных/multiscale SNO/FNO и три seeds. Обучение и выбор checkpoint
+используют единую consistent FEM L2-loss. Команды: `make sample-study` и
+`make sample-status`; завершённые результаты отделены от промежуточных кривых.
+
 ```bash
 docker compose up -d --build dolfinx-complex
-docker compose exec -T dolfinx-complex python3 -m pip install -r neural_operator/requirements.txt
 
 docker compose exec -T dolfinx-complex python3 -m gmsfem.learning verify
 docker compose exec -T dolfinx-complex python3 -m neural_operator.run data --band low --dry-run

@@ -1,0 +1,32 @@
+[
+  {
+    "k": 4.0,
+    "relative_scattered_l2": 9.669974281603513e-05,
+    "degree_a": 2,
+    "degree_b": 3
+  },
+  {
+    "k": 8.0,
+    "relative_scattered_l2": 0.0013645407944527337,
+    "degree_a": 2,
+    "degree_b": 3
+  },
+  {
+    "k": 12.0,
+    "relative_scattered_l2": 0.0006474603671395985,
+    "degree_a": 2,
+    "degree_b": 3
+  },
+  {
+    "k": 16.0,
+    "relative_scattered_l2": 0.0020126598880512176,
+    "degree_a": 2,
+    "degree_b": 3
+  },
+  {
+    "k": 20.0,
+    "relative_scattered_l2": 0.005307483003223658,
+    "degree_a": 2,
+    "degree_b": 3
+  }
+]

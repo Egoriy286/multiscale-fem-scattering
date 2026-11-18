@@ -1,0 +1,157 @@
+{
+  "passed": true,
+  "native_mesh": "graded_geometry256.msh",
+  "warm_start": true,
+  "rows": [
+    {
+      "anchor_k": 0.05,
+      "k": 0.06,
+      "anchor": {
+        "seconds": 17.797272134999957,
+        "residual": 2.8858779132757086e-12,
+        "dofs": 377530,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "gmres_info": null,
+        "original_equation_residual": 2.8858779132757086e-12,
+        "anchor_k": 0.05
+      },
+      "iterative": {
+        "seconds": 3.165296000000012,
+        "residual": 6.311577983688936e-12,
+        "dofs": 377530,
+        "reused_lu": true,
+        "gmres_iterations": 5,
+        "gmres_info": 1,
+        "original_equation_residual": 6.311577983688936e-12,
+        "anchor_k": 0.05
+      },
+      "direct": {
+        "seconds": 17.861234996999997,
+        "residual": 2.902219714503934e-12,
+        "dofs": 377530,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "gmres_info": null,
+        "original_equation_residual": 2.902219714503934e-12,
+        "anchor_k": 0.06
+      },
+      "relative_coefficient_difference": 2.749334123748986e-12
+    },
+    {
+      "anchor_k": 0.06,
+      "k": 0.1,
+      "anchor": {
+        "seconds": 1.7996059339999988,
+        "residual": 1.6345786283468549e-12,
+        "dofs": 377530,
+        "reused_lu": true,
+        "gmres_iterations": 1,
+        "gmres_info": 0,
+        "original_equation_residual": 1.6345786283468549e-12,
+        "anchor_k": 0.06
+      },
+      "iterative": {
+        "seconds": 2.2912494430000265,
+        "residual": 6.227267138350629e-12,
+        "dofs": 377530,
+        "reused_lu": true,
+        "gmres_iterations": 7,
+        "gmres_info": 1,
+        "original_equation_residual": 6.227267138350629e-12,
+        "anchor_k": 0.06
+      },
+      "direct": {
+        "seconds": 17.08850018200002,
+        "residual": 2.9707348644096185e-12,
+        "dofs": 377530,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "gmres_info": null,
+        "original_equation_residual": 2.9707348644096185e-12,
+        "anchor_k": 0.1
+      },
+      "relative_coefficient_difference": 1.4018049801449467e-12
+    },
+    {
+      "anchor_k": 8.0,
+      "k": 8.05,
+      "anchor": {
+        "seconds": 15.454119364000007,
+        "residual": 1.5367406537061413e-12,
+        "dofs": 377530,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "gmres_info": null,
+        "original_equation_residual": 1.5367406537061413e-12,
+        "anchor_k": 8.0
+      },
+      "iterative": {
+        "seconds": 5.701890997000021,
+        "residual": 1.3515690612387896e-12,
+        "dofs": 377530,
+        "reused_lu": true,
+        "gmres_iterations": 14,
+        "gmres_info": 0,
+        "original_equation_residual": 1.3515690612387896e-12,
+        "anchor_k": 8.0
+      },
+      "direct": {
+        "seconds": 22.299808859999985,
+        "residual": 1.421622819245305e-12,
+        "dofs": 377530,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "gmres_info": null,
+        "original_equation_residual": 1.421622819245305e-12,
+        "anchor_k": 8.05
+      },
+      "relative_coefficient_difference": 4.543268685369303e-13
+    },
+    {
+      "anchor_k": 19.95,
+      "k": 20.0,
+      "anchor": {
+        "seconds": 26.92507213199997,
+        "residual": 2.995950969668777e-13,
+        "dofs": 377530,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "gmres_info": null,
+        "original_equation_residual": 2.995950969668777e-13,
+        "anchor_k": 19.95
+      },
+      "iterative": {
+        "seconds": 3.0079080109999836,
+        "residual": 6.673572996186206e-13,
+        "dofs": 377530,
+        "reused_lu": true,
+        "gmres_iterations": 11,
+        "gmres_info": 0,
+        "original_equation_residual": 6.673572996186206e-13,
+        "anchor_k": 19.95
+      },
+      "direct": {
+        "seconds": 19.455153835000033,
+        "residual": 2.9576365219969345e-13,
+        "dofs": 377530,
+        "reused_lu": false,
+        "gmres_iterations": 0,
+        "gmres_info": null,
+        "original_equation_residual": 2.9576365219969345e-13,
+        "anchor_k": 20.0
+      },
+      "relative_coefficient_difference": 1.2626801527896932e-12
+    }
+  ],
+  "low_k_check": {
+    "seconds": 15.801887692000037,
+    "residual": 2.8858779132757086e-12,
+    "dofs": 377530,
+    "reused_lu": false,
+    "gmres_iterations": 0,
+    "gmres_info": null,
+    "original_equation_residual": 2.8858779132757086e-12,
+    "anchor_k": 0.05
+  }
+}

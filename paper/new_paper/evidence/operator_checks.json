@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "date": "2026-11-13",
+  "scope": "No retraining or new FEM solves",
+  "torch": "2.15.0",
+  "numpy": "2.5.4",
+  "reloaded_test_fields": 424,
+  "frequency_groups": [
+    214,
+    54,
+    52
+  ],
+  "disjoint_physical_frequencies": true,
+  "source_hash_parity": {
+    "experiments/shared_sno_gmsfem/dataset.py": true,
+    "experiments/shared_sno_gmsfem/training.py": true,
+    "experiments/reference_sno_gmsfem/training.py": true,
+    "neural_operator/training.py": true,
+    "neural_operator/sno/model.py": true,
+    "neural_operator/sno/basis.py": true,
+    "neural_operator/_layers.py": true,
+    "neural_operator/losses.py": true
+  },
+  "checkpoint_sha256": "27c5d0d2778c2752d6ad1ff27cd82047a19969c9754f7679cb64180833a803a7",
+  "label_hash_verified": true,
+  "max_reload_relative_l2": 3.355295430862816e-06,
+  "max_scattered_metric_difference_percentage_points": 7.561363849717395e-05,
+  "loss_identity_samples": 12,
+  "quadratic_loss": 0.043605128735061116,
+  "direct_consistent_mass_loss": 0.04360512774239325,
+  "loss_absolute_difference": 9.926678645744147e-10,
+  "chebyshev_inverse_max_errors": {
+    "2": 0.0,
+    "9": 4.440892098500626e-16,
+    "16": 1.609823385706477e-15,
+    "32": 2.2343238370581275e-15
+  },
+  "field_examples_sha256": "362ff18178489508dc0837905e6d959eca990a043e8f3195b95e0c0e838c38ff",
+  "baseline_fem_solves": "Not rerun; archived verification checked",
+  "full_pde_accuracy": "Not established by these checks"
+}

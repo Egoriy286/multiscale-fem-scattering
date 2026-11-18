@@ -1,0 +1,9 @@
+{
+  "experiments/gms_sno_100/model.py": "e582097768b93da6e59060d26c55ce56e2b2a60905e0a150ccf24dbbe157f62b",
+  "experiments/gms_sno_100/pod.py": "d324a8ed53bd6209e1e1a3af26533a54e8bed86719192c3494b202fb4ed983d5",
+  "experiments/multiscale_sample_study/sno.py": "58c86dca02926206dce236a368b948d0da61746acef7517b9b87bf85b878d823",
+  "experiments/highk_svd_gmsfem/training.py": "50f3da9a7a75257794cf70aa164454a061ba600face72798e5b78f6420121b33",
+  "neural_operator/chebyshev/model.py": "e4d29382b9c855104349cbc73f2c3caa07a61b9da7bb60e2b5c389e25331235b",
+  "experiments/mscale_fno_100/model.py": "bb147c07ca864de879b341d6690009aeb9663cbb4d9826c6f7e731c186c23b7f",
+  "gmsfem/offline.py": "553062c8c53d908ebfcbeb743137129d8c0ac0e17ec29a22ba2f81af7e4ef1d9"
+}

@@ -1,0 +1,5 @@
+stage,degree,vertices,triangles,dofs_complex,real_unknowns,requested_h_background,requested_h_inclusion
+P1 mesh level 0,1,33406,66410,33406,66812,0.04,0.005
+P1 mesh level 1,1,122137,243472,122137,244274,0.02,0.0025
+P1 mesh level 2,1,472599,943596,472599,945198,0.01,0.00125
+Selected native CG3 reference,3,42082,83762,377530,755060,0.04,0.005

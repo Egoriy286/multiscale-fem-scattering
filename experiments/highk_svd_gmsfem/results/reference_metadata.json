@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "samples": 2400,
+  "nodes": 122137,
+  "triangles": 243472,
+  "frequency_groups": 2400,
+  "new_fem_labels": 2400,
+  "inherited_fem_labels": 0,
+  "query_sha256": "8b2f6de0c6c086a2235d3195598843b5c27d52026b733fc94c26160698a61a36",
+  "reference": {
+    "schema_version": 1,
+    "passed": true,
+    "native_mesh": "meshes/graded_geometry256.msh",
+    "native_degree": 3,
+    "native_dofs": 377530,
+    "support_mesh": "meshes/graded_1.msh",
+    "support_archive": "results/mesh_convergence/level_1_fields.npz",
+    "support_dofs": 122137,
+    "validation_frequencies": [
+      4.0,
+      8.0,
+      12.0,
+      16.0,
+      20.0
+    ],
+    "separate_relative_l2_tolerance": 0.02,
+    "observed_relative_l2_maxima": {
+      "native_degree": 0.005307483003223658,
+      "native_spatial": 0.006696124153972738,
+      "p1_representation": 0.009611991438631505
+    },
+    "reference_definition": "Native affine-geometry CG3 scattering solution sampled onto declared P1 support nodes",
+    "geometry": {
+      "native": {
+        "vertices": 42082,
+        "triangles": 83762,
+        "edge_min": 0.000328957398541657,
+        "edge_max": 0.05358243450164423,
+        "inclusion_edge_max": 0.00729706574200773,
+        "crossings_coarse_grid_10": 0,
+        "crossings_coarse_grid_20": 0
+      },
+      "support": {
+        "vertices": 122137,
+        "triangles": 243472,
+        "edge_min": 0.001730224900133562,
+        "edge_max": 0.026575476414885307,
+        "inclusion_edge_max": 0.003385174227195463,
+        "crossings_coarse_grid_10": 0,
+        "crossings_coarse_grid_20": 0
+      }
+    },
+    "native_linear_solver": "Finite original-equation residual <1e-10 determines acceptance independently of GMRES internal info; previous-solution warm-start, nearby-frequency LU preconditioning, max50iterations; direct LU fallback",
+    "interpretation": "Empirical degree/spatial/representation diagnostics at five anchors, not a rigorous uniform continuum error certificate. Polygonal material geometry and fixed first-order absorbing boundary are declared model approximations. P1 support is an observation representation, not P1 FEM truth.",
+    "verified_files": {
+      "meshes/graded_geometry256.msh": "1819a0c3d7e72eb2ee2872b2bfe95bfaf47ae069e61cac7d2d5364774b14bd6e",
+      "meshes/graded_1.msh": "458680360152d528104d286cb455c0a481cea6253dfe926f7c5f0235b0cac988",
+      "results/mesh_convergence/level_1_fields.npz": "c5534d69d48fbca4e2a64e652ab387c3523f6015586ee74c591f3edbfe61b323",
+      "results/highorder/geometry256_cg3.npz": "e29bb271d460587c199e6eeedd1ab7dac4a8e14c25457f6be22f97db4c8c3fc2",
+      "results/highorder/geometry256_cg2.npz": "419b2d59762360ea891de3b96d064ef73292ba37c0050529ffee58e09c0a2980",
+      "results/highorder/level1_cg2.npz": "55432e905211d50c7f789c37c0adbc5c9a745e0091ab9c45b879bac9583a656a",
+      "results/highorder/geometry256_degree_convergence.json": "e57801c6050aefdaf3748fb9d88614b3ec8af1e753e9e21d05b79f2c4576ae03",
+      "results/highorder/geometry256_spatial_convergence.json": "d811e21572b08ff796292b55b6e6766dee4df8104a7b4f9db7c67273ef71de5f",
+      "results/highorder/geometry256_representation.json": "bedda1d2ac108af95f0338c9b97fe6596be109550e18d560f4c051af193da138",
+      "results/highorder/selected_iterative_validation.json": "5f72589791efc88163d3aa54aac38b5b45261ac9d2b87dae00f2db4d0f53cd22",
+      "highorder.py": "9c335c58d41332ca2895ec0a77b0a01dcfba37e25794e7e3fe28469e1c3f88cd",
+      "mesh.py": "9892c7bee51880c43f2b328f42737564ad3288cb4a072b63857660714ef4c9c3"
+    }
+  },
+  "splits": [
+    {
+      "name": "train",
+      "samples": 2000
+    },
+    {
+      "name": "validation",
+      "samples": 200
+    },
+    {
+      "name": "test",
+      "samples": 200
+    }
+  ],
+  "normalized_native_residual_max": 9.70235464979425e-11,
+  "solve_seconds": 51060.177026490994,
+  "current_session_seconds": 51097.992917147996,
+  "sha256": {
+    "config.json": "f50a899c9352259b23869d439562a8f230b9602b8155136801b9fd0813c1907a",
+    "etal.msh": "458680360152d528104d286cb455c0a481cea6253dfe926f7c5f0235b0cac988",
+    "reference_problem.npz": "ea67c9cbd92cac52c0effda26fb1a454b2485397eb8454ac06c34663eabb0cbd",
+    "samples.npz": "1b7c9fb3516be955b2006e62449a52369b5cd849ca22e9ba5cffc9624577ed94",
+    "u_scat.npy": "a61fd08f1d0047d7e2e0733dfd1d89a0c76c763bffc058751e67c35eabbb10fe",
+    "completed.npy": "a996cee07a5eab2fc3b1cd9f2d5e3dac5cf074ab30ca7feb5fe1dbe6e3f33304",
+    "generation_times.npy": "2c4087af4a57ae402cfc8f5aec09e7803f1f8830a93871742149dc9bfd9b1b58",
+    "linear_residuals.npy": "cd2595ec7bbf79fc9f6f739f40066e91ff8a24fb1759208356fd9e1edf871e39",
+    "native_solve_stats.json": "35bd0583103d7ca09c95ab416e38a39e10474d0c690854fcc0882af1ae32c5be"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "date": "2026-11-13",
+  "numerical_sources": 16,
+  "paired_queries": 424,
+  "baseline_methods": 5,
+  "sno_lower_total_queries": 139,
+  "tests": 91,
+  "subtests": 2,
+  "figure_pairs": 8,
+  "total_pdf_pages": 11,
+  "main_body_pages": 7,
+  "undefined_references": false,
+  "overfull_boxes": false,
+  "pdf_author_errors": false,
+  "letter_page_size": true,
+  "latex_sha256": "3d696a1367536dd440f66f3ccaf56efcb8df1ab7db69321466230b6aad79d65f",
+  "pdf_sha256": "bf316f1852f82ecf90a5174f6032d0f681bf20b248f7b443a7d494351450048d",
+  "visual_review": "Recorded separately in visual_review.json after inspecting final page renders"
+}

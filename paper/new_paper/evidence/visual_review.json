@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "date": "2026-11-13",
+  "pdf_sha256": "bf316f1852f82ecf90a5174f6032d0f681bf20b248f7b443a7d494351450048d",
+  "pages_reviewed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "render": "Poppler pdftoppm, scale-to 1200 pixels",
+  "checks": [
+    "Readable text and mathematical notation",
+    "No clipped figures, tables, or captions",
+    "Shared scales in field panels",
+    "Final-size labels in combined diagnostics",
+    "Author notice has no placeholder or acceptance claim",
+    "Balanced, readable bibliography",
+    "Page numbers and appendix transitions"
+  ],
+  "layout_issues": [],
+  "page_png_sha256": {
+    "page-01.png": "43927519cc1369b92518555fdb10a216793396ad0232a6efdea2552da9f4315b",
+    "page-02.png": "b12bd38ce743fdbaee3aa8ac9681a22d30418f341c451d5702cd0b20945e0905",
+    "page-03.png": "c32936dbcf80be4f7f86d084a93b2001049da3a8469d9531e7c1441ccfd6e464",
+    "page-04.png": "8ebd2f9b748168225145fc219dd0857a321485205c47c410ba795c6071726430",
+    "page-05.png": "6ff464f20a9f985e0a6ecf04ac1de425791ccab6ab4b582a269b53122da564f3",
+    "page-06.png": "d33e0e0df31e64961ba9001d136b6319d8424746b0449921e52d20c962baad5e",
+    "page-07.png": "eb9e87b874bebd3dba7e627e2a2bd5fef1e72a78e99603cf329a9580d45f31b9",
+    "page-08.png": "52486c044fab45c20d0546a9dec5ad1ec414e44a202f9a3acb92360b58bccd9d",
+    "page-09.png": "44c09358eb15e4b84813c59c31efa17c2af8dc9bbc3328a4826a55a0e96cd6f1",
+    "page-10.png": "7a8580180768f6dea0831485f3e70d57292001a710a0506ea86b838a87f2d141",
+    "page-11.png": "18238e5b4e1a1650a600959f6f1f5ec07f244ceb5cf5c6258d7a704eba492ee6"
+  }
+}

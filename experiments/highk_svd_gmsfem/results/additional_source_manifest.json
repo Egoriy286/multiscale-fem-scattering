@@ -1,0 +1,14 @@
+{
+  "phase": "POD preparation, before any new-model optimizer steps; supplement to immutable protocol",
+  "created_at": "2026-11-15T12:37:58.379961+09:00",
+  "source_sha256": {
+    "experiments/multiscale_sample_study/training.py": "d44cfc4c98c7f20a4fc7c22f925e2950c0fc9e433888b1c96b825ecf3b87eb0a",
+    "experiments/multiscale_sample_study/dataset.py": "ecba7241f693fb98bd66c4978d2df47064dd793826656144e4c51ef267e9320b",
+    "experiments/reference_sno_gmsfem/dataset.py": "8966664336b61b0288f8e66daf3a391135787703bf0423cfbd20751a15130e97",
+    "experiments/reference_sno_gmsfem/baselines.py": "b901466d3166cccd59937cb5188b655cfacee937e1361af261f46cb089fb5c4d",
+    "gmsfem/fem.py": "1ed331453fdb99bdd2095cfbfb9ced47300d6647cdfa6cebc39deef75853e98c",
+    "gmsfem/offline.py": "553062c8c53d908ebfcbeb743137129d8c0ac0e17ec29a22ba2f81af7e4ef1d9",
+    "gmsfem/metrics.py": "820b38a982beb731986eaf578f40d1d17eca389576349aa91fcc34813ed7c1a2",
+    "gmsfem/geometry.py": "61ff16130fbefa6d0c54e20928ecf0831ed4f55e04fd51b2acc4acb082c15a8c"
+  }
+}
