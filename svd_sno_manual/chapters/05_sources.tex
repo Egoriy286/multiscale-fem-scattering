@@ -1,0 +1,91 @@
+\chapter{Справочник и литература}
+\label{sources:chapter}
+
+\section{Обозначения, к которым удобно вернуться}
+\begin{center}
+\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+Обозначение & Смысл \\ \midrule
+$p=(A,n,k,\theta)$ & Один запрос: свойства среды, волновое число и угол падения.\\
+$u_i,\ u_s,\ u_{s,h}$ & Падающее, рассеянное и приближённое рассеянное поля.\\
+$N,\ m,\ r$ & Число узлов, число обучающих снимков, число оставленных мод.\\
+$U,\ \widehat U$ & Векторы узловых значений расчётного поля и прогноза.\\
+$\varphi_i,\ \phi_j$ & Узловая функция МКЭ и пространственная POD-мода.\\
+$\mu,\ \Phi_r,\ c$ & Среднее поле, матрица из $r$ мод и модальные коэффициенты одного поля.\\
+$M,\ W$ & Согласованная матрица масс и её диагональное приближение. Определяют два скалярных произведения на одной сетке.\\
+$T,\ *$ & Верхние индексы матрицы: транспонирование и сопряжённое транспонирование. Для вещественных матриц совпадают.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Где посмотреть реализацию}
+Пути ниже отсчитываются от корня репозитория. Основной код расположен
+в \path{neural_operator/}. Для чтения конкретной формулы достаточно
+открыть соответствующий файл.
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\toprule
+Файл в \path{neural_operator/} & Что искать \\ \midrule
+\path{fem.py}, \path{data.py} & Сборка системы МКЭ, нагрузка, матрица масс и норма поля.\\
+\path{sno/basis.py} & Среднее, взвешенное SVD, переход от поля к коэффициентам и обратно.\\
+\path{sno/model.py}, \path{_layers.py} & Входная таблица признаков, смешивание мод и выходные коэффициенты.\\
+\path{losses.py} & Квадратичная форма для оценки ошибки по коэффициентам.\\
+\path{training.py} & Подготовка базисов, выбор ранга, обучение и загрузка модели.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+В серии \path{experiments/reference_sno_gmsfem/} файл \path{dataset.py}
+открывает эталон GMsFEM, а \path{training.py} задаёт цикл обучения SVD-SNO.
+Для комплексного варианта см.\ \path{experiments/gms_sno_100/pod.py}
+и \path{model.py} в том же каталоге. Описание опыта со 100 полями
+находится в \path{experiments/mscale_sno_100/METHOD.md}.
+
+\clearpage
+\section{Литература для самостоятельного чтения}
+\begin{enumerate}[itemsep=.45em]\RaggedRight
+\item В.\,С. Фанасков, И.\,В. Оселедец. \emph{Спектральные нейронные операторы}.
+Доклады РАН. Математика, информатика, процессы управления, 514(2),
+72--79 (2023). В развёрнутой англоязычной работе архитектуру описывают
+раздел 4 и приложение C.1.3. \href{https://www.mathnet.ru/rus/danma452}{Русская статья},
+\href{https://arxiv.org/html/2205.10573v2}{англоязычная версия},
+\href{https://github.com/VLSF/SNO/tree/4362226284f22f6f456d429ec4ddec5b8596e894}{авторская реализация}.
+\item C. Eckart, G. Young. \emph{The Approximation of One Matrix by Another of
+Lower Rank}.\newline Psychometrika, 1, 211--218 (1936). Исходная работа об
+оптимальном приближении матрицы заданного ранга.
+\href{https://doi.org/10.1007/BF02288367}{DOI 10.1007/BF02288367}.
+\item L. Sirovich. \emph{Turbulence and the Dynamics of Coherent Structures.
+I. Coherent Structures}. Quarterly of Applied Mathematics, 45, 561--571
+(1987). Построение мод по корреляциям снимков.
+\href{https://doi.org/10.1090/qam/910462}{DOI 10.1090/qam/910462}.
+\item N. Halko, P.-G. Martinsson, J.\,A. Tropp.
+\emph{Finding Structure with Randomness}. SIAM Review, 53, 217--288 (2011).
+Как случайная выборка помогает приближённо выделить ведущее
+сингулярное подпространство. \href{https://arxiv.org/abs/0909.4061}{Полный текст авторов}.
+\item Z. Li и др. \emph{Fourier Neural Operator for Parametric Partial
+Differential Equations} (2020). Параметризация оператора в пространстве
+Фурье. \href{https://arxiv.org/abs/2010.08895}{arXiv:2010.08895}.
+\item L. Lu и др. \emph{A Comprehensive and Fair Comparison of Two Neural
+Operators (with Practical Extensions) Based on FAIR Data}. Computer Methods
+in Applied Mechanics and Engineering, 393, 114778 (2022). Варианты
+DeepONet, в том числе с выходным POD-базисом.
+\href{https://arxiv.org/abs/2111.05512}{Полный текст авторов}.
+\item А.\,А. Самарский. \emph{The Theory of Difference Schemes} (2001).
+Общие понятия аппроксимации и устойчивости разностных схем.
+\href{https://www.routledge.com/The-Theory-of-Difference-Schemes/Samarskii/p/book/9780429208171}{Издание на английском языке}.
+\end{enumerate}
+
+\section{Как повторить примеры и собрать пособие}
+Из корня проекта в его Python-окружении выполните
+\begin{lstlisting}[language=bash]
+python svd_sno_manual/build_notation_assets.py
+python svd_sno_manual/build_assets.py
+python svd_sno_manual/check_sno_examples.py
+python svd_sno_manual/mini_demo.py
+sh svd_sno_manual/build.sh
+\end{lstlisting}
+Первые две команды работают с сохранённым расчётом на эталонной сетке
+и повторяют прогноз без переобучения. Следующие две проверяют алгебру
+слоя и функции потерь. Для сборки PDF достаточно готовых иллюстраций,
+XeLaTeX и шрифтов, перечисленных в \path{svd_sno_manual/README.md}.

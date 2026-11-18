@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "model_count": 1,
+  "k_range": [
+    0.1,
+    4.0
+  ],
+  "test_samples": 424,
+  "test_frequency_groups": 52,
+  "method_samples": {
+    "SVD-SNO shared": 424,
+    "FEM h=0.04": 424,
+    "GMsFEM 10x10 Type 1 M=16": 424,
+    "GMsFEM 10x10 Type 2 M=16": 424,
+    "GMsFEM 20x20 Type 1 M=16": 424,
+    "GMsFEM 20x20 Type 2 M=16": 424
+  },
+  "independent_verification": {
+    "passed": true,
+    "checkpoint_sha256": "27c5d0d2778c2752d6ad1ff27cd82047a19969c9754f7679cb64180833a803a7",
+    "dataset_fingerprint": "b3d1e73fe5305e7ede449d5fd2388935e8997a079d3b03399e39634812e657c0",
+    "source_label_sha256": "972b376922185c7cc20e2c87b2946d659761e4161a7a86de139c81621f31acbe",
+    "all_test_predictions_reloaded": 424,
+    "max_reload_relative_l2": 0.0,
+    "max_sno_metric_difference": 0.0,
+    "saved_predictions_sha256": "b630c83a18f8033d52c5304d1c400060de81fc3c14ecd74838bf56d266c117f0",
+    "history_sha256": "6684b70a1e2448133486740808c042d23ef4fcc425fad4bac879e83b52e40be4",
+    "baseline_spot_indices": [
+      0,
+      608,
+      1280,
+      2560
+    ],
+    "baseline_spot_k": [
+      0.1,
+      1.0,
+      2.0,
+      4.0
+    ],
+    "baseline_spot_methods": [
+      "FEM h=0.04",
+      "GMsFEM 20x20 Type 2 M=16"
+    ],
+    "baseline_max_metric_difference": 2.6412205755832474e-12,
+    "baseline_metric_difference_tolerance": 1e-06,
+    "score_sha256": {
+      "sno.json": "c7de2b5a8a2cc867c1d64bfd1f9c1aff77893b77bef95878e3d485eeb5f5dc98",
+      "baselines.json": "6ee924caf8528339f481fac3b9171f9d39fdda7f8cc7d7f27bb284b696b31850",
+      "sno_metrics.json": "1271abf0ad5c3d50a93be1cc39622509985c5782d03a469131343a1c76e28572"
+    }
+  }
+}

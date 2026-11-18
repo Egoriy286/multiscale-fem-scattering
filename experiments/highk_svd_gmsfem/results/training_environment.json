@@ -1,0 +1,16 @@
+{
+  "python": "3.15.2",
+  "system": "Darwin",
+  "machine": "arm64",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "torch": "2.15.0",
+  "mps_available": true,
+  "logical_cpus": 10,
+  "physical_memory_bytes": 25769803776,
+  "blas_threads": 2,
+  "torch_cpu_threads": 2,
+  "training_device": "mps",
+  "training_dtype": "float32",
+  "validation_dtype": "float64 CPU"
+}

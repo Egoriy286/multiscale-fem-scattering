@@ -1,0 +1,61 @@
+name: FEM and neural experiments
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      full_experiment:
+        description: Run the complete 100-field MscaleFNO experiment (300 epochs, 3 seeds)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: experiments-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docker-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Build complex FEM and PyTorch runtime
+        run: make docker-build
+      - name: Start and check runtime
+        run: make docker-up doctor
+      - name: Run numerical and pipeline tests
+        run: make test
+      - name: Run complete experiment
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.full_experiment }}
+        run: python3 scripts/pipeline.py run --skip-tests
+      - name: Collect container diagnostics
+        if: always()
+        run: |
+          mkdir -p tmp/ci
+          bash scripts/docker.sh compose ps -a > tmp/ci/compose-ps.txt
+          bash scripts/docker.sh compose logs --no-color > tmp/ci/compose.log
+      - name: Preserve diagnostics and experiment reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: experiment-results
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            tmp/ci/
+            experiments/mscale_fno_100/pipeline/
+            experiments/mscale_fno_100/results/*.json
+            experiments/mscale_fno_100/results/*.csv
+            experiments/mscale_fno_100/results/*.md
+            experiments/mscale_fno_100/results/*.png
+            experiments/mscale_fno_100/results/baseline_m*/*.json
+            experiments/mscale_fno_100/results/baseline_m*/*.csv
+      - name: Stop CI containers
+        if: always()
+        run: bash scripts/docker.sh compose down

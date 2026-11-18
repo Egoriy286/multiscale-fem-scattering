@@ -1,0 +1,16 @@
+{
+  "runtime": "Linux ARM64 Docker; complex FEM label generation",
+  "python": "3.12.3",
+  "numpy": "2.4.6",
+  "scipy": "1.17.1",
+  "dolfinx": "0.11.0.post0",
+  "gmsh": "4.15.2",
+  "petsc": [
+    3,
+    25,
+    1
+  ],
+  "scalar_type": "complex128",
+  "base_image_digest": "sha256:ce646f5b359e60bdd3af040fc1240236df6281786a96ff86274a2e0b744bea25",
+  "query_authority": "data/samples.npz; its content digest is frozen in data/config.json"
+}

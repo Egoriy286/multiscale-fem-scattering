@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "test_samples": 424,
+  "baseline_method": "GMsFEM 20x20 Type 2 M=16",
+  "paired_statistics": {
+    "total": {
+      "samples": 424,
+      "sno_better": 139,
+      "gmsfem_better": 285,
+      "ties": 0
+    },
+    "scattered": {
+      "samples": 424,
+      "sno_better": 139,
+      "gmsfem_better": 285,
+      "ties": 0
+    }
+  },
+  "generator_sha256": "be0967d01b63e5158219437b5ade7eeec198fa9973b5a1d6124c10b8780f4fc6",
+  "source_sha256": {
+    "comparison.json": "80d716707723ae7b0d3991d79c38e084001602d73abb08ebd4029c2531789dde",
+    "sno_history.json": "6684b70a1e2448133486740808c042d23ef4fcc425fad4bac879e83b52e40be4",
+    "sno_metrics.json": "1271abf0ad5c3d50a93be1cc39622509985c5782d03a469131343a1c76e28572",
+    "verification.json": "2fdafb404ad5957a795d9870dd4c93173fa68189f61ed0052db644a5a12e23aa"
+  },
+  "files": {
+    "accuracy_by_k.png": "fa2f0fce68e57f451e24d75717c9178cb1c6a88ebb5d3cab211ffd7ac3d777f4",
+    "accuracy_by_k.svg": "27548eb81d0326c7c7906045d5e7ebd73b38debd6b02d93222bc91d01bc2d480",
+    "methods_comparison.png": "1e1955975d53e9cb641211160066a2ba35fb31401fccc547bb71d838b448c97a",
+    "methods_comparison.svg": "aa8c1f619056941748dca50be9717c5e393ccd922f3577357a720967a692629d",
+    "error_distributions.png": "7cab8ba8cafe577c54137950c2cbd9a7b6eda9c46e9a81e4e1f046dc9239d1ea",
+    "error_distributions.svg": "071e70ac965789080e41290842b51bd13baa44bb118c5a08e8993fdfad1c3201",
+    "training.png": "33f61faf55a6d70c383b6124c621ec46d5543d74e5915a303028c93e78baccee",
+    "training.svg": "9bc76727e36bd416048d4c79c6cf0a71cdfc96260161faeb9331fc08da928e6e"
+  }
+}

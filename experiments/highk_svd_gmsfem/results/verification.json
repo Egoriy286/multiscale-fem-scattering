@@ -1,0 +1,111 @@
+{
+  "passed": true,
+  "runs": [
+    {
+      "n_train": 400,
+      "seed": 11,
+      "checkpoint_sha256": "556e35eb4ce69ea364f8ecedfe6c6ae42c43524fc00d3747fd4c7aa9886463ab",
+      "predictions_sha256": "b0f7184b2e4818b21a23e03dbb3bd7f67f3670fed0a15b5cad4dc04a1eaa89bb",
+      "old_weights_l2_change": 13.311784215301214
+    },
+    {
+      "n_train": 400,
+      "seed": 29,
+      "checkpoint_sha256": "d5a3af1c6c68d767b85be5eb0c162e45cfdf791b3ec6b74e4cf8ad5576a96160",
+      "predictions_sha256": "575e6405fb5527a4a0b4b77491e6ce83107d555608f6160482221d2ae30278aa",
+      "old_weights_l2_change": 13.70451511588452
+    },
+    {
+      "n_train": 400,
+      "seed": 47,
+      "checkpoint_sha256": "6f3432f10d12ade6ba570017634082ac6134fa6e471b90da8d07486ead318c28",
+      "predictions_sha256": "658c9e19fa7f9ad9c989caa2b19e444137317c88ee01ddcd8fb530e2aecd77ff",
+      "old_weights_l2_change": 13.311322756138676
+    },
+    {
+      "n_train": 600,
+      "seed": 11,
+      "checkpoint_sha256": "5835370afb7508367e60abdbcbb7e70b7a064cdb1ab7901a4caf974453552643",
+      "predictions_sha256": "30ec11028c93f541f97a4f1181e2eb56b9d0c66eb18e216abd5a7a560a64ee44",
+      "old_weights_l2_change": 16.17578697743668
+    },
+    {
+      "n_train": 600,
+      "seed": 29,
+      "checkpoint_sha256": "46789a8d71d08a03993470db808d8c6c74e83f5b88f0df2f13eb34b7e37d9748",
+      "predictions_sha256": "6c149637a7b76729a6a80afb01a9f2f31b72aa080b675768d39455c9067dfb6e",
+      "old_weights_l2_change": 16.575758635113772
+    },
+    {
+      "n_train": 600,
+      "seed": 47,
+      "checkpoint_sha256": "9628b027f7dae64ce3fc20522724fa8542f51d75a527ca50c8b7460005173831",
+      "predictions_sha256": "6db2766394c4277c4b1892dc6efe0708786e2b61707a6d08722f4a9466cc2819",
+      "old_weights_l2_change": 16.53297380373611
+    },
+    {
+      "n_train": 800,
+      "seed": 11,
+      "checkpoint_sha256": "e6e01982b15314968ac0b60473dfa71e4e1289bcd5a8a361395438bde8a4b0d5",
+      "predictions_sha256": "df1dc38a9dd53a7027072978c4540b608d6840553212a866a28e2f2979148edf",
+      "old_weights_l2_change": 19.645590795788813
+    },
+    {
+      "n_train": 800,
+      "seed": 29,
+      "checkpoint_sha256": "82251aa8b1160f266a69bd496dac2eb176a1c95691c6854469430b259e79f4d5",
+      "predictions_sha256": "47c5cba187e98056c344593e2e8749cf0bf173e8b5e3ad4f851601e81a582bca",
+      "old_weights_l2_change": 19.846560474594202
+    },
+    {
+      "n_train": 800,
+      "seed": 47,
+      "checkpoint_sha256": "ff488c3b27004ec426c47977ee7660ceb5d2ddb78d148b62af4855e392120a4c",
+      "predictions_sha256": "18997e12ff0f354c688078e6bda0969e39b4b8075d309fe788647ac6c4afc1b9",
+      "old_weights_l2_change": 19.78522605008988
+    },
+    {
+      "n_train": 1000,
+      "seed": 11,
+      "checkpoint_sha256": "b686cad75ccfdca1f485011f815bfb60c9f50d281b7335551dc6153f639640b5",
+      "predictions_sha256": "8821af9e57a401127eff98eaeb36189f0f9e677e6ccc451c6cd77b4d5eb57eee",
+      "old_weights_l2_change": 22.32290376828072
+    },
+    {
+      "n_train": 1000,
+      "seed": 29,
+      "checkpoint_sha256": "29e8748d3555715dda2e26d09731e58f47b99e448f88d7876aad5762b797fa2f",
+      "predictions_sha256": "f3f5959565709e9012ae2e56723e9382171783f2a9a93e48e81e5abaea1a807f",
+      "old_weights_l2_change": 22.78017931470001
+    },
+    {
+      "n_train": 1000,
+      "seed": 47,
+      "checkpoint_sha256": "173d4c56dc7b2c0516681d2a111746599c135945330252a0897bf39e69bc82c1",
+      "predictions_sha256": "8a94f677169a5e7c957577f33e2c1a012d596fbd6d977c94ec56b4dcedb28186",
+      "old_weights_l2_change": 22.408282863640725
+    },
+    {
+      "n_train": 2000,
+      "seed": 11,
+      "checkpoint_sha256": "f4857d1cd6e0c9698f946de98527383e2f1ed7a3da99019491e982c0687bdf36",
+      "predictions_sha256": "bcdf41522598df879499fd0be3c7d89452015bbef86a83a1456e3011fe5f6ad3",
+      "old_weights_l2_change": 35.14857753961628
+    },
+    {
+      "n_train": 2000,
+      "seed": 29,
+      "checkpoint_sha256": "928a0e5b358fbf6c7a261aa2f86a0e41e0584383c00cd6ca314228f1901ada0b",
+      "predictions_sha256": "5eb421f3ff328f80d88ef5163054438aef3e0cbbee466800a3d4304d6ef16791",
+      "old_weights_l2_change": 34.983770426793455
+    },
+    {
+      "n_train": 2000,
+      "seed": 47,
+      "checkpoint_sha256": "f269cf83c736e07fc22eee7ac915d3fc74e498fca0275f429998b12183a87a8d",
+      "predictions_sha256": "58c8ad9dc56133969370bec17c2e6004eb8562af503239feb97aef177d773712",
+      "old_weights_l2_change": 34.989739330551885
+    }
+  ],
+  "protocol_sha256": "2324b8fd28100ce3e1da7a65640de89d6968a83fa7dfe594a9e6eae68dadb538"
+}

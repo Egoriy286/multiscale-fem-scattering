@@ -1,0 +1,45 @@
+{
+  "model_count": 1,
+  "k_range": [
+    0.1,
+    4.0
+  ],
+  "config": {
+    "method": "svd",
+    "epochs": 500,
+    "batch_size": 32,
+    "learning_rate": 0.002,
+    "width": 48,
+    "depth": 6,
+    "rank": 96,
+    "input_rank": 32,
+    "sno_architecture_version": 2,
+    "target_projection_error": 0.001,
+    "pod_method": "randomized",
+    "resolution": 32,
+    "modes": 8,
+    "padding": 8,
+    "patience": 100,
+    "min_epochs": 150,
+    "seed": 42,
+    "threads": 2,
+    "device": "cpu",
+    "lr_scheduler_factor": 0.5,
+    "lr_scheduler_patience": 20,
+    "lr_scheduler_min_lr": 1e-05
+  },
+  "selection": "POD rank and checkpoint chosen only on inherited validation",
+  "source_splits_preserved": true,
+  "dataset_config_sha256": "67a977ef4ff5bb219a8ab7e30251d30bc0846e863b6544f78f7cf9b6cf4794ce",
+  "dataset_info_sha256": "2419933f7d32aa7cc132d01494c89eea972bfcd6c8bbb544340d7789acc542a2",
+  "source_sha256": {
+    "experiments/shared_sno_gmsfem/dataset.py": "235ea0446a0e5483585555341e872bb2725805f06a35b36ffcf0ea540a0e7406",
+    "experiments/shared_sno_gmsfem/training.py": "03b6e9640746f96b51de2c98a7737a9f5a01fdb90cd5c3ddb9f5598d75d551da",
+    "experiments/reference_sno_gmsfem/training.py": "30957451465783a132a6651522baf3182b1d7321318fdb4ed13e1728efbe2bbe",
+    "neural_operator/training.py": "3cfa92f1be317650c3014e7794d7651c34fc6ab744102c7da6eaf9a6028a736d",
+    "neural_operator/sno/model.py": "e25cbf5c1db3fc3fbbba683062760ffec92a7641563f03c9df20b67263990fcf",
+    "neural_operator/sno/basis.py": "7204528f5180bd5507da5aa2e238c42fbdb1e0b6dd02e03744b6efa7e9748fb7",
+    "neural_operator/_layers.py": "03670c4b09969fde605e29cc61b89d1e65a5bb6d482bd5fdda883c528e7fd219",
+    "neural_operator/losses.py": "1fd45b01ed8a1e3bf153f573f9fc2faf71671f048fb1a774e2525ae32e18ea2a"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "head": "8954022b075897b1130ce5e47f9bc70be9b4565a",
+  "worktree_dirty": true,
+  "source_sha256": {
+    "experiments/multiscale_sample_study/dataset.py": "ecba7241f693fb98bd66c4978d2df47064dd793826656144e4c51ef267e9320b",
+    "experiments/multiscale_sample_study/sno.py": "58c86dca02926206dce236a368b948d0da61746acef7517b9b87bf85b878d823",
+    "experiments/multiscale_sample_study/fno.py": "f5646f253896ad156f620d7377b41a001308ac94b812425d0017227d950342f9",
+    "experiments/multiscale_sample_study/training.py": "d44cfc4c98c7f20a4fc7c22f925e2950c0fc9e433888b1c96b825ecf3b87eb0a",
+    "experiments/multiscale_sample_study/run.py": "2b41aadaa1f8625314a91580f33c367dc0b614df4931b2f1ef55944f1072f7d5",
+    "experiments/gms_sno_100/model.py": "e582097768b93da6e59060d26c55ce56e2b2a60905e0a150ccf24dbbe157f62b",
+    "experiments/gms_sno_100/pod.py": "d324a8ed53bd6209e1e1a3af26533a54e8bed86719192c3494b202fb4ed983d5",
+    "experiments/mscale_fno_100/model.py": "bb147c07ca864de879b341d6690009aeb9663cbb4d9826c6f7e731c186c23b7f",
+    "experiments/mscale_fno_100/training.py": "12fab2a5e6e4650377aedb8247475278d674837f0f2d3b661cef95bc31cb732e",
+    "neural_operator/data.py": "a7a8d616ea958e0f824d124a8e61bcb6359209fb6bf7764a72ac8e2bfa304a86",
+    "neural_operator/mesh_transfer.py": "7bacc5329a4ebaf94fcdb80916ecb07fbffded6f8a1b40dcd7dce19af2d8d903",
+    "experiments/reference_sno_gmsfem/dataset.py": "8966664336b61b0288f8e66daf3a391135787703bf0423cfbd20751a15130e97"
+  },
+  "note": "The experiment includes uncommitted sources; use the supplied file fingerprints, not repository HEAD alone."
+}

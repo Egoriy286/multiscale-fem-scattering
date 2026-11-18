@@ -1,0 +1,9 @@
+{
+  "sno_lower_total_queries": 139,
+  "test_queries": 424,
+  "extrapolation_paired": {
+    "samples": 200,
+    "frozen_total_mean_percent": 131.82310649382603,
+    "shared_total_mean_percent": 4.560418600295925
+  }
+}

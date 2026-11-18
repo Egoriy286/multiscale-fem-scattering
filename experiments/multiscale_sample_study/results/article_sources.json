@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-11-13T22:06:07.627653+09:00",
+  "mscale_fno": {
+    "doi": "https://doi.org/10.1016/j.jcp.2025.114530",
+    "journal_reprint": "https://bpb-us-w2.wpmucdn.com/people.smu.edu/dist/e/573/files/2026/04/MultiscaleFNO_reprint.pdf",
+    "author_code_commit": "75f12b6f55e53280e6a1baf2f6d96e84a910a5b3",
+    "author_code_url": "https://raw.githubusercontent.com/yyc-rgb/MscaleFNO/75f12b6f55e53280e6a1baf2f6d96e84a910a5b3/fourier_2d_earlystop_mscale_helm.py",
+    "author_code_sha256": "062ee5742bd380b289bdd47bd1402d045b041b31be095aab5e26e110bf76df93"
+  },
+  "sno": {
+    "paper": "https://arxiv.org/abs/2205.10573v2",
+    "scope": "Fourier/Chebyshev SNO; our mass-POD/SVD decoder is a local adaptation"
+  },
+  "gmsfem": {
+    "doi": "https://doi.org/10.1016/j.cam.2022.114977",
+    "local_pdf_sha256": "75d97229eda675df5393f4acab4a956bd897032357885077cf82759608f53288"
+  }
+}

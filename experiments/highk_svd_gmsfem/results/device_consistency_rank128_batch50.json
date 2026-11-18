@@ -1,0 +1,1312 @@
+{
+  "synthetic": true,
+  "data_access": false,
+  "rank": 128,
+  "batch_size": 50,
+  "seed": 11,
+  "threads": 2,
+  "cpu_loss": 1.0015126466751099,
+  "mps_loss": 1.0015126466751099,
+  "loss_relative_error": 0.0,
+  "prediction_relative_l2": 1.7380980760120296e-05,
+  "gradient_relative_l2": 3.489214048809788e-05,
+  "finite": true,
+  "gradient_details": [
+    {
+      "parameter": "old.scales",
+      "relative_l2": 6.881783293016931e-05
+    },
+    {
+      "parameter": "old.gamma",
+      "relative_l2": 5.564686513742146e-06
+    },
+    {
+      "parameter": "old.branches.0.lift.weight",
+      "relative_l2": 3.166829798912516e-06
+    },
+    {
+      "parameter": "old.branches.0.lift.bias",
+      "relative_l2": 2.6324488269014547e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.0.local.weight",
+      "relative_l2": 2.385599451734858e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.0.local.bias",
+      "relative_l2": 8.653366680253674e-07
+    },
+    {
+      "parameter": "old.branches.0.blocks.0.channels.weight",
+      "relative_l2": 2.767635299279915e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.0.modes.weight",
+      "relative_l2": 2.806041941720792e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.1.local.weight",
+      "relative_l2": 2.7190272233505754e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.1.local.bias",
+      "relative_l2": 5.841288314184868e-07
+    },
+    {
+      "parameter": "old.branches.0.blocks.1.channels.weight",
+      "relative_l2": 2.8548369167342385e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.1.modes.weight",
+      "relative_l2": 2.6973452471789115e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.2.local.weight",
+      "relative_l2": 2.3931750279857273e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.2.local.bias",
+      "relative_l2": 5.936398828394772e-07
+    },
+    {
+      "parameter": "old.branches.0.blocks.2.channels.weight",
+      "relative_l2": 3.4360282480762577e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.2.modes.weight",
+      "relative_l2": 2.5920454623517815e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.3.local.weight",
+      "relative_l2": 1.826927379574941e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.3.local.bias",
+      "relative_l2": 6.897047477463901e-07
+    },
+    {
+      "parameter": "old.branches.0.blocks.3.channels.weight",
+      "relative_l2": 2.9119315562413033e-06
+    },
+    {
+      "parameter": "old.branches.0.blocks.3.modes.weight",
+      "relative_l2": 3.1540385749781792e-06
+    },
+    {
+      "parameter": "old.branches.0.project.weight",
+      "relative_l2": 2.281137609873844e-06
+    },
+    {
+      "parameter": "old.branches.0.project.bias",
+      "relative_l2": 1.0373683282997619e-06
+    },
+    {
+      "parameter": "old.branches.1.lift.weight",
+      "relative_l2": 1.1080745875362008e-05
+    },
+    {
+      "parameter": "old.branches.1.lift.bias",
+      "relative_l2": 7.126260190077871e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.0.local.weight",
+      "relative_l2": 5.289594984448599e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.0.local.bias",
+      "relative_l2": 1.1096617065300043e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.0.channels.weight",
+      "relative_l2": 4.479985843118781e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.0.modes.weight",
+      "relative_l2": 8.200469605933082e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.1.local.weight",
+      "relative_l2": 5.8409029439091396e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.1.local.bias",
+      "relative_l2": 1.1423364283344015e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.1.channels.weight",
+      "relative_l2": 5.042918613260308e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.1.modes.weight",
+      "relative_l2": 8.286592233384942e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.2.local.weight",
+      "relative_l2": 4.377771756352865e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.2.local.bias",
+      "relative_l2": 1.067800966622794e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.2.channels.weight",
+      "relative_l2": 8.77840687858329e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.2.modes.weight",
+      "relative_l2": 6.4063572036116265e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.3.local.weight",
+      "relative_l2": 4.208767919837084e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.3.local.bias",
+      "relative_l2": 6.734794158395178e-07
+    },
+    {
+      "parameter": "old.branches.1.blocks.3.channels.weight",
+      "relative_l2": 7.039625875051707e-06
+    },
+    {
+      "parameter": "old.branches.1.blocks.3.modes.weight",
+      "relative_l2": 6.783521913628373e-06
+    },
+    {
+      "parameter": "old.branches.1.project.weight",
+      "relative_l2": 4.957257917437383e-06
+    },
+    {
+      "parameter": "old.branches.1.project.bias",
+      "relative_l2": 1.0373683282997619e-06
+    },
+    {
+      "parameter": "old.branches.2.lift.weight",
+      "relative_l2": 1.643246095051759e-05
+    },
+    {
+      "parameter": "old.branches.2.lift.bias",
+      "relative_l2": 1.0740962514987142e-05
+    },
+    {
+      "parameter": "old.branches.2.blocks.0.local.weight",
+      "relative_l2": 9.603364891702666e-06
+    },
+    {
+      "parameter": "old.branches.2.blocks.0.local.bias",
+      "relative_l2": 2.324023134869914e-06
+    },
+    {
+      "parameter": "old.branches.2.blocks.0.channels.weight",
+      "relative_l2": 1.7368943963066324e-05
+    },
+    {
+      "parameter": "old.branches.2.blocks.0.modes.weight",
+      "relative_l2": 1.265207526069944e-05
+    },
+    {
+      "parameter": "old.branches.2.blocks.1.local.weight",
+      "relative_l2": 1.1355241867916616e-05
+    },
+    {
+      "parameter": "old.branches.2.blocks.1.local.bias",
+      "relative_l2": 1.3559964431398008e-06
+    },
+    {
+      "parameter": "old.branches.2.blocks.1.channels.weight",
+      "relative_l2": 1.1788012755865633e-05
+    },
+    {
+      "parameter": "old.branches.2.blocks.1.modes.weight",
+      "relative_l2": 1.2748708057426461e-05
+    },
+    {
+      "parameter": "old.branches.2.blocks.2.local.weight",
+      "relative_l2": 1.2710124524605839e-05
+    },
+    {
+      "parameter": "old.branches.2.blocks.2.local.bias",
+      "relative_l2": 2.180662053655344e-06
+    },
+    {
+      "parameter": "old.branches.2.blocks.2.channels.weight",
+      "relative_l2": 1.5665131491899854e-05
+    },
+    {
+      "parameter": "old.branches.2.blocks.2.modes.weight",
+      "relative_l2": 1.3630028242548913e-05
+    },
+    {
+      "parameter": "old.branches.2.blocks.3.local.weight",
+      "relative_l2": 1.591357512286816e-05
+    },
+    {
+      "parameter": "old.branches.2.blocks.3.local.bias",
+      "relative_l2": 1.3266107131836007e-06
+    },
+    {
+      "parameter": "old.branches.2.blocks.3.channels.weight",
+      "relative_l2": 9.662463625679856e-06
+    },
+    {
+      "parameter": "old.branches.2.blocks.3.modes.weight",
+      "relative_l2": 1.1820578373875886e-05
+    },
+    {
+      "parameter": "old.branches.2.project.weight",
+      "relative_l2": 1.3932053090053112e-05
+    },
+    {
+      "parameter": "old.branches.2.project.bias",
+      "relative_l2": 1.0373683282997619e-06
+    },
+    {
+      "parameter": "old.branches.3.lift.weight",
+      "relative_l2": 1.7142036776639032e-05
+    },
+    {
+      "parameter": "old.branches.3.lift.bias",
+      "relative_l2": 1.1742303853093747e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.0.local.weight",
+      "relative_l2": 2.2287260360956314e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.0.local.bias",
+      "relative_l2": 1.978218138346799e-06
+    },
+    {
+      "parameter": "old.branches.3.blocks.0.channels.weight",
+      "relative_l2": 1.3560547758549258e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.0.modes.weight",
+      "relative_l2": 1.4102087628948632e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.1.local.weight",
+      "relative_l2": 1.9618002777720353e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.1.local.bias",
+      "relative_l2": 1.5513024103999784e-06
+    },
+    {
+      "parameter": "old.branches.3.blocks.1.channels.weight",
+      "relative_l2": 1.7943544239709415e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.1.modes.weight",
+      "relative_l2": 1.5732502200872956e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.2.local.weight",
+      "relative_l2": 2.3342778957692153e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.2.local.bias",
+      "relative_l2": 2.538530380528588e-06
+    },
+    {
+      "parameter": "old.branches.3.blocks.2.channels.weight",
+      "relative_l2": 2.210280371337583e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.2.modes.weight",
+      "relative_l2": 1.6747700978026232e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.3.local.weight",
+      "relative_l2": 2.1265079143927896e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.3.local.bias",
+      "relative_l2": 1.7292001178383096e-06
+    },
+    {
+      "parameter": "old.branches.3.blocks.3.channels.weight",
+      "relative_l2": 2.1726801660568662e-05
+    },
+    {
+      "parameter": "old.branches.3.blocks.3.modes.weight",
+      "relative_l2": 1.745971265557268e-05
+    },
+    {
+      "parameter": "old.branches.3.project.weight",
+      "relative_l2": 2.3324022242501253e-05
+    },
+    {
+      "parameter": "old.branches.3.project.bias",
+      "relative_l2": 1.0373683282997619e-06
+    },
+    {
+      "parameter": "old.branches.4.lift.weight",
+      "relative_l2": 2.137401921052614e-05
+    },
+    {
+      "parameter": "old.branches.4.lift.bias",
+      "relative_l2": 1.4691635008704101e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.0.local.weight",
+      "relative_l2": 1.4647849589338556e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.0.local.bias",
+      "relative_l2": 3.2046421355253305e-06
+    },
+    {
+      "parameter": "old.branches.4.blocks.0.channels.weight",
+      "relative_l2": 2.654976490007829e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.0.modes.weight",
+      "relative_l2": 1.8381269300695695e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.1.local.weight",
+      "relative_l2": 1.454462172554161e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.1.local.bias",
+      "relative_l2": 2.9920862670972597e-06
+    },
+    {
+      "parameter": "old.branches.4.blocks.1.channels.weight",
+      "relative_l2": 1.7070739098023368e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.1.modes.weight",
+      "relative_l2": 1.8648053256763754e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.2.local.weight",
+      "relative_l2": 1.590619761437669e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.2.local.bias",
+      "relative_l2": 3.014276985953165e-06
+    },
+    {
+      "parameter": "old.branches.4.blocks.2.channels.weight",
+      "relative_l2": 1.813764309879439e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.2.modes.weight",
+      "relative_l2": 1.671824126372374e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.3.local.weight",
+      "relative_l2": 1.4355689867701675e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.3.local.bias",
+      "relative_l2": 3.2216137293715602e-06
+    },
+    {
+      "parameter": "old.branches.4.blocks.3.channels.weight",
+      "relative_l2": 2.2845677306934942e-05
+    },
+    {
+      "parameter": "old.branches.4.blocks.3.modes.weight",
+      "relative_l2": 1.92195246095155e-05
+    },
+    {
+      "parameter": "old.branches.4.project.weight",
+      "relative_l2": 1.621527432253426e-05
+    },
+    {
+      "parameter": "old.branches.4.project.bias",
+      "relative_l2": 1.0373683282997619e-06
+    },
+    {
+      "parameter": "old.branches.5.lift.weight",
+      "relative_l2": 3.466093751740342e-05
+    },
+    {
+      "parameter": "old.branches.5.lift.bias",
+      "relative_l2": 2.507222221885279e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.0.local.weight",
+      "relative_l2": 2.082635293402531e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.0.local.bias",
+      "relative_l2": 3.300923295194165e-06
+    },
+    {
+      "parameter": "old.branches.5.blocks.0.channels.weight",
+      "relative_l2": 2.2517162128780576e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.0.modes.weight",
+      "relative_l2": 2.46745368859181e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.1.local.weight",
+      "relative_l2": 1.9735635952523583e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.1.local.bias",
+      "relative_l2": 2.7785462502151277e-06
+    },
+    {
+      "parameter": "old.branches.5.blocks.1.channels.weight",
+      "relative_l2": 2.3037146019440073e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.1.modes.weight",
+      "relative_l2": 2.383572260513375e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.2.local.weight",
+      "relative_l2": 1.9883417230877644e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.2.local.bias",
+      "relative_l2": 2.36984070852265e-06
+    },
+    {
+      "parameter": "old.branches.5.blocks.2.channels.weight",
+      "relative_l2": 1.7130300670132506e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.2.modes.weight",
+      "relative_l2": 2.237628253970522e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.3.local.weight",
+      "relative_l2": 1.4079706229475532e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.3.local.bias",
+      "relative_l2": 2.1838112650733584e-06
+    },
+    {
+      "parameter": "old.branches.5.blocks.3.channels.weight",
+      "relative_l2": 3.0735672836722166e-05
+    },
+    {
+      "parameter": "old.branches.5.blocks.3.modes.weight",
+      "relative_l2": 2.2160357031519822e-05
+    },
+    {
+      "parameter": "old.branches.5.project.weight",
+      "relative_l2": 1.3993605478059805e-05
+    },
+    {
+      "parameter": "old.branches.5.project.bias",
+      "relative_l2": 1.0373683282997619e-06
+    },
+    {
+      "parameter": "old.branches.6.lift.weight",
+      "relative_l2": 4.521960962120498e-05
+    },
+    {
+      "parameter": "old.branches.6.lift.bias",
+      "relative_l2": 3.0764497686485664e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.0.local.weight",
+      "relative_l2": 3.501287698208801e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.0.local.bias",
+      "relative_l2": 3.4235788541958415e-06
+    },
+    {
+      "parameter": "old.branches.6.blocks.0.channels.weight",
+      "relative_l2": 1.9646612151385136e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.0.modes.weight",
+      "relative_l2": 3.1655583536526595e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.1.local.weight",
+      "relative_l2": 2.1679912164001576e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.1.local.bias",
+      "relative_l2": 5.230853664269035e-06
+    },
+    {
+      "parameter": "old.branches.6.blocks.1.channels.weight",
+      "relative_l2": 2.0311548817926755e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.1.modes.weight",
+      "relative_l2": 2.9933304768654825e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.2.local.weight",
+      "relative_l2": 1.9130272147392944e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.2.local.bias",
+      "relative_l2": 2.379025775262809e-06
+    },
+    {
+      "parameter": "old.branches.6.blocks.2.channels.weight",
+      "relative_l2": 4.210450037988771e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.2.modes.weight",
+      "relative_l2": 2.851266794032728e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.3.local.weight",
+      "relative_l2": 1.5998813912724695e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.3.local.bias",
+      "relative_l2": 2.4488866790300295e-06
+    },
+    {
+      "parameter": "old.branches.6.blocks.3.channels.weight",
+      "relative_l2": 1.8074379971465655e-05
+    },
+    {
+      "parameter": "old.branches.6.blocks.3.modes.weight",
+      "relative_l2": 2.9126432747257813e-05
+    },
+    {
+      "parameter": "old.branches.6.project.weight",
+      "relative_l2": 1.79558553192614e-05
+    },
+    {
+      "parameter": "old.branches.6.project.bias",
+      "relative_l2": 1.0373683282997619e-06
+    },
+    {
+      "parameter": "old.branches.7.lift.weight",
+      "relative_l2": 3.779637104733139e-05
+    },
+    {
+      "parameter": "old.branches.7.lift.bias",
+      "relative_l2": 2.5616690479591997e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.0.local.weight",
+      "relative_l2": 1.7143758034944532e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.0.local.bias",
+      "relative_l2": 4.269166623571433e-06
+    },
+    {
+      "parameter": "old.branches.7.blocks.0.channels.weight",
+      "relative_l2": 2.3787055512901816e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.0.modes.weight",
+      "relative_l2": 2.905416796695125e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.1.local.weight",
+      "relative_l2": 1.927944351573322e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.1.local.bias",
+      "relative_l2": 2.3883508013042576e-06
+    },
+    {
+      "parameter": "old.branches.7.blocks.1.channels.weight",
+      "relative_l2": 3.421862308009274e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.1.modes.weight",
+      "relative_l2": 2.6431869488466698e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.2.local.weight",
+      "relative_l2": 2.1317633898512233e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.2.local.bias",
+      "relative_l2": 4.268559776747603e-06
+    },
+    {
+      "parameter": "old.branches.7.blocks.2.channels.weight",
+      "relative_l2": 2.957646851087735e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.2.modes.weight",
+      "relative_l2": 3.019212988865132e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.3.local.weight",
+      "relative_l2": 1.7140788905378607e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.3.local.bias",
+      "relative_l2": 3.9743291197441604e-06
+    },
+    {
+      "parameter": "old.branches.7.blocks.3.channels.weight",
+      "relative_l2": 2.093607395612645e-05
+    },
+    {
+      "parameter": "old.branches.7.blocks.3.modes.weight",
+      "relative_l2": 2.7065030510311074e-05
+    },
+    {
+      "parameter": "old.branches.7.project.weight",
+      "relative_l2": 1.4752685798079553e-05
+    },
+    {
+      "parameter": "old.branches.7.project.bias",
+      "relative_l2": 1.0373683282997619e-06
+    },
+    {
+      "parameter": "residual.scales",
+      "relative_l2": 3.950722387012789e-06
+    },
+    {
+      "parameter": "residual.gamma",
+      "relative_l2": 3.312041222604395e-06
+    },
+    {
+      "parameter": "residual.branches.0.lift.weight",
+      "relative_l2": 1.0296030993242169e-06
+    },
+    {
+      "parameter": "residual.branches.0.lift.bias",
+      "relative_l2": 9.288378481056888e-07
+    },
+    {
+      "parameter": "residual.branches.0.blocks.0.local.weight",
+      "relative_l2": 1.5390525043613653e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.0.local.bias",
+      "relative_l2": 1.2541502760743037e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.0.channels.weight",
+      "relative_l2": 1.985916316647123e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.0.modes.weight",
+      "relative_l2": 1.0585527619606238e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.1.local.weight",
+      "relative_l2": 1.517997755349139e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.1.local.bias",
+      "relative_l2": 1.016134643172389e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.1.channels.weight",
+      "relative_l2": 1.9116246408546745e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.1.modes.weight",
+      "relative_l2": 1.0397396976901492e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.2.local.weight",
+      "relative_l2": 1.5099378905605814e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.2.local.bias",
+      "relative_l2": 9.288646256855233e-07
+    },
+    {
+      "parameter": "residual.branches.0.blocks.2.channels.weight",
+      "relative_l2": 1.7935011708861981e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.2.modes.weight",
+      "relative_l2": 1.0640691777762513e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.3.local.weight",
+      "relative_l2": 1.4614719078007745e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.3.local.bias",
+      "relative_l2": 1.5115620224011027e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.3.channels.weight",
+      "relative_l2": 2.046100468745766e-06
+    },
+    {
+      "parameter": "residual.branches.0.blocks.3.modes.weight",
+      "relative_l2": 1.0269410946356638e-06
+    },
+    {
+      "parameter": "residual.branches.0.project.weight",
+      "relative_l2": 1.5100392765668858e-06
+    },
+    {
+      "parameter": "residual.branches.0.project.bias",
+      "relative_l2": 7.895234175594069e-07
+    },
+    {
+      "parameter": "residual.branches.1.lift.weight",
+      "relative_l2": 1.7563683999605824e-06
+    },
+    {
+      "parameter": "residual.branches.1.lift.bias",
+      "relative_l2": 1.4078256973633664e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.0.local.weight",
+      "relative_l2": 2.109034512771572e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.0.local.bias",
+      "relative_l2": 1.6599944415084324e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.0.channels.weight",
+      "relative_l2": 2.0761460491754214e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.0.modes.weight",
+      "relative_l2": 1.4998109454847898e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.1.local.weight",
+      "relative_l2": 2.0703292178756994e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.1.local.bias",
+      "relative_l2": 9.202940296238382e-07
+    },
+    {
+      "parameter": "residual.branches.1.blocks.1.channels.weight",
+      "relative_l2": 2.239111965710328e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.1.modes.weight",
+      "relative_l2": 1.5141170657708034e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.2.local.weight",
+      "relative_l2": 1.9841760783263366e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.2.local.bias",
+      "relative_l2": 9.388032915665936e-07
+    },
+    {
+      "parameter": "residual.branches.1.blocks.2.channels.weight",
+      "relative_l2": 1.9043855159113179e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.2.modes.weight",
+      "relative_l2": 1.5200414790208356e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.3.local.weight",
+      "relative_l2": 2.4970033274240182e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.3.local.bias",
+      "relative_l2": 7.232456755986755e-07
+    },
+    {
+      "parameter": "residual.branches.1.blocks.3.channels.weight",
+      "relative_l2": 2.049614512070962e-06
+    },
+    {
+      "parameter": "residual.branches.1.blocks.3.modes.weight",
+      "relative_l2": 1.5396368538315892e-06
+    },
+    {
+      "parameter": "residual.branches.1.project.weight",
+      "relative_l2": 2.893405269545979e-06
+    },
+    {
+      "parameter": "residual.branches.1.project.bias",
+      "relative_l2": 7.895234175594069e-07
+    },
+    {
+      "parameter": "residual.branches.2.lift.weight",
+      "relative_l2": 2.9117382428661204e-06
+    },
+    {
+      "parameter": "residual.branches.2.lift.bias",
+      "relative_l2": 2.405237592562366e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.0.local.weight",
+      "relative_l2": 2.839643473312289e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.0.local.bias",
+      "relative_l2": 8.248791954655227e-07
+    },
+    {
+      "parameter": "residual.branches.2.blocks.0.channels.weight",
+      "relative_l2": 3.4427190001540062e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.0.modes.weight",
+      "relative_l2": 2.448103111605022e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.1.local.weight",
+      "relative_l2": 3.206958251408284e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.1.local.bias",
+      "relative_l2": 1.2259597102646192e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.1.channels.weight",
+      "relative_l2": 2.9749022569855e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.1.modes.weight",
+      "relative_l2": 2.4157026532428437e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.2.local.weight",
+      "relative_l2": 3.335941150644907e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.2.local.bias",
+      "relative_l2": 1.0808829879298682e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.2.channels.weight",
+      "relative_l2": 3.854042022860754e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.2.modes.weight",
+      "relative_l2": 2.5681575756776397e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.3.local.weight",
+      "relative_l2": 3.043157615555839e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.3.local.bias",
+      "relative_l2": 1.4533798449219692e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.3.channels.weight",
+      "relative_l2": 2.0722310406220913e-06
+    },
+    {
+      "parameter": "residual.branches.2.blocks.3.modes.weight",
+      "relative_l2": 2.492500353522842e-06
+    },
+    {
+      "parameter": "residual.branches.2.project.weight",
+      "relative_l2": 3.313746992354192e-06
+    },
+    {
+      "parameter": "residual.branches.2.project.bias",
+      "relative_l2": 7.895234175594069e-07
+    },
+    {
+      "parameter": "residual.branches.3.lift.weight",
+      "relative_l2": 3.7178105376412465e-06
+    },
+    {
+      "parameter": "residual.branches.3.lift.bias",
+      "relative_l2": 2.885657767335591e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.0.local.weight",
+      "relative_l2": 3.843019475219457e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.0.local.bias",
+      "relative_l2": 8.085949163482527e-07
+    },
+    {
+      "parameter": "residual.branches.3.blocks.0.channels.weight",
+      "relative_l2": 2.3147951045441537e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.0.modes.weight",
+      "relative_l2": 2.991962440028238e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.1.local.weight",
+      "relative_l2": 3.881233779083016e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.1.local.bias",
+      "relative_l2": 6.659622358172102e-07
+    },
+    {
+      "parameter": "residual.branches.3.blocks.1.channels.weight",
+      "relative_l2": 2.838935022978013e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.1.modes.weight",
+      "relative_l2": 2.8491182877309965e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.2.local.weight",
+      "relative_l2": 3.4824076525944567e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.2.local.bias",
+      "relative_l2": 8.328790543923822e-07
+    },
+    {
+      "parameter": "residual.branches.3.blocks.2.channels.weight",
+      "relative_l2": 5.382182430023682e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.2.modes.weight",
+      "relative_l2": 3.012263367480848e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.3.local.weight",
+      "relative_l2": 3.334321381928248e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.3.local.bias",
+      "relative_l2": 7.099560980829286e-07
+    },
+    {
+      "parameter": "residual.branches.3.blocks.3.channels.weight",
+      "relative_l2": 4.607759788578002e-06
+    },
+    {
+      "parameter": "residual.branches.3.blocks.3.modes.weight",
+      "relative_l2": 3.0061623268382476e-06
+    },
+    {
+      "parameter": "residual.branches.3.project.weight",
+      "relative_l2": 3.688465791670687e-06
+    },
+    {
+      "parameter": "residual.branches.3.project.bias",
+      "relative_l2": 7.895234175594069e-07
+    },
+    {
+      "parameter": "residual.branches.4.lift.weight",
+      "relative_l2": 4.040277428587704e-06
+    },
+    {
+      "parameter": "residual.branches.4.lift.bias",
+      "relative_l2": 3.7242182841778105e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.0.local.weight",
+      "relative_l2": 3.237690527066841e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.0.local.bias",
+      "relative_l2": 9.588905941261048e-07
+    },
+    {
+      "parameter": "residual.branches.4.blocks.0.channels.weight",
+      "relative_l2": 3.612468042536083e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.0.modes.weight",
+      "relative_l2": 3.524265992433009e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.1.local.weight",
+      "relative_l2": 3.914901363423161e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.1.local.bias",
+      "relative_l2": 4.969485556211491e-07
+    },
+    {
+      "parameter": "residual.branches.4.blocks.1.channels.weight",
+      "relative_l2": 2.55730726115864e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.1.modes.weight",
+      "relative_l2": 3.4438841119748856e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.2.local.weight",
+      "relative_l2": 3.812664442632879e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.2.local.bias",
+      "relative_l2": 9.19599796447125e-07
+    },
+    {
+      "parameter": "residual.branches.4.blocks.2.channels.weight",
+      "relative_l2": 1.2916367546645539e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.2.modes.weight",
+      "relative_l2": 3.555266694671687e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.3.local.weight",
+      "relative_l2": 3.5283119390255312e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.3.local.bias",
+      "relative_l2": 1.5542435822413423e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.3.channels.weight",
+      "relative_l2": 4.136784515007606e-06
+    },
+    {
+      "parameter": "residual.branches.4.blocks.3.modes.weight",
+      "relative_l2": 3.4858379271052927e-06
+    },
+    {
+      "parameter": "residual.branches.4.project.weight",
+      "relative_l2": 2.94447636514013e-06
+    },
+    {
+      "parameter": "residual.branches.4.project.bias",
+      "relative_l2": 7.895234175594069e-07
+    },
+    {
+      "parameter": "residual.branches.5.lift.weight",
+      "relative_l2": 5.049701367233103e-06
+    },
+    {
+      "parameter": "residual.branches.5.lift.bias",
+      "relative_l2": 4.0276780260791604e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.0.local.weight",
+      "relative_l2": 5.339887291796753e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.0.local.bias",
+      "relative_l2": 3.2400901481492865e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.0.channels.weight",
+      "relative_l2": 3.5758579458487395e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.0.modes.weight",
+      "relative_l2": 4.173478282350289e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.1.local.weight",
+      "relative_l2": 5.191806805635328e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.1.local.bias",
+      "relative_l2": 1.807016881908793e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.1.channels.weight",
+      "relative_l2": 6.281738552674379e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.1.modes.weight",
+      "relative_l2": 4.0436580601745615e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.2.local.weight",
+      "relative_l2": 3.9202366380615415e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.2.local.bias",
+      "relative_l2": 3.1458283502365786e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.2.channels.weight",
+      "relative_l2": 3.066641613081397e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.2.modes.weight",
+      "relative_l2": 4.16790110647958e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.3.local.weight",
+      "relative_l2": 3.5832983177122795e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.3.local.bias",
+      "relative_l2": 1.5427731087157773e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.3.channels.weight",
+      "relative_l2": 4.910171826668644e-06
+    },
+    {
+      "parameter": "residual.branches.5.blocks.3.modes.weight",
+      "relative_l2": 3.8650751780528405e-06
+    },
+    {
+      "parameter": "residual.branches.5.project.weight",
+      "relative_l2": 4.003028266106122e-06
+    },
+    {
+      "parameter": "residual.branches.5.project.bias",
+      "relative_l2": 7.895234175594069e-07
+    },
+    {
+      "parameter": "residual.branches.6.lift.weight",
+      "relative_l2": 6.011165621724756e-06
+    },
+    {
+      "parameter": "residual.branches.6.lift.bias",
+      "relative_l2": 4.6382346673147096e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.0.local.weight",
+      "relative_l2": 3.956912280350312e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.0.local.bias",
+      "relative_l2": 1.8336443128183176e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.0.channels.weight",
+      "relative_l2": 5.09513498016835e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.0.modes.weight",
+      "relative_l2": 4.967839402775272e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.1.local.weight",
+      "relative_l2": 4.14199187467187e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.1.local.bias",
+      "relative_l2": 2.1788210132263595e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.1.channels.weight",
+      "relative_l2": 4.53890352919471e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.1.modes.weight",
+      "relative_l2": 5.1723601193259235e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.2.local.weight",
+      "relative_l2": 3.452451808675518e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.2.local.bias",
+      "relative_l2": 2.114385669933879e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.2.channels.weight",
+      "relative_l2": 9.327024371472772e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.2.modes.weight",
+      "relative_l2": 5.0088510601085265e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.3.local.weight",
+      "relative_l2": 3.7894586269359896e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.3.local.bias",
+      "relative_l2": 2.603028375974809e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.3.channels.weight",
+      "relative_l2": 4.572384921161153e-06
+    },
+    {
+      "parameter": "residual.branches.6.blocks.3.modes.weight",
+      "relative_l2": 5.098690228952599e-06
+    },
+    {
+      "parameter": "residual.branches.6.project.weight",
+      "relative_l2": 4.1848641333925995e-06
+    },
+    {
+      "parameter": "residual.branches.6.project.bias",
+      "relative_l2": 7.895234175594069e-07
+    },
+    {
+      "parameter": "residual.branches.7.lift.weight",
+      "relative_l2": 6.968002680265761e-06
+    },
+    {
+      "parameter": "residual.branches.7.lift.bias",
+      "relative_l2": 5.499945218458944e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.0.local.weight",
+      "relative_l2": 5.194155493172894e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.0.local.bias",
+      "relative_l2": 9.949480768401194e-07
+    },
+    {
+      "parameter": "residual.branches.7.blocks.0.channels.weight",
+      "relative_l2": 7.198136237902874e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.0.modes.weight",
+      "relative_l2": 5.521276436008178e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.1.local.weight",
+      "relative_l2": 5.605587290966538e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.1.local.bias",
+      "relative_l2": 1.1402079203400645e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.1.channels.weight",
+      "relative_l2": 3.446637754348177e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.1.modes.weight",
+      "relative_l2": 5.323473110360196e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.2.local.weight",
+      "relative_l2": 4.146499904477433e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.2.local.bias",
+      "relative_l2": 1.7086093905190516e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.2.channels.weight",
+      "relative_l2": 4.049856737668096e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.2.modes.weight",
+      "relative_l2": 5.41530222975966e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.3.local.weight",
+      "relative_l2": 4.649689445905465e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.3.local.bias",
+      "relative_l2": 2.679765416498268e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.3.channels.weight",
+      "relative_l2": 3.755981111696244e-06
+    },
+    {
+      "parameter": "residual.branches.7.blocks.3.modes.weight",
+      "relative_l2": 4.988653841215201e-06
+    },
+    {
+      "parameter": "residual.branches.7.project.weight",
+      "relative_l2": 6.834331568415967e-06
+    },
+    {
+      "parameter": "residual.branches.7.project.bias",
+      "relative_l2": 7.895234175594069e-07
+    }
+  ]
+}

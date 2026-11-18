@@ -1,0 +1,6 @@
+/data/
+/runs/
+/cache/
+/pipeline/
+/results/*.log
+/results/*fields.npz

@@ -1,0 +1,134 @@
+\documentclass[11pt,a4paper,oneside]{report}
+\usepackage{fontspec}
+\usepackage[main=russian,english]{babel}
+\setmainfont{PT Serif}
+\setsansfont{PT Sans}
+\IfFontExistsTF{Menlo}{\setmonofont{Menlo}[Scale=.80]}{\setmonofont{DejaVu Sans Mono}[Scale=.80]}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{amsthm}
+\newtheorem{theorem}{Теорема}[chapter]
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem{proposition}[theorem]{Утверждение}
+\newtheorem{corollary}[theorem]{Следствие}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Определение}
+\newtheorem{assumption}[theorem]{Условие}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Замечание}
+\renewcommand{\proofname}{Доказательство}
+\usepackage{unicode-math}
+\setmathfont{STIX Two Math}
+\usepackage[left=24mm,right=24mm,top=23mm,bottom=23mm,headheight=15pt,headsep=7mm,footskip=12mm]{geometry}
+\usepackage{graphicx,booktabs,tabularx,longtable,array,enumitem}
+\usepackage{ragged2e}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\renewcommand{\tabularxcolumn}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\usepackage[table]{xcolor}
+\definecolor{navy}{HTML}{17324D}
+\definecolor{teal}{HTML}{006D68}
+\definecolor{soft}{HTML}{EFF5F4}
+\definecolor{amber}{HTML}{A76817}
+\definecolor{ink}{HTML}{1D2932}
+\usepackage[most]{tcolorbox}
+\tcbset{enhanced,breakable=false,boxrule=0pt,leftrule=2pt,arc=1.5mm,
+ left=3mm,right=3mm,top=2mm,bottom=2mm,before skip=10pt,after skip=10pt,
+ fonttitle=\sffamily\bfseries,coltitle=navy,colbacktitle=soft,
+ colback=soft,colframe=teal}
+\newtcolorbox{idea}[1]{title={#1}}
+\newtcolorbox{worked}[1]{title={#1},colback=blue!3,colbacktitle=blue!3,colframe=navy}
+\newtcolorbox{pitfall}[1]{title={#1},colback=orange!5,colbacktitle=orange!5,colframe=amber}
+\usepackage{listings}
+\lstset{language=Python,basicstyle=\ttfamily\small,keywordstyle=\color{teal}\bfseries,
+ commentstyle=\color{gray},stringstyle=\color{amber},showstringspaces=false,
+ breaklines=true,breakatwhitespace=false,columns=fullflexible,keepspaces=true,
+ frame=single,rulecolor=\color{teal!30},backgroundcolor=\color{black!2},
+ xleftmargin=2mm,xrightmargin=2mm,aboveskip=10pt,belowskip=10pt,
+ captionpos=b,tabsize=4,upquote=true}
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\sffamily\bfseries\color{navy}\raggedright}
+ {\normalfont\sffamily\small\bfseries\color{teal}ГЛАВА\enspace\thechapter}{4pt}{\huge}
+\titleformat{name=\chapter,numberless}[block]{\sffamily\bfseries\color{navy}\huge\raggedright}{}{0pt}{}
+\titlespacing*{\chapter}{0pt}{-6pt}{14pt}
+\titleformat{\section}{\Large\sffamily\bfseries\color{navy}\raggedright}{\color{teal}\thesection}{.6em}{}
+\titlespacing*{\section}{0pt}{2.0ex plus .5ex minus .3ex}{.6ex}
+\titleformat{\subsection}{\large\sffamily\bfseries\color{navy}\raggedright}{\thesubsection}{.6em}{}
+\titlespacing*{\subsection}{0pt}{1.6ex plus .5ex}{.35ex}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{navy}SVD-SNO}
+\fancyhead[R]{\sffamily\footnotesize\color{navy}\leftmark}
+\fancyfoot[R]{\sffamily\small\color{navy}\thepage}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\headrulewidth}{.3pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[R]{\sffamily\small\color{navy}\thepage}\renewcommand{\headrulewidth}{0pt}}
+\usepackage{microtype}
+\usepackage{caption}
+\captionsetup{font={small,sf},labelfont={bf,color=navy},labelsep=period,justification=raggedright,singlelinecheck=false,skip=5pt}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit}
+\usepackage[unicode,bookmarksdepth=1,colorlinks=true,linkcolor=navy,urlcolor=teal,citecolor=teal,
+ pdftitle={SVD-SNO. Как предсказать поле рассеянной волны},
+ pdfauthor={Учебные материалы проекта multiscale-fem-scattering}]{hyperref}
+\usepackage{bookmark}
+\usepackage{xurl}
+\urlstyle{tt}
+\setcounter{tocdepth}{0}
+\makeatletter
+\renewcommand*\l@chapter[2]{\addpenalty{-\@highpenalty}\vskip .34em
+  {\sffamily\large\color{navy}\@dottedtocline{0}{0pt}{1.75em}{#1}{#2}}}
+\makeatother
+\setcounter{secnumdepth}{2}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus .6pt}
+\linespread{1.075}
+\setlist{topsep=4pt,itemsep=3pt,parsep=0pt,leftmargin=1.6em}
+\setlength{\emergencystretch}{2em}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\DeclareMathOperator{\GELU}{GELU}
+\DeclareMathOperator{\diag}{diag}
+\raggedbottom
+\begin{document}
+\begin{titlepage}
+\color{navy}
+{\sffamily\bfseries\color{teal} ВЫЧИСЛИТЕЛЬНАЯ МАТЕМАТИКА}\hfill
+{\sffamily Учебное пособие}\par
+{\color{teal}\rule{\linewidth}{.8pt}}
+\vspace{15mm}
+{\sffamily\bfseries\fontsize{52}{56}\selectfont SVD-SNO\par}
+\vspace{3mm}
+{\fontsize{28}{34}\selectfont Как предсказать поле\\
+рассеянной волны\par}
+\vspace{8mm}
+{\large От метода конечных элементов к нейронной сети\\
+в пространстве модальных коэффициентов\par}
+\vfill
+\includegraphics[width=\linewidth]{assets/cover_reconstruction.pdf}
+\vspace{1mm}
+
+{\small\sffamily Действительная часть одного прогноза. К среднему полю прибавляется
+взвешенная сумма 25 мод на эталонной сетке GMsFEM. Шкала ParaView Blue to Red Rainbow
+общая для всех трёх карт. Зелёный цвет соответствует нулю.\par}
+\vfill
+{\color{teal}\rule{\linewidth}{.8pt}}
+{\sffamily\small По материалам проекта \texttt{multiscale-fem-scattering}}\hfill
+{\sffamily\small Ноябрь 2026}\par
+\end{titlepage}
+\color{ink}
+\setcounter{page}{2}
+\input{chapters/00_reading}
+\input{chapters/00_notation_and_unknowns}
+\input{chapters/01_math}
+\input{chapters/01c_original_sno}
+\input{chapters/02_implementation}
+\input{chapters/02b_walkthrough}
+\input{chapters/04_experiments}
+\input{chapters/01b_operator_analysis}
+\input{chapters/03_multiscale_practice}
+\input{chapters/05_sources}
+\end{document}

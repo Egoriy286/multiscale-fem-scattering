@@ -1,0 +1,152 @@
+[
+  {
+    "k": 4.0,
+    "degree": 2,
+    "native_dofs": 133221,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.0034790529493714177,
+    "p1_representation_relative_l2": 0.0004356350524692449,
+    "native_mesh_level": 0,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 8.0,
+    "degree": 2,
+    "native_dofs": 133221,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.07328364159345065,
+    "p1_representation_relative_l2": 0.001575817711019994,
+    "native_mesh_level": 0,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 12.0,
+    "degree": 2,
+    "native_dofs": 133221,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.04442209538362866,
+    "p1_representation_relative_l2": 0.0034886317668848675,
+    "native_mesh_level": 0,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 16.0,
+    "degree": 2,
+    "native_dofs": 133221,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.10812231097331529,
+    "p1_representation_relative_l2": 0.006261990770536201,
+    "native_mesh_level": 0,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 20.0,
+    "degree": 2,
+    "native_dofs": 133221,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.1979203422491434,
+    "p1_representation_relative_l2": 0.00957709074915005,
+    "native_mesh_level": 0,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 4.0,
+    "degree": 3,
+    "native_dofs": 299446,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.0035866665385715776,
+    "p1_representation_relative_l2": 0.00043425420158229536,
+    "native_mesh_level": 0,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 8.0,
+    "degree": 3,
+    "native_dofs": 299446,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.07489332792613582,
+    "p1_representation_relative_l2": 0.0015719436744741403,
+    "native_mesh_level": 0,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 12.0,
+    "degree": 3,
+    "native_dofs": 299446,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.04505896134333455,
+    "p1_representation_relative_l2": 0.00349220666396085,
+    "native_mesh_level": 0,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 16.0,
+    "degree": 3,
+    "native_dofs": 299446,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.11003742965757177,
+    "p1_representation_relative_l2": 0.006276655540971658,
+    "native_mesh_level": 0,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 20.0,
+    "degree": 3,
+    "native_dofs": 299446,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.20295932760287516,
+    "p1_representation_relative_l2": 0.009614739913134055,
+    "native_mesh_level": 0,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 4.0,
+    "degree": 2,
+    "native_dofs": 487745,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.008163850259199842,
+    "p1_representation_relative_l2": 0.00043414058637851715,
+    "native_mesh_level": 1,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 8.0,
+    "degree": 2,
+    "native_dofs": 487745,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.10347908319077327,
+    "p1_representation_relative_l2": 0.0015723497212522953,
+    "native_mesh_level": 1,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 12.0,
+    "degree": 2,
+    "native_dofs": 487745,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.056399357502447706,
+    "p1_representation_relative_l2": 0.003488354498854583,
+    "native_mesh_level": 1,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 16.0,
+    "degree": 2,
+    "native_dofs": 487745,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.12115115407870541,
+    "p1_representation_relative_l2": 0.006260622864220254,
+    "native_mesh_level": 1,
+    "p1_mesh_level": 1
+  },
+  {
+    "k": 20.0,
+    "degree": 2,
+    "native_dofs": 487745,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.2147904122438901,
+    "p1_representation_relative_l2": 0.009575488715566622,
+    "native_mesh_level": 1,
+    "p1_mesh_level": 1
+  }
+]

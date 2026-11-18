@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-13",
+  "command": ".venv/bin/python -m pytest --import-mode=importlib neural_operator/tests/test_operators.py neural_operator/tests/test_chebyshev_projection.py neural_operator/tests/test_pod_fem_loss.py neural_operator/tests/test_training.py neural_operator/tests/test_static_training.py neural_operator/tests/test_mapped_data.py experiments/shared_sno_gmsfem/tests experiments/reference_sno_gmsfem/tests -q",
+  "passed": 91,
+  "subtests_passed": 2,
+  "failed": 0,
+  "elapsed_seconds": 3.08,
+  "scope": "Numerical unit tests, synthetic training fixtures, and experiment provenance logic; no reported physical model retraining",
+  "collection_note": "The first collection used pytest's default import mode and failed on duplicate test_training module names. The complete rerun with importlib collected and passed the declared 91 tests."
+}

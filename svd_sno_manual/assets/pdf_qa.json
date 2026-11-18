@@ -1,0 +1,283 @@
+{
+  "pdf": "svd_sno_student_manual.pdf",
+  "sha256": "04f3f211e8b24cc3121c115f6b510942827b1233dd3e1062013921270a1db3f5",
+  "page_count": 45,
+  "a4": true,
+  "annotation_count": 114,
+  "outline_top_level_entries": 11,
+  "tex_critical_messages": [],
+  "off_page_characters": [],
+  "replacement_character_pages": [],
+  "pages": [
+    {
+      "pdf_page": 1,
+      "characters": 508,
+      "body_bottom": 779.18365,
+      "body_top": 67.97417499999995
+    },
+    {
+      "pdf_page": 2,
+      "characters": 1654,
+      "body_bottom": 568.438093,
+      "body_top": 85.44112499999994
+    },
+    {
+      "pdf_page": 3,
+      "characters": 1912,
+      "body_bottom": 655.6200930000001,
+      "body_top": 79.54305
+    },
+    {
+      "pdf_page": 4,
+      "characters": 1467,
+      "body_bottom": 623.5463658000001,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 5,
+      "characters": 2048,
+      "body_bottom": 561.431093,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 6,
+      "characters": 2233,
+      "body_bottom": 764.8340930000002,
+      "body_top": 79.54305
+    },
+    {
+      "pdf_page": 7,
+      "characters": 2144,
+      "body_bottom": 779.2893658,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 8,
+      "characters": 2089,
+      "body_bottom": 779.2020930000001,
+      "body_top": 66.40906319999999
+    },
+    {
+      "pdf_page": 9,
+      "characters": 1157,
+      "body_bottom": 385.41436579999987,
+      "body_top": 66.40906319999999
+    },
+    {
+      "pdf_page": 10,
+      "characters": 2125,
+      "body_bottom": 779.2893658,
+      "body_top": 79.54305
+    },
+    {
+      "pdf_page": 11,
+      "characters": 1846,
+      "body_bottom": 776.9204631999999,
+      "body_top": 67.18959999999993
+    },
+    {
+      "pdf_page": 12,
+      "characters": 2450,
+      "body_bottom": 730.9680930000003,
+      "body_top": 67.75599299999999
+    },
+    {
+      "pdf_page": 13,
+      "characters": 2988,
+      "body_bottom": 763.7780930000002,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 14,
+      "characters": 2503,
+      "body_bottom": 780.3993658000004,
+      "body_top": 79.54305
+    },
+    {
+      "pdf_page": 15,
+      "characters": 2405,
+      "body_bottom": 698.793093,
+      "body_top": 66.40906319999999
+    },
+    {
+      "pdf_page": 16,
+      "characters": 2712,
+      "body_bottom": 769.6480930000001,
+      "body_top": 67.75599299999999
+    },
+    {
+      "pdf_page": 17,
+      "characters": 2532,
+      "body_bottom": 768.2904632000001,
+      "body_top": 79.54305
+    },
+    {
+      "pdf_page": 18,
+      "characters": 2624,
+      "body_bottom": 766.8814632000002,
+      "body_top": 67.75599299999999
+    },
+    {
+      "pdf_page": 19,
+      "characters": 2920,
+      "body_bottom": 779.2020930000001,
+      "body_top": 66.40906319999999
+    },
+    {
+      "pdf_page": 20,
+      "characters": 2340,
+      "body_bottom": 761.8030930000001,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 21,
+      "characters": 2160,
+      "body_bottom": 607.5324632,
+      "body_top": 67.18959999999993
+    },
+    {
+      "pdf_page": 22,
+      "characters": 2368,
+      "body_bottom": 704.0606499999999,
+      "body_top": 67.18959999999993
+    },
+    {
+      "pdf_page": 23,
+      "characters": 2117,
+      "body_bottom": 615.5013658,
+      "body_top": 79.54305
+    },
+    {
+      "pdf_page": 24,
+      "characters": 1813,
+      "body_bottom": 620.1913658000001,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 25,
+      "characters": 1830,
+      "body_bottom": 643.3950930000001,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 26,
+      "characters": 2134,
+      "body_bottom": 777.0203658,
+      "body_top": 79.54305
+    },
+    {
+      "pdf_page": 27,
+      "characters": 1820,
+      "body_bottom": 748.6000930000001,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 28,
+      "characters": 1869,
+      "body_bottom": 657.5270930000003,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 29,
+      "characters": 1393,
+      "body_bottom": 632.0743657999999,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 30,
+      "characters": 1752,
+      "body_bottom": 516.4933658,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 31,
+      "characters": 1300,
+      "body_bottom": 365.957093,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 32,
+      "characters": 2273,
+      "body_bottom": 779.2020930000001,
+      "body_top": 79.54305
+    },
+    {
+      "pdf_page": 33,
+      "characters": 2555,
+      "body_bottom": 780.8014632000001,
+      "body_top": 67.75599299999999
+    },
+    {
+      "pdf_page": 34,
+      "characters": 2510,
+      "body_bottom": 761.3394632000001,
+      "body_top": 66.40906319999999
+    },
+    {
+      "pdf_page": 35,
+      "characters": 2642,
+      "body_bottom": 757.051,
+      "body_top": 67.75599299999999
+    },
+    {
+      "pdf_page": 36,
+      "characters": 2346,
+      "body_bottom": 747.9033658000001,
+      "body_top": 67.75599299999999
+    },
+    {
+      "pdf_page": 37,
+      "characters": 2978,
+      "body_bottom": 779.2020930000003,
+      "body_top": 67.18959999999993
+    },
+    {
+      "pdf_page": 38,
+      "characters": 1317,
+      "body_bottom": 372.2000929999999,
+      "body_top": 65.9122658
+    },
+    {
+      "pdf_page": 39,
+      "characters": 2572,
+      "body_bottom": 770.6104632,
+      "body_top": 79.54305
+    },
+    {
+      "pdf_page": 40,
+      "characters": 2535,
+      "body_bottom": 779.2020930000001,
+      "body_top": 67.75599299999999
+    },
+    {
+      "pdf_page": 41,
+      "characters": 1918,
+      "body_bottom": 557.9893657999999,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 42,
+      "characters": 2386,
+      "body_bottom": 645.4200930000002,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 43,
+      "characters": 2089,
+      "body_bottom": 517.894093,
+      "body_top": 67.93135000000007
+    },
+    {
+      "pdf_page": 44,
+      "characters": 1662,
+      "body_bottom": 676.0910930000001,
+      "body_top": 79.54305
+    },
+    {
+      "pdf_page": 45,
+      "characters": 2163,
+      "body_bottom": 630.5940930000002,
+      "body_top": 67.93135000000007
+    }
+  ]
+}

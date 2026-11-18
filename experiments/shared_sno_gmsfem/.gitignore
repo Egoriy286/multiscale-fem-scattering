@@ -1,0 +1,4 @@
+/data/
+/runs/
+/results/*.log
+/results/verification/baseline_fields.npz

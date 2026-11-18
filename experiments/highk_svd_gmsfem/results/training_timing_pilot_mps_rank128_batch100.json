@@ -1,0 +1,26 @@
+{
+  "synthetic": true,
+  "data_access": false,
+  "selection_use": false,
+  "device": "mps",
+  "threads": 2,
+  "rank": 128,
+  "batch_size": 100,
+  "seed": 11,
+  "warmup_updates": 2,
+  "measured_updates": 4,
+  "parameters": 584000,
+  "update_seconds": [
+    0.08529212500070571,
+    0.0842562910002016,
+    0.08431041700168862,
+    0.08881250000194996
+  ],
+  "median_update_seconds": 0.08480127100119716,
+  "median_forward_seconds": 0.024498083501384826,
+  "projected_1000_epoch_seconds_per_seed": 902.1779726335335,
+  "projected_1000_epoch_three_seed_hours": 0.7518149771946112,
+  "assumptions": "1000 training rows,100 validation rows,1000 epochs,validation every5 plus epoch1; includes full train evaluation; excludes POD, disk I/O and test scoring",
+  "torch_version": "2.15.0",
+  "mps_available": true
+}

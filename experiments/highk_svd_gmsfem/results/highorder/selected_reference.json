@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "native_mesh": "meshes/graded_geometry256.msh",
+  "native_degree": 3,
+  "native_dofs": 377530,
+  "support_mesh": "meshes/graded_1.msh",
+  "support_archive": "results/mesh_convergence/level_1_fields.npz",
+  "support_dofs": 122137,
+  "validation_frequencies": [
+    4.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0
+  ],
+  "separate_relative_l2_tolerance": 0.02,
+  "observed_relative_l2_maxima": {
+    "native_degree": 0.005307483003223658,
+    "native_spatial": 0.006696124153972738,
+    "p1_representation": 0.009611991438631505
+  },
+  "reference_definition": "Native affine-geometry CG3 scattering solution sampled onto declared P1 support nodes",
+  "geometry": {
+    "native": {
+      "vertices": 42082,
+      "triangles": 83762,
+      "edge_min": 0.000328957398541657,
+      "edge_max": 0.05358243450164423,
+      "inclusion_edge_max": 0.00729706574200773,
+      "crossings_coarse_grid_10": 0,
+      "crossings_coarse_grid_20": 0
+    },
+    "support": {
+      "vertices": 122137,
+      "triangles": 243472,
+      "edge_min": 0.001730224900133562,
+      "edge_max": 0.026575476414885307,
+      "inclusion_edge_max": 0.003385174227195463,
+      "crossings_coarse_grid_10": 0,
+      "crossings_coarse_grid_20": 0
+    }
+  },
+  "native_linear_solver": "Finite original-equation residual <1e-10 determines acceptance independently of GMRES internal info; previous-solution warm-start, nearby-frequency LU preconditioning, max50iterations; direct LU fallback",
+  "interpretation": "Empirical degree/spatial/representation diagnostics at five anchors, not a rigorous uniform continuum error certificate. Polygonal material geometry and fixed first-order absorbing boundary are declared model approximations. P1 support is an observation representation, not P1 FEM truth.",
+  "verified_files": {
+    "meshes/graded_geometry256.msh": "1819a0c3d7e72eb2ee2872b2bfe95bfaf47ae069e61cac7d2d5364774b14bd6e",
+    "meshes/graded_1.msh": "458680360152d528104d286cb455c0a481cea6253dfe926f7c5f0235b0cac988",
+    "results/mesh_convergence/level_1_fields.npz": "c5534d69d48fbca4e2a64e652ab387c3523f6015586ee74c591f3edbfe61b323",
+    "results/highorder/geometry256_cg3.npz": "e29bb271d460587c199e6eeedd1ab7dac4a8e14c25457f6be22f97db4c8c3fc2",
+    "results/highorder/geometry256_cg2.npz": "419b2d59762360ea891de3b96d064ef73292ba37c0050529ffee58e09c0a2980",
+    "results/highorder/level1_cg2.npz": "55432e905211d50c7f789c37c0adbc5c9a745e0091ab9c45b879bac9583a656a",
+    "results/highorder/geometry256_degree_convergence.json": "e57801c6050aefdaf3748fb9d88614b3ec8af1e753e9e21d05b79f2c4576ae03",
+    "results/highorder/geometry256_spatial_convergence.json": "d811e21572b08ff796292b55b6e6766dee4df8104a7b4f9db7c67273ef71de5f",
+    "results/highorder/geometry256_representation.json": "bedda1d2ac108af95f0338c9b97fe6596be109550e18d560f4c051af193da138",
+    "results/highorder/selected_iterative_validation.json": "5f72589791efc88163d3aa54aac38b5b45261ac9d2b87dae00f2db4d0f53cd22",
+    "highorder.py": "9c335c58d41332ca2895ec0a77b0a01dcfba37e25794e7e3fe28469e1c3f88cd",
+    "mesh.py": "9892c7bee51880c43f2b328f42737564ad3288cb4a072b63857660714ef4c9c3"
+  }
+}

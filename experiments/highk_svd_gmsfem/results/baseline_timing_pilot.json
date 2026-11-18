@@ -1,0 +1,68 @@
+{
+  "k": 20.0,
+  "theta": 0.0,
+  "n_coarse": 10,
+  "max_modes": 32,
+  "dofs_fine": 122137,
+  "mesh_sha256": "458680360152d528104d286cb455c0a481cea6253dfe926f7c5f0235b0cac988",
+  "setup_seconds": 4.092202848001762,
+  "assembly_seconds": 0.455310813998949,
+  "complete": true,
+  "methods": [
+    {
+      "modes": 16,
+      "system_seconds": 2.074561224999343,
+      "dofs_coarse": 1936,
+      "galerkin_residual": 1.0555210584390438e-12,
+      "matrix_projection_seconds": 1.7138057880001725,
+      "rhs_projection_seconds": 0.016481706999911694,
+      "projection_seconds": 1.7302874950000842,
+      "factorization_seconds": 0.3444500200021139,
+      "solve_seconds": 0.012015801999950781,
+      "reconstruction_seconds": 0.01975424099873635,
+      "error_vs_native_p1_percent": 660.9446503577728,
+      "error_vs_projected_cg3_percent": 662.356744788366
+    },
+    {
+      "modes": 32,
+      "system_seconds": 11.155430629001785,
+      "dofs_coarse": 3872,
+      "galerkin_residual": 2.1735825067070433e-12,
+      "matrix_projection_seconds": 6.002010834999965,
+      "rhs_projection_seconds": 0.05740822600273532,
+      "projection_seconds": 6.0594190610027,
+      "factorization_seconds": 5.10467392099963,
+      "solve_seconds": 0.025141392998193623,
+      "reconstruction_seconds": 0.0573876009984815,
+      "error_vs_native_p1_percent": 478.4827424420155,
+      "error_vs_projected_cg3_percent": 479.13485931096085
+    }
+  ],
+  "offline_seconds": 20.1146498900016,
+  "diagnostics": {
+    "chi_dirichlet_residual": 1.5398716761002165e-17,
+    "chi_interface_defect": 8.43769498715119e-15,
+    "partition_sum_defect": 836.6725863275317,
+    "max_snapshot_residual": 8.363948890856459e-18,
+    "max_eigen_residual": 5.987736638563064e-15,
+    "min_snapshots": 80,
+    "max_snapshots": 499,
+    "P_nnz": 15857280
+  },
+  "eigenvalue_min": 282.7086609909824,
+  "eigenvalue_max": 7717.566001726769,
+  "peak_rss_gib": 2.225372314453125,
+  "reference": {
+    "path": "results/highorder/level0_cg3_on_p1level1.npy",
+    "sha256": "39dbf8c3da4aeb7d87dad5c1a36009ea99cedb17dc19b9116507dbd6a16104db",
+    "kind": "CG3 level0 sampled on graded1 P1 nodes; scored with consistent P1 mass",
+    "native_p1_error_percent": 20.367406584539914
+  },
+  "component_seconds_total": 38.0064544429988,
+  "interpretation": {
+    "linear_algebra": "Small reduced, snapshot, and eigensystem residuals; inaccurate fields are not explained by failed linear solves.",
+    "local_resonance_warning": "Type2 chi partition-sum defect is allowed by this construction, but value 836.67 indicates severe local amplitude amplification. No condition number was estimated.",
+    "scope": "One k=20 theta=0 pilot, not an estimate of average test accuracy; M16/32 remain predeclared.",
+    "timing": "component_seconds_total sums mesh setup, assembly, offline build, and reduced systems/solve/reconstruction. Archive loading, scoring, and direct full P1 factorization are excluded."
+  }
+}

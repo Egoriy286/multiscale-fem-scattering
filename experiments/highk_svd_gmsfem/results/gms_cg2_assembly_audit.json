@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "global_assembly": {
+    "degree": 2,
+    "quadrature_degree": 4,
+    "basix_version": "0.11.0",
+    "global_assembly_errors": {
+      "K": 9.156151042069049e-15,
+      "Mn": 7.309849680231742e-15,
+      "M0": 6.785346279100249e-15,
+      "Salpha": 6.7799106704687546e-15
+    },
+    "setup_seconds": 3.6243169820008916,
+    "ndofs": 133221,
+    "cells": 66410,
+    "local_dofs": 6
+  },
+  "interface_patch": {
+    "cells": 1094,
+    "dofs": 2249,
+    "boundary_dofs": 120,
+    "material_tags": [
+      1,
+      3
+    ],
+    "relative_assembly_errors": {
+      "K": 1.6802960395921638e-14,
+      "Mn": 2.1503439904644752e-14,
+      "Salpha": 8.10356101078859e-15
+    }
+  }
+}

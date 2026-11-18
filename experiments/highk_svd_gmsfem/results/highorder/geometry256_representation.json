@@ -1,0 +1,42 @@
+[
+  {
+    "k": 4.0,
+    "degree": 3,
+    "native_dofs": 377530,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.009191755945747228,
+    "p1_representation_relative_l2": 0.00043428138638888845
+  },
+  {
+    "k": 8.0,
+    "degree": 3,
+    "native_dofs": 377530,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.1098548838578816,
+    "p1_representation_relative_l2": 0.001573612587951612
+  },
+  {
+    "k": 12.0,
+    "degree": 3,
+    "native_dofs": 377530,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.06042190637217162,
+    "p1_representation_relative_l2": 0.0034937320519221934
+  },
+  {
+    "k": 16.0,
+    "degree": 3,
+    "native_dofs": 377530,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.12381028309519068,
+    "p1_representation_relative_l2": 0.006276142336699118
+  },
+  {
+    "k": 20.0,
+    "degree": 3,
+    "native_dofs": 377530,
+    "p1_nodes": 122137,
+    "p1_fem_relative_l2": 0.21819440842276805,
+    "p1_representation_relative_l2": 0.009611991438631505
+  }
+]

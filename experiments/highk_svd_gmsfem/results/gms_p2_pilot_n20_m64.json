@@ -1,0 +1,53 @@
+{
+  "mesh": "experiments/highk_svd_gmsfem/meshes/gms_geometry256_h02.msh",
+  "mesh_sha256": "aaa7d0d426c502190c5d8e1a89affd737860cdda6ab4ed7f833b019da7ede174",
+  "k": 18.12345,
+  "theta": 0.0,
+  "n_coarse": 20,
+  "fine_degree": 2,
+  "dofs_fine": 323793,
+  "provenance": {
+    "degree": 2,
+    "quadrature_degree": 4,
+    "basix_version": "0.11.0",
+    "global_assembly_errors": {
+      "K": 4.55809962709463e-14,
+      "Mn": 1.2860541179985182e-14,
+      "M0": 1.2338971555271003e-14,
+      "Salpha": 1.2333239529489765e-14
+    },
+    "setup_seconds": 13.388379728000018,
+    "ndofs": 323793,
+    "cells": 161496,
+    "local_dofs": 6
+  },
+  "complete": false,
+  "methods": [],
+  "offline_seconds": 73.66865165199988,
+  "diagnostics": {
+    "chi_dirichlet_residual": 8.5366379969765e-18,
+    "chi_interface_defect": 1.1324274851176597e-14,
+    "partition_sum_defect": 6.790186538483778,
+    "max_snapshot_residual": 8.141815296315925e-18,
+    "max_eigen_residual": 5.1066688690585687e-14,
+    "min_snapshots": 80,
+    "max_snapshots": 420,
+    "P_nnz": 84121984,
+    "fine_degree": 2,
+    "local_assembly": "Basix affine P2 quadrature degree4",
+    "scoped_dispatch": true,
+    "global_assembly_errors": {
+      "K": 4.55809962709463e-14,
+      "Mn": 1.2860541179985182e-14,
+      "M0": 1.2338971555271003e-14,
+      "Salpha": 1.2333239529489765e-14
+    }
+  },
+  "eigenvalue_min": 205.90295752413223,
+  "eigenvalue_max": 119624.76484844655,
+  "stopped_for_resource_budget": true,
+  "status": "Excluded before observing M64 accuracy",
+  "stopping_reason": "Pilot still had no completed reduced solve after more than 7 minutes process wall time; process RSS exceeded 6.5 GiB while native production required another 2.2 GiB. The 200-case main study uses predeclared M16/32; M64 field accuracy was not observed.",
+  "observed_wall_seconds_lower_bound": 435.0,
+  "observed_process_rss_gib_lower_bound": 6.5
+}

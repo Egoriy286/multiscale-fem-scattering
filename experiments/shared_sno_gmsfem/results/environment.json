@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-11-10T17:06:42.943705+09:00",
+  "timezone": "Asia/Yakutsk",
+  "python": "3.12.3",
+  "machine": "aarch64",
+  "numpy": "2.4.6",
+  "scipy": "1.17.1",
+  "torch": "2.9.1+cpu",
+  "dolfinx": "0.11.0.post0",
+  "gmsh": "4.15.2",
+  "petsc": [
+    3,
+    25,
+    1
+  ],
+  "scalar_type": "complex128",
+  "device": "cpu",
+  "training_threads": 2,
+  "source_sha256": {
+    "__init__.py": "07193945c041064ea468b9557f9ac24b32b9fae4e8b48b15ffbb3ba0232e2d36",
+    "comparison.py": "8db3fcdc175cb9b97f27a834f0a49107d0aa313df74f863535a9114735ad5008",
+    "dataset.py": "235ea0446a0e5483585555341e872bb2725805f06a35b36ffcf0ea540a0e7406",
+    "report.py": "05fc2fcf06bd635c6250cde384a165d9269da97636e73d863152536769a2b8f1",
+    "run.py": "0ac2424a5ed8281611ba1a7c2a9c0bc115fa2202ee7e748ab93363fd207b08bc",
+    "tests/__init__.py": "c03fe65d6cdf717c7444c5f0b9b702e91d3dfd1479b09384d8668071a99068e2",
+    "tests/test_comparison.py": "08695a5fa5edfeaae914d56d60ddd97c79adbed36c91395d0d2d7dd5974d2b8f",
+    "tests/test_dataset.py": "0d73c7627c192e317d4403cb2314b77ba3e521fe440065c1d61a4f04ffd7ed56",
+    "tests/test_storage.py": "df428c04a39418885798aa00908d441d12ba439dd98dc5e7dd1f5f77c13c7ea9",
+    "training.py": "03b6e9640746f96b51de2c98a7737a9f5a01fdb90cd5c3ddb9f5598d75d551da"
+  }
+}

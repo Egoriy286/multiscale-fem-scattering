@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "ncases": 1200,
+  "threshold": 1e-08,
+  "residual_definition": "Euclidean ||H(k,theta)u_scat-f(k,theta)|| / ||f(k,theta)||",
+  "minimum": 1.1423198073578145e-13,
+  "mean": 2.435788889306106e-13,
+  "p95": 4.066334501894128e-13,
+  "maximum": 4.2748386096855716e-13,
+  "setup_and_anchor_seconds": 2.339360501999181,
+  "assembly_seconds": 58.22721501099841,
+  "total_seconds": 61.33476730300026,
+  "per_query_linear_solves": 0,
+  "temporary_independent_anchor_solve": true,
+  "original_provenance_untouched": true,
+  "original_provenance_sha256": "4fef927f21dc70eb1db7577d037940dee70e976f360b187aff7f09fe1d42752c",
+  "residual_statistics": {
+    "min": 1.1423198073578145e-13,
+    "mean": 2.435788889306106e-13,
+    "p95": 4.066334501894128e-13,
+    "max": 4.2748386096855716e-13
+  },
+  "anchor_verification": {
+    "k": 1.0,
+    "theta": 0.0,
+    "mesh_order_verified": true,
+    "consistent_relative_l2": 9.119820435770504e-14,
+    "normalized_linear_residual": 4.177379767063974e-13,
+    "validation_seconds": 0.9916069989994867
+  },
+  "dataset_sha256": {
+    "config.json": "288e1d3614d3a955e40099a3256eb6b100261fe4fc5aafa555af7cce4b2ebfb3",
+    "etal.msh": "9273efc7c0b500209ff847de4ee36d3790b93d64b09e67f62348318ed6b6cb47",
+    "reference_problem.npz": "b202bd558a794a11ac0c303e9aca8ec242de9d4d9ec83c54e5509569610b00b6",
+    "samples.npz": "54de578d8d3fe10271b52f39d3de9fb668fa7101173b280b5013978b54d7836b",
+    "u_scat.npy": "a64977bbfc3cb2ea86a52c543206c6b2db3454e1a467355f0661a3781c545232",
+    "completed.npy": "46256fbe57e5954003dce48c2a64eea84a32c62faf08096ddac5219afab1824a",
+    "generation_times.npy": "199f00f609f3a1e2b1dd86ab6bfb7c8733ebecf964ba09c60dde09b9985d09be"
+  },
+  "protocol_sha256": "5d161c70462f2760bcf970faa9de347a30cba7de9fdc35e22d987797d53fab56",
+  "source_sha256": {
+    "experiments/multiscale_sample_study/label_audit.py": "505fa88be0ed7f7a8076fa780d47002b082ac0ea11a48060519f323ee6575415",
+    "experiments/reference_sno_gmsfem/dataset.py": "8966664336b61b0288f8e66daf3a391135787703bf0423cfbd20751a15130e97",
+    "neural_operator/fem.py": "9265689e757084f28443dca609a5c158ce9b608768836bf33fe9070ef1938197",
+    "gmsfem/fem.py": "1ed331453fdb99bdd2095cfbfb9ced47300d6647cdfa6cebc39deef75853e98c",
+    "gmsfem/geometry.py": "61ff16130fbefa6d0c54e20928ecf0831ed4f55e04fd51b2acc4acb082c15a8c"
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "system": "Linux",
+    "machine": "aarch64",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "dolfinx": "0.11.0.post0"
+  },
+  "completed_at": "2026-11-13T13:58:46.199118+00:00",
+  "rows_csv": {
+    "path": "fem_label_audit.csv",
+    "sha256": "0d45945f166b9861e946a14a1b677f62a48a02dea905b472f541822b2101c9c6"
+  }
+}

@@ -1,0 +1,7 @@
+data/
+meshes/
+cache/
+runs/
+results/*.log
+results/**/*.npz
+results/**/*.npy

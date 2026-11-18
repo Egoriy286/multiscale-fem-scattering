@@ -1,0 +1,80 @@
+{
+  "mesh": "experiments/highk_svd_gmsfem/meshes/graded_geometry256.msh",
+  "mesh_sha256": "1819a0c3d7e72eb2ee2872b2bfe95bfaf47ae069e61cac7d2d5364774b14bd6e",
+  "k": 18.12345,
+  "theta": 0.0,
+  "n_coarse": 20,
+  "fine_degree": 2,
+  "dofs_fine": 167925,
+  "provenance": {
+    "degree": 2,
+    "quadrature_degree": 4,
+    "basix_version": "0.11.0",
+    "global_assembly_errors": {
+      "K": 7.186767438230518e-14,
+      "Mn": 7.33752553326827e-15,
+      "M0": 6.850804161756379e-15,
+      "Salpha": 6.845756620410895e-15
+    },
+    "setup_seconds": 4.749365388001024,
+    "ndofs": 167925,
+    "cells": 83762,
+    "local_dofs": 6
+  },
+  "complete": true,
+  "methods": [
+    {
+      "modes": 16,
+      "system_setup_seconds": 32.542315418002545,
+      "error_vs_native_cg2_percent": 495.1158697179426,
+      "dofs_coarse": 7056,
+      "galerkin_residual": 2.2612890767104062e-13,
+      "matrix_projection_seconds": 20.221234598000592,
+      "rhs_projection_seconds": 0.15061319900269154,
+      "projection_seconds": 20.371847797003284,
+      "factorization_seconds": 12.069993654993596,
+      "solve_seconds": 0.07752611299656564,
+      "reconstruction_seconds": 0.315746403997764
+    },
+    {
+      "modes": 32,
+      "system_setup_seconds": 74.29411654100113,
+      "error_vs_native_cg2_percent": 145.55635017501578,
+      "dofs_coarse": 14112,
+      "galerkin_residual": 1.990591219723931e-13,
+      "matrix_projection_seconds": 13.99467089799873,
+      "rhs_projection_seconds": 0.44480093799938913,
+      "projection_seconds": 14.43947183599812,
+      "factorization_seconds": 60.09110350699484,
+      "solve_seconds": 0.3920500360036385,
+      "reconstruction_seconds": 0.24721550200047204
+    }
+  ],
+  "offline_seconds": 85.57233680700301,
+  "diagnostics": {
+    "chi_dirichlet_residual": 1.7167443506613717e-17,
+    "chi_interface_defect": 1.1324274851176597e-14,
+    "partition_sum_defect": 6.791822640195276,
+    "max_snapshot_residual": 1.4586330387393574e-17,
+    "max_eigen_residual": 4.7454178578617674e-14,
+    "min_snapshots": 40,
+    "max_snapshots": 376,
+    "P_nnz": 21844672,
+    "fine_degree": 2,
+    "local_assembly": "Basix affine P2 quadrature degree4",
+    "scoped_dispatch": true,
+    "global_assembly_errors": {
+      "K": 7.186767438230518e-14,
+      "Mn": 7.33752553326827e-15,
+      "M0": 6.850804161756379e-15,
+      "Salpha": 6.845756620410895e-15
+    }
+  },
+  "eigenvalue_min": 205.80704154332676,
+  "eigenvalue_max": 29503.069084628325,
+  "native_fine_seconds": 27.738061213000037,
+  "native_fine_residual": 1.59853090347565e-13,
+  "wall_seconds": 228.81006346199865,
+  "peak_rss_gib": 2.8753280639648438,
+  "scope": "One non-dataset pilot query; accuracy against native CG2 only, not against converged CG3 truth"
+}

@@ -1,0 +1,33 @@
+{
+  "scope": "four completed runs only; full48 verification still pending",
+  "runs": [
+    {
+      "method": "sno_gelu",
+      "n_train": 400,
+      "seed": 11,
+      "replayed_cases": 100,
+      "first_case_independent_reference_quadrature_passed": true
+    },
+    {
+      "method": "mscale_sno",
+      "n_train": 400,
+      "seed": 11,
+      "replayed_cases": 100,
+      "first_case_independent_reference_quadrature_passed": true
+    },
+    {
+      "method": "fno_gelu",
+      "n_train": 400,
+      "seed": 11,
+      "replayed_cases": 100,
+      "first_case_independent_reference_quadrature_passed": true
+    },
+    {
+      "method": "mscale_fno",
+      "n_train": 400,
+      "seed": 11,
+      "replayed_cases": 100,
+      "first_case_independent_reference_quadrature_passed": true
+    }
+  ]
+}

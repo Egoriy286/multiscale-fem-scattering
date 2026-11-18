@@ -1,0 +1,7 @@
+# Only these files are needed for the runtime image, never datasets or weights.
+**
+!.devcontainer/
+!.devcontainer/Dockerfile
+!experiments/
+!experiments/reference_sno_gmsfem/
+!experiments/reference_sno_gmsfem/requirements.txt

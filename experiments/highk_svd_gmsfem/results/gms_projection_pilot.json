@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "relative_matrix_difference": 3.562295445917791e-16,
+  "rhs_relative_difference": 1.4519592049619804e-16,
+  "reconstruction_relative_difference": 2.1290630104984993e-16,
+  "split_projection_seconds": 13.760742153000137,
+  "original_projection_seconds": 22.46460640099997
+}

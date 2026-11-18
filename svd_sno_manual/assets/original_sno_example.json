@@ -1,0 +1,88 @@
+{
+  "description": "Manually chosen SNO algebra examples; not trained paper results",
+  "input": [
+    [
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      2.0
+    ]
+  ],
+  "channel": [
+    [
+      1.0,
+      -1.0
+    ],
+    [
+      1.0,
+      1.0
+    ]
+  ],
+  "mode": [
+    [
+      1.0,
+      1.0
+    ],
+    [
+      1.0,
+      -1.0
+    ]
+  ],
+  "bias": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      1.0,
+      0.0
+    ]
+  ],
+  "UA": [
+    [
+      1.0,
+      -1.0
+    ],
+    [
+      2.0,
+      2.0
+    ]
+  ],
+  "BUA": [
+    [
+      3.0,
+      1.0
+    ],
+    [
+      -1.0,
+      -3.0
+    ]
+  ],
+  "affine_output": [
+    [
+      3.0,
+      1.0
+    ],
+    [
+      0.0,
+      -3.0
+    ]
+  ],
+  "activated_internal_output": [
+    [
+      3.048587351573742,
+      1.3132616875182228
+    ],
+    [
+      0.6931471805599453,
+      0.04858735157374206
+    ]
+  ],
+  "real_layer_parameters": 12,
+  "dense_real_parameters": 20,
+  "chebyshev_max_error": 4.440892098500626e-16,
+  "fourier_coefficient_max_error": 1.7554167342883506e-16,
+  "softplus_linear_branch_exact_error_bound": 6.305116760146989e-16
+}
