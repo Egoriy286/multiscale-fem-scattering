@@ -4,6 +4,8 @@ cache/
 runs/
 meshes/
 results/*.log
+/results/PARTIAL_REPORT.md
+/results/partial_*
 results/**/*fields.npz
 results/**/*.npz
 results/**/*.npy

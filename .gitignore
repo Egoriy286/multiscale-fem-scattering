@@ -4,6 +4,8 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.ruff_cache/
+.array_cache/
 .ipynb_checkpoints/
 .playwright-mcp/
 tmp/

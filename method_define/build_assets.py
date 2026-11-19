@@ -48,10 +48,66 @@ for row in gms:
   ax.axhline(float(row['scattered_mean_pct']),linestyle='--',label=row['method'])
 ax.set(xlabel='Train N',ylabel='Mean complex scattered L2 error (%)',yscale='log',title='Общий тест: k=0.1–4; 100 задач; 3 seed');ax.legend(fontsize=11);ax.grid(alpha=.2);save(f,'low_comparison')
 f,ax=plt.subplots(figsize=(8,4.8));ax.bar(['SVD-SNO v2','FNO','Chebyshev-SNO'],[.9475,1.6599,7.9364],color=['#2563eb','#d97706','#059669']);ax.set(ylabel='Mean complex FEM L2 error (%)',title='Отдельный static-low: k=1–2; 1280 test; 1 seed');ax.grid(axis='y',alpha=.2);save(f,'static_low_comparison')
-for source,name in [(REPO/'experiments/highk_svd_gmsfem/results/partial_sample_size.png','highk_partial.png'),(REPO/'experiments/highk_svd_gmsfem/results/reference_convergence.png','reference_convergence.png'),(REPO/'experiments/multiscale_sample_study/results/convergence_epoch.png','low_convergence.png')]:shutil.copyfile(source,A/name)
-partial=json.loads((REPO/'experiments/highk_svd_gmsfem/results/partial_verification.json').read_text())
+highk_root = REPO / 'experiments/highk_svd_gmsfem'
+highk_results = highk_root / 'results'
+status_path = highk_results / 'execution.json'
+manifest_path = highk_results / 'final_artifact_manifest.json'
+training_path = highk_results / 'training_summary.json'
+summary_path = highk_results / 'summary.csv'
+sample_efficiency_plot = highk_results / 'sample_efficiency.png'
+status = json.loads(status_path.read_text())['status']
+manifest = json.loads(manifest_path.read_text())
+runs = json.loads(training_path.read_text())['runs']
+if status != 'passed' or not manifest['passed'] or len(runs) != manifest['neural_runs']:
+    raise ValueError('The high-k study must pass final verification before export')
+for artifact in (summary_path, sample_efficiency_plot):
+    digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
+    if manifest['outputs_sha256'][str(artifact.relative_to(highk_root))] != digest:
+        raise ValueError(f'High-k artifact differs from its final manifest: {artifact.name}')
+shutil.copyfile(sample_efficiency_plot, A / 'highk_sample_efficiency.png')
+
+highk_completed = []
+for n_train in sorted({run['n_train'] for run in runs}):
+    group = sorted((run for run in runs if run['n_train'] == n_train), key=lambda run: run['seed'])
+    record = {
+        'n_train': n_train,
+        'seeds': [run['seed'] for run in group],
+        'completed_seed_runs': len(group),
+    }
+    for field in ('scattered', 'total'):
+        values = [run[f'{field}_mean_pct'] for run in group]
+        record[f'{field}_mean_over_seed_means_pct'] = float(np.mean(values))
+        record[f'{field}_seed_sd_pct'] = float(np.std(values, ddof=1))
+        record[f'{field}_seed_min_pct'] = min(values)
+        record[f'{field}_seed_max_pct'] = max(values)
+    highk_completed.append(record)
+with summary_path.open(newline='') as stream:
+    highk_gms = [row for row in csv.DictReader(stream) if row['method'].startswith('GMsFEM')]
+
 staticdoc=REPO/'neural_operator/docs/operator_revision.md'
-metrics={'snapshot_at':datetime.now(timezone(timedelta(hours=9))).isoformat(),'low':low,'gms_low':gms,'highk_completed':partial['per_n_seed_summary'],'highk_status':'partial 9/15; Ns1000,2000 and GMs incomplete at snapshot','static_low':{'range':[1,2],'train':5360,'validation':1360,'test':1280,'seeds':1,'metrics':[{'method':'SVD-SNO v2','mean_pct':.9475,'parameters':4022},{'method':'FNO','mean_pct':1.6599,'parameters':445010},{'method':'Chebyshev-SNO modes8','mean_pct':7.9364,'parameters':2426}],'chebyshev_validation_floor_mean_pct':7.6143},'source_sha256':{str(p.relative_to(REPO)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [lowpath,gmspath,staticdoc,REPO/'experiments/highk_svd_gmsfem/results/partial_verification.json']}}
+sources = (lowpath, gmspath, staticdoc, status_path, manifest_path, training_path,
+           summary_path, sample_efficiency_plot)
+metrics = {
+    'snapshot_at': datetime.now(timezone(timedelta(hours=9))).isoformat(),
+    'low': low,
+    'gms_low': gms,
+    'highk_completed': highk_completed,
+    'highk_gms': highk_gms,
+    'highk_status': status,
+    'static_low': {
+        'range': [1, 2], 'train': 5360, 'validation': 1360, 'test': 1280, 'seeds': 1,
+        'metrics': [
+            {'method': 'SVD-SNO v2', 'mean_pct': .9475, 'parameters': 4022},
+            {'method': 'FNO', 'mean_pct': 1.6599, 'parameters': 445010},
+            {'method': 'Chebyshev-SNO modes8', 'mean_pct': 7.9364, 'parameters': 2426},
+        ],
+        'chebyshev_validation_floor_mean_pct': 7.6143,
+    },
+    'source_sha256': {
+        str(source.relative_to(REPO)): hashlib.sha256(source.read_bytes()).hexdigest()
+        for source in sources
+    },
+}
 (A/'metrics.json').write_text(json.dumps(metrics,ensure_ascii=False,indent=2)+'\n')
 print('Assets created; GMs low summary:',gms)
 # Print-sized versions keep legends readable on an A4 page.

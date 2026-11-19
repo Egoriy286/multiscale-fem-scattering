@@ -14,7 +14,7 @@
     "results/article_sources.json": "0dfbebac216eb9efcec8db8e280048b94b9e361fbab04b49a9f5c744b43fd4d9"
   },
   "output_sha256": {
-    "REPORT.md": "8973625a6abf7dfe25879c742c7c0d3f6d331a04e6f7290ed36774d4e9cb3380",
+    "REPORT.md": "861739caed194e497a64420b729f5b820bc87bb90ab4607232e842e764328076",
     "summary.csv": "6d1d89d80ad872dd99e5b74731dcdad550b3f4cf04fc3a426e4588af99cfeb75",
     "validation_thresholds.csv": "dd14566606015717e3e12e12ea7fffb166a8a0c4e52b639ea0f90495ebe74c68",
     "paired_errors.csv": "1e36cb11b771d0a686e95318c0f9fe5559ca05fc147de51229a8908b1e484920",
@@ -49,7 +49,7 @@
     "tests/test_audit.py": "d5f105b615a3634fd211ce4fa8aace3c2c1bfc82506c7667f36798a665f6a125",
     "tests/test_sno.py": "cb38c3dde7a2edb97d39ddd1ef0795332c54ec3fb4ee1d224366a9912cd2edcf"
   },
-  "readme_sha256": "783e4c65a35e211fcac2f6074e65cb22b8185dee42ea3e29d08f64487f42bc7b",
+  "readme_sha256": "81e2c456d94027901e1328058055896f16c1e1e2a4d976ea2c69b23a4c21f75a",
   "protocol_text_sha256": "f163b9fd3d58601032bff2a9cafb57bf4b53c5da1c0253f9c6d4b53fe3a1a962",
   "completed_at": "2026-11-13T23:19:30.412396+09:00",
   "updated_at": "2026-11-13T23:38:11.490883+09:00"

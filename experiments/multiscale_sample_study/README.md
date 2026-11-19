@@ -38,6 +38,8 @@ make sample-study      # native macOS: обучение, replay, независ�
 make sample-status
 ```
 
-Текущий статус — [execution.json](results/execution.json). Промежуточные измеренные кривые находятся в [LIVE_REPORT.md](results/LIVE_REPORT.md). Финальный `results/REPORT.md` появляется только после завершения всех 48 запусков и replay-проверки. Изменять настройки уже начатого опыта нельзя: нужен новый `--root` и отдельный протокол. Новый каталог сам по себе не меняет частоты: для независимого test после подбора по опубликованным результатам нужен также новый seed планировщика и новый manifest. Истории, optimizer/scheduler/RNG и лучший checkpoint сохраняются на evaluation-эпохах; прерывание повторяет только несохранённые эпохи.
+Все 48 запусков и повторная проверка checkpoints завершены. [Итоговый отчёт](results/REPORT.md) · [Статус выполнения](results/execution.json).
+
+Для нового запуска команда `python -m experiments.multiscale_sample_study.run live` строит промежуточные кривые локально. При изменении настроек используйте новый `--root` и отдельный протокол. Для независимого теста после подбора по опубликованным результатам также нужны новый seed планировщика и новый manifest. Во время обучения состояние optimizer/scheduler/RNG и лучший checkpoint сохраняются на evaluation-эпохах. После прерывания повторяются только несохранённые эпохи.
 
 Итоговые артефакты: `convergence_epoch.png`, `convergence_time.png`, `convergence_steps.png`, `sample_size_error.png`, `metrics.csv`, `summary.csv`, `validation_thresholds.csv`, `verification.json`, `physical_audit.json`. Пропущенные пороги обозначают отсутствие наблюдаемого достижения в данном бюджете; они не заменяются выдуманной эпохой или временем. Отдельный свежий GMsFEM Type 1/2 M=16 и FEM h=0.04 проверяются на тех же 100 test-частотах; стоимость численного setup не приравнивается к нейросетевому forward.

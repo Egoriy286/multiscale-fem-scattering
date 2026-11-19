@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-11-15T22:48:40.735834+09:00",
+  "snapshot_at": "2026-11-20T03:55:30.384336+09:00",
   "low": [
     {
       "n_train": "400",
@@ -306,9 +306,65 @@
       "total_seed_sd_pct": 0.01890384403095866,
       "total_seed_min_pct": 2.211801417581942,
       "total_seed_max_pct": 2.2488901042158704
+    },
+    {
+      "n_train": 1000,
+      "seeds": [
+        11,
+        29,
+        47
+      ],
+      "completed_seed_runs": 3,
+      "scattered_mean_over_seed_means_pct": 2.724188757350348,
+      "scattered_seed_sd_pct": 0.3277992063939225,
+      "scattered_seed_min_pct": 2.5155650898739452,
+      "scattered_seed_max_pct": 3.102013742031986,
+      "total_mean_over_seed_means_pct": 2.0445637872696936,
+      "total_seed_sd_pct": 0.24784702657266472,
+      "total_seed_min_pct": 1.8885141237806327,
+      "total_seed_max_pct": 2.330349359951063
+    },
+    {
+      "n_train": 2000,
+      "seeds": [
+        11,
+        29,
+        47
+      ],
+      "completed_seed_runs": 3,
+      "scattered_mean_over_seed_means_pct": 1.8836291605399185,
+      "scattered_seed_sd_pct": 0.33015229916132105,
+      "scattered_seed_min_pct": 1.511678758493631,
+      "scattered_seed_max_pct": 2.1419936871208423,
+      "total_mean_over_seed_means_pct": 1.3697679628354937,
+      "total_seed_sd_pct": 0.2609245756613268,
+      "total_seed_min_pct": 1.0768205042639605,
+      "total_seed_max_pct": 1.5772168843833874
     }
   ],
-  "highk_status": "partial 9/15; Ns1000,2000 and GMs incomplete at snapshot",
+  "highk_gms": [
+    {
+      "method": "GMsFEM CG2 Type2 20x20 M=16",
+      "count": "200",
+      "mean": "222.67154561328647",
+      "median": "141.62228788586756",
+      "p95": "683.212018177287",
+      "maximum": "2781.7374547883633",
+      "seed_count": "1",
+      "seed_mean_sd": ""
+    },
+    {
+      "method": "GMsFEM CG2 Type2 20x20 M=32",
+      "count": "200",
+      "mean": "205.71400514216128",
+      "median": "133.65099774060238",
+      "p95": "703.9947298618265",
+      "maximum": "1445.4302540956962",
+      "seed_count": "1",
+      "seed_mean_sd": ""
+    }
+  ],
+  "highk_status": "passed",
   "static_low": {
     "range": [
       1,
@@ -341,6 +397,10 @@
     "experiments/multiscale_sample_study/results/summary.csv": "6d1d89d80ad872dd99e5b74731dcdad550b3f4cf04fc3a426e4588af99cfeb75",
     "experiments/multiscale_sample_study/results/gmsfem_summary.csv": "fc548dc5476aba4eb71a153834e4f8a1cb83d7e806781bfa3e700a5306fcfbce",
     "neural_operator/docs/operator_revision.md": "12eb19034fcdc5444e7c89dab1bfc9e2864490f3074a6b085acfc4174dc52d30",
-    "experiments/highk_svd_gmsfem/results/partial_verification.json": "3476ea72dd759fbbe1ab6c306f325281ee5a3b0d70b974ef5d9c81d9c55169c0"
+    "experiments/highk_svd_gmsfem/results/execution.json": "7287d46a7e978e7aa0fd9aef3447016ea2f46aea126eaab7357e77930d5692fb",
+    "experiments/highk_svd_gmsfem/results/final_artifact_manifest.json": "bc17f974abe90e14a8f9b0e68de08d86234323f46f462780c0ab94232c9268c7",
+    "experiments/highk_svd_gmsfem/results/training_summary.json": "242cbd7e413a1c24e15cb03712a57556c49c2e22b86729bc6b5de83ac0665bab",
+    "experiments/highk_svd_gmsfem/results/summary.csv": "726e25af45e836c01acfbda07db18e51b87ce1005d87d16138f1871a11d82bf5",
+    "experiments/highk_svd_gmsfem/results/sample_efficiency.png": "fd7cc8572f4cb76a7a76614da449571cd708919e1ec0d989aa7dc514a5c9ac2c"
   }
 }
