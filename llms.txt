@@ -11,6 +11,7 @@
 - [GMsFEM formulation](gmsfem/docs/method.md) and [audit](gmsfem/docs/audit.md).
 - [Neural methods](neural_operator/docs/methods.md) and [current results](neural_operator/docs/operator_revision.md).
 - [Current provenance JSON](neural_operator/docs/operator_revision.json) and [FNO verification](neural_operator/docs/fno_static_low_verification_2026-11-08.json).
+- [Dataset handoff for agents](docs/datasets/README.md) covers retained datasets, provenance checks, and restoring archives from Google Drive.
 - [Dataset audit](neural_operator/docs/dataset_audit.md): only the retained static-low dataset.
 - [Lab templates](templates/README.md): preparatory labs 4 and 6.
 - [Paper](paper/svd_sno_revision_2026-11-06/README.md): current three-method study and reproduction.

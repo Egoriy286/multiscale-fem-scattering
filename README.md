@@ -128,6 +128,7 @@ FNO и все подробные настройки: [neural README](neural_oper
 | Путь | Назначение |
 | --- | --- |
 | [SUMMARY.md](SUMMARY.md) | Научное и практическое саммари |
+| [Датасеты для агентов](docs/datasets/README.md) | Активные наборы, контрольные суммы и восстановление из Google Drive |
 | [gmsfem/](gmsfem/README.md) | FEM, snapshots, локальный спектр, глобальная проекция, учебные примеры |
 | [neural_operator/](neural_operator/README.md) | Общие данные, три метода, обучение и inference |
 | [templates/](templates/README.md) | Лабораторные 4 и 6: блоки, подсетки и окрестности |
