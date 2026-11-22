@@ -1,0 +1,43 @@
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage{fontspec,amsmath,amssymb}
+\setsansfont{cmunss.otf}[BoldFont=cmunsx.otf]
+\usetikzlibrary{arrows.meta,calc}
+\definecolor{ink}{HTML}{253849}
+\definecolor{blue}{HTML}{2E587D}
+\definecolor{tint}{HTML}{EAF2F8}
+\begin{document}
+\begin{tikzpicture}[font=\sffamily\small,text=ink,
+ stage/.style={draw=ink!65,rounded corners=2pt,align=center,minimum height=1.0cm,inner sep=4pt},
+ block/.style={stage,draw=blue,fill=tint},
+ link/.style={-Stealth,draw=ink,line width=.7pt},
+ op/.style={circle,draw=ink,inner sep=0pt,minimum size=5mm,font=\normalsize},
+ heading/.style={anchor=west,inner sep=0pt,font=\sffamily\bfseries\small}]
+\node[heading] at (0,.90) {а) От параметров волны к рассеянному полю};
+\node[stage,minimum width=2.9cm] (input) at (1.45,0) {Признаки $(k,\theta)$\\$r$ строк по 5 чисел};
+\node[stage,minimum width=2.35cm] (lift) at (4.50,0) {Слой $5\to w$\\GELU};
+\node[block,minimum width=2.6cm] (stack) at (7.42,0) {4 блока SNO\\$Z_0\to Z_4$};
+\node[stage,minimum width=2.55cm] (head) at (10.47,0) {Слой $w\to2$\\$r\times2$ выхода};
+\node[stage,minimum width=3.4cm] (field) at (13.80,0) {Масштабирование\\и два базиса SVD\\$\widehat U\in\mathbb C^{53\,246}$};
+\foreach \a/\b in {input/lift,lift/stack,stack/head,head/field}{\draw[link] (\a)--(\b);}
+\node[heading,text=blue] at (0,-1.14) {б) Один блок SNO};
+\node[anchor=east,inner sep=0pt] at (15.50,-1.14) {$Z_\ell,Z_{\ell+1}\in\mathbb R^{r\times w}$};
+\node (z) at (.54,-2.65) {$Z_\ell$};
+\coordinate (fork) at (1.65,-2.65);
+\fill[ink] (fork) circle (1.35pt);
+\node[block,minimum width=3.3cm,minimum height=.66cm] (local) at (4.22,-2.17) {$Z_\ell W_1+\mathbf1 b^{\mathsf T}$};
+\node[block,minimum width=3.3cm,minimum height=.66cm] (mix) at (4.22,-3.13) {$D Z_\ell W_2$};
+\node[op] (sum) at (7.02,-2.65) {$+$};
+\node[stage,minimum width=1.95cm,minimum height=.7cm] (act) at (9.04,-2.65) {GELU};
+\node[op] (res) at (11.70,-2.65) {$+$};
+\node (out) at (14.24,-2.65) {$Z_{\ell+1}$};
+\draw[draw=ink,line width=.7pt] (z)--(fork);
+\draw[link] (fork) |- (local.west);
+\draw[link] (fork) |- (mix.west);
+\draw[link] (local.east) -| (sum.north);
+\draw[link] (mix.east) -| (sum.south);
+\draw[link] (sum)--(act);
+\draw[link] (act)--(res);
+\draw[link] (res)--(out);
+\draw[link] (fork)--(1.65,-3.92) -- node[midway,below=1pt,font=\sffamily\footnotesize] {Остаточная связь} (11.70,-3.92)--(res.south);
+\end{tikzpicture}
+\end{document}

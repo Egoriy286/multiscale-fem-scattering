@@ -1,0 +1,4 @@
+data/
+runs/
+build/
+__pycache__/
