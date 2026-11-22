@@ -1,0 +1,32 @@
+{
+  "family": "fourier",
+  "input_features": [
+    "alpha1",
+    "alpha2",
+    "n1",
+    "n2",
+    "k",
+    "cos(theta)",
+    "sin(theta)"
+  ],
+  "modes_per_axis": 16,
+  "width": 24,
+  "depth": 4,
+  "seed": 2026,
+  "epochs": 150,
+  "batch_size": 64,
+  "adamw": {
+    "lr": 0.002,
+    "eta_min": 0.00015,
+    "weight_decay": 1e-05
+  },
+  "sizes": [
+    400,
+    600,
+    800,
+    1000
+  ],
+  "targets": "complex scattered field divided by k",
+  "signature": "9c91e54457a04376",
+  "basis_condition": 4.0531028260960325
+}
